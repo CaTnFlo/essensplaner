@@ -29,6 +29,7 @@
   "radii": {
     "control": "12px",
     "container": "20px",
-    "pill": "999px"
+    "pill": "999px",
+    "button": "18px"
   }
 }

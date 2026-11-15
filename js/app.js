@@ -4,7 +4,7 @@ import { installPlanDrag } from "./plan-drag.js";
 // UI, Navigation, Events (SPEC 6, 7). Planungslogik liegt in planner.js / shopping.js / bring.js.
 import { SLOTS, erzeugeRng, planeWoche, wuerfleSlot, setzeSlot, pruefePlan, uebernehmePlan, anzeigeName, kandidaten, tauscheSlots, planeMitWunsch, wunschGrund, filterKandidaten } from "./planner.js";
 import { einkaufsliste } from "./shopping.js";
-import { bringLink, rezeptSeitenPfad, bringWochenLink } from "./bring.js?v=20261115-6";
+import { bringLink, rezeptSeitenPfad, bringWochenLink } from "./bring.js?v=20261115-7";
 import { firebaseConfig } from "./firebase-config.js";
 
 const KEY_HAUSHALT = "essensplaner-haushalt";

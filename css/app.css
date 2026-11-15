@@ -1,7 +1,7 @@
 /* Hallmark · v2.0.0 · existing app · approved neutral week concept, no new direction */
 /* Critique: fixed bottom navigation, clear cooking days and one action menu per dish. */
 /* Hallmark · waive 24b · 48px controls and overflow checked at 360, 393, 412 and 1920px · Compact metadata keeps the explicitly approved week mockup spacing rather than imposing a new grid. */
-@import url("./tokens.css?v=20261115-6");
+@import url("./tokens.css?v=20261115-7");
 
 * { box-sizing: border-box; }
 
@@ -368,3 +368,9 @@ button, .btn { min-height:44px; min-width:44px; }
 .bring-all { margin:12px 0 20px; }
 
 .sheet-grip { min-height:32px; }
+
+/* Softer CTA corners, with the compact control height retained. */
+.btn { border-radius:var(--radius-button); }
+.card-heading h2.day-badge, .card-heading .badge, .card-heading .pin,
+.card-heading .icon-button { border-radius:var(--radius-button); }
+.sheet-actions .btn { border-radius:0; }
