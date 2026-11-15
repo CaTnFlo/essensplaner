@@ -1,8 +1,8 @@
 # Meal planner UI proposal
 
-Status: awaiting approval. No redesign code is included in this review branch.
+Status: visual direction and UX refinements updated at the user's request on 15 November 2026. These are design artifacts; no redesign, wish-selection, undo or synchronization implementation is included. The existing review fixes remain separate. The latest [mockups and behavior contract](mockups/README.md) supersede earlier chat images and conflicting earlier proposals.
 
-The goal is to replace or move one of three weekly dishes quickly, while keeping cooking days, eating days and shopping consequences visible. Keep the existing three top tabs, orange accent, system font, static ES modules and Firebase storage.
+The goal is to replace or move one of three weekly dishes quickly, while keeping cooking days, eating days and shopping consequences visible. Keep the three destinations, orange accent, system font, static ES modules and Firebase storage. Move navigation to a bottom bar labelled “Woche”, “Einkauf” and “Rezepte”.
 
 ## Mobbin references
 
@@ -13,7 +13,7 @@ All references below are iOS screenshots or flows inspected through the connecte
 | [Recime: Meal Plan, populated week](https://mobbin.com/flows/041c90ab-7821-4dc1-8962-41ddc49ad94f?tab=screens&utm_source=chatgpt&utm_medium=ai-assistant&utm_source_platform=mcp) | Separate day sections and a visible grocery action above the plan. | Use three explicit meal blocks for So + Mo, Di + Mi and Do + Fr. Keep cooking information separate, especially “Sonntag vorkochen” for B. Do not introduce a seven-day calendar or new week navigation. |
 | [Blue Apron: weekly menu](https://mobbin.com/screens/c76e2e0a-147f-41e1-a4b5-5579cc50c433?utm_source=chatgpt&utm_medium=ai-assistant&utm_source_platform=mcp) | Compact recipe rows separate title, duration and a new-recipe marker. | Give recipe names the strongest type; place duration and dietary/device badges on a quiet secondary line. Omit prices, promotional copy and unavailable photos. |
 | [Crouton: Adding a recipe, selection sheet](https://mobbin.com/flows/3d70e281-7384-4810-afb1-1c8385a2ae10?tab=screens&utm_source=chatgpt&utm_medium=ai-assistant&utm_source_platform=mcp) | Recipe selection opens in a sheet with a close control, search and tags. | Keep the weekly plan behind one sheet titled for the destination slot. Search and filters precede a single list; no folder hierarchy for this small catalog. |
-| [NYT Cooking: Filter sheet](https://mobbin.com/screens/b403979a-09a7-4e8f-9aed-1cfec328a282?utm_source=chatgpt&utm_medium=ai-assistant&utm_source_platform=mcp) | Cooking-time options and meal types are selectable chips. | Offer the requested six filters with clear selected states and 44px targets. Use sentence-case labels and fewer groups. |
+| [NYT Cooking: Filter sheet](https://mobbin.com/screens/b403979a-09a7-4e8f-9aed-1cfec328a282?utm_source=chatgpt&utm_medium=ai-assistant&utm_source_platform=mcp) | Cooking-time options and meal types are selectable chips. | Offer the requested six filters with clear selected states and targets of at least 48 CSS px. Use sentence-case labels and fewer groups. |
 | [Kitchen Stories: Filter](https://mobbin.com/screens/1e181e40-4847-496d-8f39-61f446ed9197?utm_source=chatgpt&utm_medium=ai-assistant&utm_source_platform=mcp) | Reset control and result count remain easy to find. | Show a live candidate count and “Filter zurücksetzen”. A zero-result state explains how to widen the search without dropping R1. |
 | [Swiggy: shopping list](https://mobbin.com/screens/de0f97bc-c665-431e-9cfc-7c47502f8bc8?utm_source=chatgpt&utm_medium=ai-assistant&utm_source_platform=mcp) | Ingredients appear as compact rows with one clear action area. | Use readable ingredient rows, aligned amounts and an obvious “Liste kopieren” action per shopping day. Do not copy cart creation or add shared checkboxes without a separate state decision. |
 | [Crouton: Reordering recipes](https://mobbin.com/flows/30b04cbe-62f7-4248-b339-3ddf7cf0f885?tab=screens&utm_source=chatgpt&utm_medium=ai-assistant&utm_source_platform=mcp) | The lifted recipe appears above the list, and the final screen shows the changed order. | Give the dragged dish a visible lifted state and highlight the target meal block. Screenshots do not establish Crouton's press duration, Pointer Events implementation or auto-scroll behavior; those are implementation decisions here. |
@@ -22,8 +22,8 @@ All references below are iOS screenshots or flows inspected through the connecte
 
 **Hallmark · v2.0.0**
 
-- Scope: existing app screens, redesigned inside the current three-tab shell. No marketing hero, stock food imagery, promotional sections or screen word quota.
-- Theme: existing brand retained. Orange is `#c2410c` in light mode and `#fb923c` in dark mode. Keep the system font; put font, color, spacing and control styles behind tokens. No theme lottery overrides these constraints.
+- Scope: existing app screens, preserving the three destinations in bottom navigation. No marketing hero, stock food imagery, promotional sections or screen word quota.
+- Theme: neutral white/dark surfaces with the selected brighter orange #E66D20, dark canvas #121214 and cards #232326; small dark accents use #FF9B5D. See the [selected palette and contrast constraints](mockups/README.md#selected-neutral-palette). The week board shows the selected palette; the other boards illustrate UX with earlier neutral accent shades. Runtime CSS is unchanged.
 - Signature: three meal blocks that distinguish when a dish is cooked from when it is eaten. The B block must make Sunday preparation for Tuesday/Wednesday unmistakable.
 - Material: actual recipe names, duration, categories and planning data. No recipe photographs exist in the current data model, so no image placeholders are proposed.
 - Files to edit after approval: `js/app.js`, `js/planner.js`, `css/app.css`, `SPEC.md`, planner tests and app tests. Add `js/icons.js`, `js/plan-drag.js`, icon attribution and a shared `design.md`; add `css/tokens.css` if extracting existing tokens simplifies the stylesheet. Do not delete routes or replace the component tree wholesale. `js/shopping.js` should need tests for moved C ingredients, not a new calculation model.
@@ -37,7 +37,9 @@ The visual problems are uneven wrapping of equally prominent card actions, an in
 
 ### Week
 
-Each block starts with its eating days as a real heading, followed by the recipe name, cooking instruction and metadata. Use the same action arrangement on all cards: “Ändern” and “Neu würfeln” in the first row; quieter “Rezept”, “Zu Bring” and “Verschieben” actions below. Preserve “Hat geschmeckt” only for the marked new recipe. Orange identifies selection and the primary action; neutral surfaces carry the rest.
+Each block starts with a small calendar outline and its eating days as a real heading: “So + Mo”, “Di + Mi”, “Do + Fr”. Show the recipe name, duration and a separate cooking instruction. “Sonntag vorkochen” must remain visible for B. A tap on the recipe opens details; one labelled overflow control contains replacement, reroll, Bring and move actions. Preserve “Hat geschmeckt” in the marked new recipe's detail/action view. Orange identifies selection and the primary action; neutral surfaces carry the rest. Avoid rows of competing buttons.
+
+Automatic recipe selection already exists behind “Woche planen”; unattended scheduled generation does not. Add one optional wish for the current week, with “Tag egal” or one of the three eating-day groups. Before a wish exists show “Wunschgericht”; afterwards show “Wunsch ändern” and a “Dein Wunsch” pin on the assigned dish. The wish sheet allows changing or releasing the wish. With one wish set, “2 Gerichte neu planen” preserves it and generates the other two dishes. A successful change offers “Rückgängig”. Compatibility rules and remote-update safeguards are in the [behavior contract](mockups/README.md).
 
 Use inline SVGs matching the existing 24px viewBox, stroke 2 and `currentColor`. Icons support text labels, including new, fish, poultry, Airfryer and duration. Use a local subset of an open icon set and include its exact license and attribution. No icon font, emoji or runtime icon library.
 
@@ -77,7 +79,7 @@ If a partner update changes the plan during a drag or destination choice, cancel
 
 ### Shopping and recipes
 
-Keep Saturday and Thursday as explicit sections. Place each day's copy action alongside its heading, category names in sentence case with small inline icons, amounts aligned consistently, and source recipes in secondary text. Keep pantry items separate and visually quieter. Move per-dish Bring actions below the ingredients so shopping content leads.
+Use calendar-labelled “Samstag” and “Donnerstag” tabs and a copy action for the selected day. Ingredient categories are expanded by default. Keep category names in sentence case with small inline icons and amounts aligned consistently. Reveal source recipe names by expanding an ingredient row rather than repeating them under every item. Only the separate “Habt ihr wahrscheinlich da” pantry section starts collapsed. Place per-dish Bring actions below the list. The list scrolls with sufficient bottom padding so navigation never covers the last row.
 
 Keep favorites, the collapsible pool and own links in the recipe tab. Give long names a full first row and put actions below, instead of squeezing names beside three buttons. Preserve link-title/URL drafts and focus across remote updates. Empty states give one relevant next action, such as planning the week, without adding illustrations or onboarding steps.
 
@@ -86,7 +88,7 @@ Keep favorites, the collapsible pool and own links in the recipe tab. Give long 
 1. Add planner tests for swap immutability, both variants, same-slot/empty-target behavior, `neuSlot` movement and provenance over repeated operations. Add shopping tests for moving fresh ingredients across C.
 2. Verify modal focus, Escape, close without saving, filters, empty results, long names and real keyboard interaction. Check external updates while a draft, sheet or drag is active.
 3. Keep `node --test tests/*.test.mjs`, full recipe validation and page generation green. Every behavior change updates SPEC in its own commit.
-4. Capture week, replacement sheet, shopping and recipes at 375px in light and dark, eight screenshots. Check wider layouts through 1920px, reduced motion and focus contrast. Run Hallmark's app-scope sweep; resolve Floor findings and record any justified Reflex waiver.
-5. Check touch drag, auto-scroll, scroll-vs-drag separation and cancellation on an actual iPhone. Browser emulation is not proof of this behavior. Verify shared Firebase updates only with an authorized household or a test environment.
+4. Capture week, wish/replacement sheets, shopping, recipes and feedback states in both themes at 393px for the iPhone 15 Pro layout and 360px/412px for the unknown older Galaxy A layout. Check 200% text scaling, software keyboards, safe areas, wider layouts through 1920px, reduced motion and focus contrast. Run Hallmark's app-scope sweep; resolve Floor findings and record any justified Reflex waiver.
+5. Check touch drag, auto-scroll, scroll-vs-drag separation, sheet dismissal and cancellation on an actual iPhone and the actual Samsung device. Browser emulation is not proof of this behavior. Verify shared Firebase updates only with an authorized household or a test environment.
 
 No new photography or brand asset is required for this concept. Authentic dish photos could be a later addition, but are not needed for recipe selection or the three-block plan.
