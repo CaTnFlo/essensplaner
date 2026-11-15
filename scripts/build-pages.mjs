@@ -38,7 +38,8 @@ function jsonLd({ titel, portionen, dauerMin, zutaten, schritte }) {
     name: titel,
     recipeYield: `${portionen} Portionen`,
     totalTime: `PT${dauerMin}M`,
-    recipeIngredient: zutaten.map(zutatText),
+    // Bring imports this list; pantry staples remain visible in the full recipe below.
+    recipeIngredient: zutaten.filter((z) => !z.vorrat).map(zutatText),
     recipeInstructions: schritte.map((text) => ({ "@type": "HowToStep", text })),
   };
   // "</" nie wörtlich im Script-Block; "<\/" ist gültiges JSON.

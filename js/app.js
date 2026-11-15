@@ -66,6 +66,15 @@ const schreibe = (k, v) => {
 
 let pending = null, saving = false, undo = null, savedState = null;
 let sheet = null, sheetTrigger = null, sheetTriggerSelector = null, sheetHistory = false, cancelDrag = () => {};
+let inputMethod = 'pointer';
+document.addEventListener('pointerdown', () => {
+  inputMethod = 'pointer'; document.documentElement?.setAttribute('data-input', 'pointer');
+}, true);
+document.addEventListener('keydown', e => {
+  if (['Tab','Enter',' ','ArrowDown','ArrowUp','ArrowLeft','ArrowRight'].includes(e.key)) {
+    inputMethod = 'keyboard'; document.documentElement?.setAttribute('data-input', 'keyboard');
+  }
+}, true);
 let toastTimer;
 function toast(text) {
   statusEl.textContent = text;
@@ -141,7 +150,11 @@ function rezeptUrl(eintrag) {
 }
 function bringUrl(eintrag) {
   const url = rezeptUrl(eintrag);
-  return url ? bringLink(url) : null;
+  if (!url) return null;
+  if (eintrag.quelle === 'link') return bringLink(url);
+  // Separate import URL prevents a previously cached full-ingredient import.
+  const importUrl = new URL(url); importUrl.searchParams.set('bring', 'ohne-vorrat');
+  return bringLink(importUrl.href);
 }
 
 // Auch gespeicherte Links sind Eingaben: HTML-Escaping prüft kein URL-Protokoll.
@@ -332,7 +345,7 @@ function slotKarte(slot, plan) {
   const name = e ? anzeigeName(e, recipes, state) : 'Kein Gericht';
   const wish = plan.wunsch?.slot === slot;
   return `<section class="card" data-plan-slot="${slot}" aria-label="${cfg.isstTage.join(' + ')}">
-    <div class="card-heading"><h2>${icon('calendar')}${cfg.isstTage.join(' + ')}</h2>
+    <div class="card-heading"><h2 class="day-badge">${icon('calendar')}${cfg.isstTage.join(' + ')}</h2>
       ${wish ? `<span class="pin">${icon('pin')}Dein Wunsch</span>` : plan.neuSlot === slot ? `<span class="badge neu">${icon('star')}Neu</span>` : ''}
       <button class="btn icon-button" data-action="menu" data-slot="${slot}" aria-label="Aktionen für ${cfg.isstTage.join(' + ')}">${icon('more')}</button></div>
     <button class="recipe-title" data-action="details" data-slot="${slot}" ${!e ? 'disabled' : ''}>${esc(name)}</button>
@@ -674,8 +687,9 @@ function oeffneSheet(type, slot) {
   const dialog = document.createElement('dialog'); dialog.id = 'sheet';
   dialog.setAttribute('aria-labelledby', 'sheet-title'); dialog.dataset.kind = type;
   dialog.addEventListener('cancel', e => { e.preventDefault(); schliesseSheet(); });
+  installSheetDismiss(dialog);
   document.body.append(dialog); zeichneSheet(); dialog.showModal(); passeSheetHoeheAn();
-  dialog.querySelector('[data-action="close"]')?.focus();
+  dialog.querySelector(inputMethod === 'keyboard' ? '.sheet-heading [data-action="close"]' : '#sheet-title')?.focus({preventScroll:true});
 }
 function schliesseSheet(fromBack = false) {
   const dialog = document.getElementById('sheet');
@@ -699,22 +713,24 @@ function zeichneSheet() {
       <div class="filters">${[['favoriten','Favoriten'],['neu','Neu'],['kurz','Bis 30 Min.'],['airfryer','Airfryer'],['fisch','Fisch'],['gefluegel','Geflügel']].map(([id,text]) => `<button class="btn" data-action="filter" data-filter="${id}" aria-pressed="false">${text}<span class="selected-mark" aria-hidden="true"> ✓</span></button>`).join('')}</div>
       <div id="wish-values"></div><p id="result-count" role="status" aria-live="polite"></p><button class="btn" data-action="resetfilter">Filter zurücksetzen</button><ul class="auswahl" id="sheet-results"></ul>`;
   } else if (['menu','details'].includes(type) && entry) {
-    content = `<p class="muted">${slot === 'B' ? 'Sonntag vorkochen' : `${TAGE[SLOTS[slot].kochtag]} kochen`} · Vier Portionen</p><div class="sheet-actions">
-      ${externerLink(rezeptUrl(entry), 'Rezept öffnen')}
-      <button class="btn" data-action="aendern" data-slot="${slot}">Gericht ändern</button>
-      <button class="btn" data-action="wuerfeln" data-slot="${slot}">Neu würfeln</button>
-      <button class="btn" data-action="move" data-slot="${slot}">Verschieben</button>
-      ${externerLink(bringUrl(entry), 'Zu Bring')}
-      ${state.aktuellerPlan.neuSlot === slot ? istFavorit(entry.id) ? '<p>Ist jetzt Favorit</p>' : `<button class="btn" data-action="geschmeckt" data-slot="${slot}">Hat geschmeckt</button>` : ''}</div>`;
+    content = `<p class="muted">${slot === 'B' ? 'Sonntag vorkochen' : `${TAGE[SLOTS[slot].kochtag]} kochen`} · Vier Portionen</p>
+      <h3 class="menu-label">Plan anpassen</h3><div class="sheet-actions">
+      <button class="btn" data-action="aendern" data-slot="${slot}">${icon('calendar')}<span>Gericht ändern</span></button>
+      <button class="btn" data-action="wuerfeln" data-slot="${slot}">${icon('shuffle')}<span>Neu würfeln</span></button>
+      <button class="btn" data-action="move" data-slot="${slot}">${icon('move')}<span>Verschieben</span></button></div>
+      <h3 class="menu-label">Rezept und Einkauf</h3><div class="sheet-actions">
+      ${menuLink(rezeptUrl(entry), TAB_ICONS.rezepte, 'Rezept öffnen')}
+      ${menuLink(bringUrl(entry), TAB_ICONS.einkauf, 'Zu Bring')}
+      ${state.aktuellerPlan.neuSlot === slot ? istFavorit(entry.id) ? '<p class="menu-note">Ist jetzt Favorit</p>' : `<button class="btn" data-action="geschmeckt" data-slot="${slot}">${icon('star')}<span>Hat geschmeckt</span></button>` : ''}</div>`;
   } else if (type === 'menu' && !entry) {
     content = `<button class="btn" data-action="aendern" data-slot="${slot}">Gericht auswählen</button>`;
   } else if (type === 'move') {
-    content = `<div class="sheet-actions">${Object.keys(SLOTS).filter(s => s !== slot).map(s => `<button class="btn" data-action="destination" data-slot="${s}">${state.aktuellerPlan.slots[s] ? 'Mit' : 'Nach'} ${SLOTS[s].isstTage.join(' + ')} ${state.aktuellerPlan.slots[s] ? 'tauschen' : 'verschieben'}</button>`).join('')}</div>`;
+    content = `<div class="sheet-actions">${Object.keys(SLOTS).filter(s => s !== slot).map(s => `<button class="btn" data-action="destination" data-slot="${s}">${icon('move')}${state.aktuellerPlan.slots[s] ? 'Mit' : 'Nach'} ${SLOTS[s].isstTage.join(' + ')} ${state.aktuellerPlan.slots[s] ? 'tauschen' : 'verschieben'}</button>`).join('')}</div>`;
   } else if (type === 'weekmenu') {
-    content = `<div class="sheet-actions"><button class="btn" data-action="wish">${state.aktuellerPlan?.wunsch ? 'Wunsch ändern' : 'Wunschgericht'}</button>
-      <button class="btn" data-action="planen">${state.aktuellerPlan?.wunsch ? '2 Gerichte neu planen' : 'Woche planen'}</button>${undo ? '<button class="btn" data-action="undo">Rückgängig</button>' : ''}</div>`;
+    content = `<div class="sheet-actions"><button class="btn" data-action="wish">${icon("pin")}${state.aktuellerPlan?.wunsch ? 'Wunsch ändern' : 'Wunschgericht'}</button>
+      <button class="btn" data-action="planen">${icon("shuffle")}${state.aktuellerPlan?.wunsch ? '2 Gerichte neu planen' : 'Woche planen'}</button>${undo ? '<button class="btn" data-action="undo">Rückgängig</button>' : ''}</div>`;
   } else if (type === 'copy') content = `<p>Kopieren nicht möglich. Du kannst den Text hier markieren und kopieren.</p><textarea readonly aria-label="Einkaufsliste">${esc(sheet.text)}</textarea>`;
-  document.getElementById('sheet').innerHTML = `<header class="sheet-heading"><h2 id="sheet-title">${esc(title)}</h2><button class="btn icon-button" data-action="close" aria-label="Schließen">${icon('x')}</button></header><div class="sheet-body">${content}</div><footer id="sheet-footer"></footer><div id="sheet-save" role="status"></div>`;
+  document.getElementById('sheet').innerHTML = `<button class="sheet-grip" data-action="close" aria-label="Bottomsheet schließen"><span></span></button><header class="sheet-heading"><h2 id="sheet-title" tabindex="-1">${esc(title)}</h2><button class="btn icon-button" data-action="close" aria-label="Schließen">${icon('x')}</button></header><div class="sheet-body">${content}</div><footer id="sheet-footer"></footer><div id="sheet-save" role="status"></div>`;
   if (['wish','replace'].includes(type)) {
     document.getElementById('sheet-search').addEventListener('input', e => { sheet.suche = e.target.value; zeichneErgebnisse(); });
     zeichneErgebnisse(); if (type === 'wish') zeichneWunsch();
@@ -791,4 +807,54 @@ function stableHTML(id, html) {
   const top = target.scrollTop;
   target.innerHTML = html; target.scrollTop = top;
   if (focused) (target.querySelector(focused) ?? document.getElementById('sheet-search'))?.focus({preventScroll:true});
+}
+
+function menuLink(url, glyph, text) {
+  const link = externerLink(url, text);
+  return link.replace(`>${esc(text)}</`, `>${glyph}<span>${esc(text)}</span></`);
+}
+
+// Dismiss only gestures starting on the backdrop or the sheet's dedicated head.
+// Body touches keep native scrolling, including when the list is already at top.
+function installSheetDismiss(dialog) {
+  let outsideStart = false, gesture = null, swallowedClick = false;
+  const outside = e => {
+    const r = dialog.getBoundingClientRect();
+    return e.clientX < r.left || e.clientX > r.right || e.clientY < r.top || e.clientY > r.bottom;
+  };
+  const reset = () => { dialog.style.transform = ''; gesture = null; };
+  dialog.addEventListener('pointerdown', e => {
+    if (!e.isPrimary || e.button !== 0) return;
+    outsideStart = e.target === dialog && outside(e);
+    if (outsideStart) return;
+    const grip = e.target.closest('.sheet-grip');
+    const head = e.target.closest('.sheet-heading');
+    if (!grip && (!head || e.target.closest('button,a,input'))) return;
+    gesture = { id:e.pointerId, x:e.clientX, y:e.clientY, distance:0, grip:!!grip };
+    dialog.setPointerCapture(e.pointerId);
+  });
+  dialog.addEventListener('pointermove', e => {
+    if (!gesture || e.pointerId !== gesture.id) return;
+    const dy = e.clientY - gesture.y, dx = Math.abs(e.clientX - gesture.x);
+    gesture.distance = Math.max(0, dy);
+    if (dy > 8 && dy > dx) {
+      e.preventDefault(); dialog.style.transform = `translateY(${dy}px)`;
+    }
+  });
+  dialog.addEventListener('pointerup', e => {
+    if (outsideStart && e.target === dialog && outside(e)) {
+      outsideStart = false; swallowedClick = true; schliesseSheet(); return;
+    }
+    outsideStart = false;
+    if (!gesture || e.pointerId !== gesture.id) return;
+    const distance = gesture.distance, dx = Math.abs(e.clientX - gesture.x), grip = gesture.grip;
+    swallowedClick = distance > 8;
+    reset();
+    if ((distance >= 80 && distance > dx) || (grip && distance < 8 && dx < 8)) { e.preventDefault(); schliesseSheet(); }
+  });
+  dialog.addEventListener('pointercancel', () => { outsideStart = false; swallowedClick = true; reset(); });
+  dialog.addEventListener('lostpointercapture', reset);
+  dialog.addEventListener('click', e => {
+    if (swallowedClick) { swallowedClick = false; e.preventDefault(); e.stopImmediatePropagation(); }
+  }, true);
 }

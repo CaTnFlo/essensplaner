@@ -307,3 +307,22 @@ dialog[data-kind="replace"] .auswahl { min-height: 96px; overflow: auto; }
 .metadata span svg { width: 16px; height: 16px; }
 
 .toast.zeigen:has(button) { pointer-events: auto; display: flex; align-items: center; gap: 12px; width: max-content; }
+
+/* Follow-up: day chips, grouped sheet actions and input-aware focus. */
+.card-heading h2.day-badge { border-radius: 99px; background: var(--accent-soft); padding: 6px 10px; }
+.metadata { gap: 8px; margin-top: 4px; }
+.metadata > span { border-radius: 99px; background: var(--accent-soft); padding: 4px 8px; }
+.menu-label { margin: 20px 0 8px; color: var(--muted); font-size: .85rem; font-weight: 600; }
+.sheet-actions { border-radius: 20px; overflow: hidden; background: var(--accent-soft); gap: 0; }
+.sheet-actions .btn { width: 100%; justify-content: flex-start; text-align: left; gap: 12px; min-height: 56px; padding: 14px 16px; border: 0; border-radius: 0; background: transparent; }
+.sheet-actions .btn + .btn { border-top: 1px solid var(--border); }
+.sheet-actions .btn svg { color: var(--accent); width: 22px; height: 22px; }
+.sheet-actions .btn:focus-visible { outline-offset: -3px; }
+.menu-note { padding: 12px 16px; margin: 0; }
+.sheet-grip { display: flex; justify-content: center; align-items: center; width: 100%; min-height: 48px; border: 0; background: var(--surface); color: var(--muted); cursor: grab; touch-action: none; flex: none; }
+.sheet-grip span { width: 36px; height: 4px; border-radius: 99px; background: currentColor; opacity: .6; }
+.sheet-heading { touch-action: none; padding-top: 0; }
+#sheet-title:focus { outline: none; }
+html[data-input="pointer"] #sheet button:focus-visible { outline: none; }
+/* Native tap flashes are replaced by the existing :active feedback. */
+button, a, summary { -webkit-tap-highlight-color: transparent; }

@@ -423,3 +423,29 @@ themes, reduced motion and enlarged text. Primary orange buttons use 20 px or la
 bold light labels; small text uses the separate accent token. Physical iPhone and
 Samsung checks and live Firebase verification are release checks, not claims made
 by browser emulation or the transaction transport tests.
+
+## 13. Live feedback refinements (15 November 2026)
+
+Day headings use neutral pill backgrounds; protein and appliance metadata retain
+badge styling. Action sheets group plan changes separately from recipe/shopping
+actions, with local icons and rounded group containers.
+
+A pointer opening focuses the sheet heading rather than the close button. Pointer
+interaction suppresses button focus outlines within the sheet and native tap
+flashes; keyboard navigation immediately restores visible focus. Focus containment,
+Escape, Back and trigger restoration remain intact.
+
+A tap that starts and ends on the backdrop closes the sheet. Dragging its grip or
+non-interactive header downward by at least 80 px also closes it. A shorter or
+cancelled gesture resets the sheet position. Content gestures retain native
+scrolling. All dismissal paths discard unapplied drafts without saving. The grip
+also works as a named close button for keyboard and assistive technology.
+
+Recipe-page JSON-LD exports only ingredients with `vorrat: false` to Bring. The
+visible recipe still includes every cooking ingredient, including pantry staples.
+This applies to base and variant ingredients. Category `vorrat` alone is not a
+reason to exclude rice, pasta or other shopping ingredients. Fresh herbs retain
+their existing non-pantry classification. Catalog Bring URLs include
+`?bring=ohne-vorrat` to distinguish them from earlier full-ingredient import URLs.
+External user-supplied recipe URLs remain external; their ingredient metadata is
+not under this app's control.

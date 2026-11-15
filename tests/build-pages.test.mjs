@@ -83,7 +83,8 @@ test("Mengen: Komma statt Punkt, ohne unnötige Nachkommastellen, null nur Name"
     ],
   })] });
   const ld = JSON.parse(ldJson(seite.html));
-  assert.deepEqual(ld.recipeIngredient, ["1,5 EL Mehl", "500 ml Milch", "Salz"]);
+  assert.deepEqual(ld.recipeIngredient, ["500 ml Milch"]);
+  assert.ok(seite.html.includes("<li>Salz</li>"));
   assert.ok(seite.html.includes("<li>1,5 EL Mehl</li>"));
 });
 
@@ -142,4 +143,13 @@ test("kollidierende Varianten-Dateinamen brechen ab, bevor vorhandene Seiten gel
   } finally {
     rmSync(dir, { recursive: true, force: true });
   }
+});
+
+test("Bring import excludes pantry staples, including variant ingredients, without removing cooking ingredients", () => {
+  const ingredient = (name, vorrat, kategorie = 'vorrat') => ({name,menge:1,einheit:'EL',vorrat,kategorie,frisch:false});
+  const recipe = minimal({zutaten:[ingredient('Salz',true,'gewuerze'), ingredient('Pfeffer',true,'gewuerze'),ingredient('Oregano',true,'gewuerze'),ingredient('Basilikum getrocknet',true,'gewuerze'),ingredient('Olivenöl',true),ingredient('Reis',false)],
+    variantenGruppen:[{id:'sauce',name:'Sauce',optionen:[{id:'kraeuter',name:'Kräuter',zutaten:[ingredient('Thymian',true,'gewuerze'),ingredient('Tomaten',false)]}]}]});
+  const [{html}] = baueSeiten({rezepte:[recipe]});
+  assert.deepEqual(JSON.parse(ldJson(html)).recipeIngredient,['1 EL Reis','1 EL Tomaten']);
+  for (const name of ['Salz','Pfeffer','Oregano','Basilikum getrocknet','Olivenöl','Thymian']) assert.ok(html.includes(`<li>1 EL ${name}</li>`));
 });
