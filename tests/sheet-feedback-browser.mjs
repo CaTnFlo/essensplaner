@@ -58,7 +58,7 @@ await page.setViewportSize({width:360,height:500});
 await page.reload();
 await open();
 const heights=await page.locator('.card-heading').first().evaluate(el=>[...el.children].map(child=>child.getBoundingClientRect().height));
-assert.ok(heights.every(height=>height===48),JSON.stringify(heights));
+assert.ok(heights.every(height=>height===44),JSON.stringify(heights));
 const scrollBody=page.locator('.sheet-body');
 assert.ok(await scrollBody.evaluate(el=>el.scrollHeight>el.clientHeight));
 const box=await scrollBody.boundingBox();

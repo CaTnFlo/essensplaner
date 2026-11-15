@@ -4,7 +4,7 @@ import { installPlanDrag } from "./plan-drag.js";
 // UI, Navigation, Events (SPEC 6, 7). Planungslogik liegt in planner.js / shopping.js / bring.js.
 import { SLOTS, erzeugeRng, planeWoche, wuerfleSlot, setzeSlot, pruefePlan, uebernehmePlan, anzeigeName, kandidaten, tauscheSlots, planeMitWunsch, wunschGrund, filterKandidaten } from "./planner.js";
 import { einkaufsliste } from "./shopping.js";
-import { bringLink, rezeptSeitenPfad, bringWochenLink } from "./bring.js?v=20261115-5";
+import { bringLink, rezeptSeitenPfad, bringWochenLink } from "./bring.js?v=20261115-6";
 import { firebaseConfig } from "./firebase-config.js";
 
 const KEY_HAUSHALT = "essensplaner-haushalt";
@@ -411,10 +411,11 @@ function renderEinkauf() {
     : "";
   const bulkUrl = bringWochenLink(plan);
   return `<h1>Einkauf</h1>
-    ${bulkUrl ? `<div class="bring-all">${externerLink(bulkUrl, "Alles zu Bring hinzufügen").replace('class="btn"','class="btn primary"')}<p class="small muted">Ganze Woche · ohne Vorräte${liste.links.length ? '. Eigene Rezeptlinks bitte separat hinzufügen.' : ''}</p></div>` : ''}
     <div class="shopping-tabs" aria-label="Einkaufstag">${['samstag','donnerstag'].map(day => `<button class="btn" data-action="shoppingday" data-day="${day}" aria-pressed="${ui.einkauf === day}">${icon('calendar')}${day === 'samstag' ? 'Samstag' : 'Donnerstag'}${ui.einkauf === day ? '<span aria-hidden="true">✓</span>' : ''}</button>`).join('')}</div>
     ${abschnitt(ui.einkauf === 'samstag' ? 'Samstag' : 'Donnerstag', ui.einkauf, liste[ui.einkauf])}
-    ${links}<h2>Zu Bring hinzufügen</h2><ul class="liste">${gerichte}</ul>`;
+    ${links}<h2>Zu Bring hinzufügen</h2>
+${bulkUrl ? `<div class="bring-all">${externerLink(bulkUrl, "Alles zu Bring hinzufügen").replace('class="btn"','class="btn primary"')}<p class="small muted">Ganze Woche · ohne Vorräte${liste.links.length ? '. Eigene Rezeptlinks bitte separat hinzufügen.' : ''}</p></div>` : ''}
+    <ul class="liste">${gerichte}</ul>`;
 }
 
 // ---------- Rendern: Rezepte ----------
@@ -861,7 +862,17 @@ function installSheetDismiss(dialog) {
   });
   dialog.addEventListener('pointerup', e => {
     if (outsideStart && e.target === dialog && outside(e)) {
-      outsideStart = false; swallowedClick = true; schliesseSheet(); return;
+      outsideStart = false; swallowedClick = true; e.preventDefault();
+      // Removing the modal during pointerup must not send its click to a button below.
+      const pointerId = e.pointerId;
+      const swallow = click => {
+        if (click.pointerId !== pointerId) return;
+        click.preventDefault(); click.stopImmediatePropagation();
+        document.removeEventListener('click', swallow, true);
+      };
+      document.addEventListener('click', swallow, true);
+      setTimeout(() => document.removeEventListener('click', swallow, true), 400);
+      schliesseSheet(); return;
     }
     outsideStart = false;
     if (!gesture || e.pointerId !== gesture.id) return;

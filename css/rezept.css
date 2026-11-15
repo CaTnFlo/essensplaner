@@ -1,6 +1,6 @@
 /* Hallmark · v2.0.0 · existing recipe page · shared approved palette */
 /* Critique: preserve recipe structure and use the same neutral colors as the planner. */
-@import url("./tokens.css?v=20261115-5");
+@import url("./tokens.css?v=20261115-6");
 :root {
   color-scheme: light dark;
   --hintergrund: var(--bg);

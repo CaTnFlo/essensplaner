@@ -28,3 +28,7 @@ The blue extension was rejected in visual review. Day labels now use warm sand #
 ## Shopping import and cache follow-up
 
 Live CSS was confirmed to contain sand #E4C9A0; the response permits 600 seconds of caching. Versioned stylesheet, token and application URLs now bypass older assets after a reload. Shopping rows use fixed quantity and unit columns with a flexible ingredient column. A primary “Alles zu Bring hinzufügen” action imports the full week without pantry staples through a public catalog-only Worker. The real Bring parser accepted a two-recipe selection and returned merged ingredients; confirmation in the native Bring app remains unverified. External links without ingredient data are clearly called out for separate import.
+
+## Compact CTA follow-up
+
+The weekly Bring action now follows the ingredient list in the Bring section, before the per-recipe actions. Standard buttons and card headers use a consistent 44px height; large primary and grouped sheet actions have a 48px minimum. Text can wrap and enlarge as needed. The existing 32px sheet grip and safe-area spacing remain unchanged. Asset version 20261115-6 refreshes cached UI files.

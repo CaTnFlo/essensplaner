@@ -1,7 +1,7 @@
 /* Hallmark · v2.0.0 · existing app · approved neutral week concept, no new direction */
 /* Critique: fixed bottom navigation, clear cooking days and one action menu per dish. */
 /* Hallmark · waive 24b · 48px controls and overflow checked at 360, 393, 412 and 1920px · Compact metadata keeps the explicitly approved week mockup spacing rather than imposing a new grid. */
-@import url("./tokens.css?v=20261115-5");
+@import url("./tokens.css?v=20261115-6");
 
 * { box-sizing: border-box; }
 
@@ -354,3 +354,17 @@ dialog[open] { display:flex; flex-direction:column; overflow:hidden; }
 .posten summary > span:first-child { min-width:0; overflow-wrap:anywhere; }
 .posten .amount { max-width:none; text-align:right; font-variant-numeric:tabular-nums; }
 .posten .unit { min-width:0; overflow-wrap:anywhere; text-align:left; }
+
+/* Compact controls retain a 44px minimum touch target. */
+button, .btn { min-height:44px; min-width:44px; }
+.btn { padding:6px 12px; }
+.btn.primary { font-size:1rem; }
+.btn.big { min-height:48px; }
+.shopping-tabs .btn { padding:6px; }
+.sheet-actions .btn { min-height:48px; padding:10px 16px; }
+.card-heading h2.day-badge, .card-heading .badge, .card-heading .pin,
+.card-heading .icon-button { min-height:44px; height:44px; }
+.card-heading .icon-button { width:44px; }
+.bring-all { margin:12px 0 20px; }
+
+.sheet-grip { min-height:32px; }
