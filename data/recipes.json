@@ -112,7 +112,7 @@
       "zutaten": [
         { "name": "Hackfleisch gemischt", "menge": 500, "einheit": "g", "kategorie": "fleisch-fisch", "frisch": true, "vorrat": false },
         { "name": "Penne", "menge": 300, "einheit": "g", "kategorie": "vorrat", "frisch": false, "vorrat": false },
-        { "name": "Brokkoli", "menge": 500, "einheit": "g", "kategorie": "obst-gemuese", "frisch": true, "vorrat": false },
+        { "name": "Brokkoli", "menge": 500, "einheit": "g", "kategorie": "obst-gemuese", "frisch": false, "vorrat": false },
         { "name": "Zwiebel", "menge": 1, "einheit": "Stück", "kategorie": "obst-gemuese", "frisch": false, "vorrat": false },
         { "name": "Knoblauch", "menge": 1, "einheit": "Zehe", "kategorie": "obst-gemuese", "frisch": false, "vorrat": false },
         { "name": "Kochsahne 15 %", "menge": 200, "einheit": "ml", "kategorie": "kuehlregal", "frisch": false, "vorrat": false },
@@ -203,21 +203,21 @@
               "id": "brokkoli",
               "name": "Brokkoli",
               "zutaten": [
-                { "name": "Brokkoli", "menge": 500, "einheit": "g", "kategorie": "obst-gemuese", "frisch": true, "vorrat": false }
+                { "name": "Brokkoli", "menge": 500, "einheit": "g", "kategorie": "obst-gemuese", "frisch": false, "vorrat": false }
               ]
             },
             {
               "id": "bohnen",
               "name": "Grüne Bohnen",
               "zutaten": [
-                { "name": "Grüne Bohnen", "menge": 400, "einheit": "g", "kategorie": "obst-gemuese", "frisch": true, "vorrat": false }
+                { "name": "Grüne Bohnen", "menge": 400, "einheit": "g", "kategorie": "obst-gemuese", "frisch": false, "vorrat": false }
               ]
             },
             {
               "id": "blumenkohl",
               "name": "Blumenkohl",
               "zutaten": [
-                { "name": "Blumenkohl", "menge": 1, "einheit": "Stück", "kategorie": "obst-gemuese", "frisch": true, "vorrat": false }
+                { "name": "Blumenkohl", "menge": 1, "einheit": "Stück", "kategorie": "obst-gemuese", "frisch": false, "vorrat": false }
               ]
             },
             {
@@ -2793,7 +2793,7 @@
           "einheit": "EL",
           "kategorie": "vorrat",
           "frisch": false,
-          "vorrat": true
+          "vorrat": false
         },
         {
           "name": "Rinderbrühe",

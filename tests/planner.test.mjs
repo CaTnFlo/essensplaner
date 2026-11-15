@@ -228,7 +228,7 @@ test("extreme Fälle stürzen nicht ab: 1 Favorit, kein Favorit, keine Rezepte",
   }
   const { plan } = plane(1, leer(), []);
   assert.deepEqual(plan.slots, { A: null, B: null, C: null });
-  assert.ok(pruefePlan({ plan, recipes: [], state: leer() }).length >= 0);
+  assert.deepEqual(pruefePlan({ plan, recipes: [], state: leer() }), []);
 });
 
 test("wuerfleSlot: ändert nur den gewünschten Slot und hält die Regeln", () => {
@@ -284,7 +284,7 @@ test("wuerfleSlot ohne Alternative: Plan bleibt, Hinweis", () => {
   const slot = plan.neuSlot === "A" ? "C" : "A"; // Favorit-Slot; nur 3 Favoriten, alle verbraucht
   const res = wuerfleSlot({ recipes: nur, state: leer(), plan, slot, rng: erzeugeRng(1) });
   assert.deepEqual(res.plan, plan);
-  assert.ok(res.hinweise.length > 0);
+  assert.ok(res.hinweise.some((h) => h.startsWith("Keine andere Möglichkeit gefunden")));
 });
 
 test("pruefePlan: gültiger Plan -> leeres Array", () => {
