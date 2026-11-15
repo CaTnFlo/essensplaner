@@ -491,3 +491,62 @@ test("uebernehmePlan: alter Plan ohne Feld probiertHinzugefuegt -> kein Fehler, 
   const res = uebernehmePlan(state, planNeu("2026-11-22", "A", eintrag("chili-con-carne")));
   assert.ok(res.probiert.includes("lachs-ofen"));
 });
+
+// ---------- P8: Lockerung nur so weit wie nötig ----------
+
+test("R3 nur für Slot B nötig: Favoriten-Slot A/C nimmt trotzdem kein Vorwochengericht", () => {
+  // B-taugliche Favoriten (haltbarTage >= 3): nur lasagne und curry, beide in der Vorwoche -> R3 muss für B gelockert werden.
+  // Für A/C sind lachs-spinat-nudeln und ofengemuese frei, nudel-baukasten stand in der Vorwoche.
+  const rez = recipes.filter((r) => r.typ === "pool" || ["lasagne", "curry", "lachs-spinat-nudeln", "nudel-baukasten", "ofengemuese"].includes(r.id));
+  const state = { ...leer(), aktuellerPlan: planMit("2026-11-15", "nudel-baukasten", "lasagne", "curry") };
+  for (const seed of SEEDS.slice(0, 200)) {
+    const { plan, hinweise } = plane(seed, state, rez);
+    const favSlot = plan.neuSlot === "A" ? "C" : "A";
+    assert.notEqual(plan.slots[favSlot].id, "nudel-baukasten", `Seed ${seed}`);
+    assert.deepEqual(hinweise, ["Regel 'keine Wiederholung aus Vorwoche' gelockert: zu wenige Favoriten"], `Seed ${seed}`);
+  }
+});
+
+test("nur R2 unlösbar (alle Rezepte Favoriten): R3 und R4 bleiben erfüllt, nur R2-Hinweis", () => {
+  const state = { ...leer(), favoriten: recipes.filter((r) => r.typ === "pool").map((r) => r.id), aktuellerPlan: vorwoche() };
+  for (const seed of SEEDS.slice(0, 200)) {
+    const { plan, hinweise } = plane(seed, state);
+    assert.deepEqual(pruefePlan({ plan, recipes, state }), [], `Seed ${seed}`);
+    assert.deepEqual(hinweise, ["Regel 'genau ein neues Rezept' gelockert: keine passende Kombination"], `Seed ${seed}`);
+    assert.equal(plan.neuSlot, null);
+  }
+});
+
+test("Lockerungsreihenfolge: R4 wird erst gelockert, wenn es ohne nicht geht, Hinweis passt zum Plan", () => {
+  // Kein Fisch und kein Geflügel vorhanden: R4 ist unlösbar, R3 nicht.
+  const rez = recipes.filter((r) => !["fisch", "gefluegel"].includes(r.protein));
+  for (const seed of SEEDS.slice(0, 100)) {
+    const { plan, hinweise } = plane(seed, leer(), rez);
+    assert.deepEqual(hinweise, ["Regel 'mindestens ein Fisch- oder Geflügelgericht' gelockert: keine passende Kombination"]);
+    assert.ok(plan.neuSlot === "A" || plan.neuSlot === "C");
+  }
+});
+
+test("wuerfleSlot bis R2 gelockert: neuSlot wird neu berechnet, Favorit landet nicht in probiert", () => {
+  // Alle Pool-Rezepte außer lachs-ofen sind Favoriten; lachs-ofen steht im Neu-Slot C. Neu würfeln findet kein neues Rezept.
+  const state = { ...leer(), favoriten: recipes.filter((r) => r.typ === "pool" && r.id !== "lachs-ofen").map((r) => r.id) };
+  const plan = planMit("2026-11-22", "nudel-baukasten", "lasagne", "lachs-ofen", "C");
+  const vorher = uebernehmePlan(state, plan);
+  assert.ok(vorher.probiert.includes("lachs-ofen"));
+  const res = wuerfleSlot({ recipes, state: vorher, plan: vorher.aktuellerPlan, slot: "C", rng: erzeugeRng(3) });
+  assert.notEqual(res.plan.slots.C.id, "lachs-ofen");
+  assert.equal(res.plan.neuSlot, null);
+  assert.ok(res.hinweise.includes("Regel 'genau ein neues Rezept' gelockert: keine passende Kombination"));
+  const nachher = uebernehmePlan(vorher, res.plan);
+  assert.ok(!nachher.probiert.includes(res.plan.slots.C.id));
+  assert.ok(!nachher.probiert.includes("lachs-ofen"), "verworfenes neues Rezept wird zurückgenommen");
+});
+
+test("uebernehmePlan: altes neues Rezept steht noch im Plan -> nichts zurücknehmen", () => {
+  const link = { id: "link-1", titel: "L", url: "https://example.org", hinzugefuegt: "2026-11-01", geplantAm: null };
+  const plan = { ...planMit("2026-11-22", "x", "lasagne", "curry", "A"), slots: { A: { quelle: "link", id: "link-1", variante: null }, B: eintrag("lasagne"), C: eintrag("curry") } };
+  const s1 = uebernehmePlan({ ...leer(), links: [link] }, plan);
+  assert.equal(s1.links[0].geplantAm, "2026-11-22");
+  const s2 = uebernehmePlan(s1, { ...s1.aktuellerPlan, neuSlot: null });
+  assert.equal(s2.links[0].geplantAm, "2026-11-22");
+});

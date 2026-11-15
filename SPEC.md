@@ -47,6 +47,8 @@ Links haben keine Zutaten- und Haltbarkeitsdaten. Sie gelten als `haltbarTage: 1
 
 Wenn keine gültige Kombination existiert: zuerst R3 lockern, dann R4, dann R2. Jede Lockerung erzeugt einen Hinweistext, z.B. "Regel 'keine Wiederholung aus Vorwoche' gelockert: zu wenige Favoriten". Der Planer darf nie abstürzen und liefert immer einen Plan.
 
+Festgelegt (P8): Gelockert wird nur so weit wie nötig. Reihenfolge der Stufen: keine Lockerung, R3, R4, R3+R4, R2, R2+R3, R2+R4, R2+R3+R4. Auch bei gelockerter R3 werden pro Slot Gerichte ohne Vorwochen-Bezug bevorzugt. Hinweistexte erscheinen nur für Regeln, die im Ergebnis tatsächlich verletzt sind. `wuerfleSlot` berechnet `neuSlot` neu, wenn es bis R2 lockern musste. `uebernehmePlan` nimmt nichts zurück, solange das alte neue Rezept noch in einem Slot des neuen Plans steht.
+
 Die Lockerung bei R2 (letzte Stufe) wählt die drei Slots frei aus Favoriten und neuen Rezepten, Favoriten bevorzugt. `neuSlot` ist dann nur gesetzt, wenn genau ein neues Rezept in A oder C landet.
 
 Varianten: Hat ein Rezept `variantenGruppen`, wird pro Gruppe zufällig eine Option gewählt.

@@ -11,8 +11,18 @@ const SLOT_IDS = ["A", "B", "C"];
 const R4_PROTEIN = ["fisch", "gefluegel"];
 const VERSUCHE = 200;
 
-// Lockerungsstufen aus SPEC 3: zuerst R3, dann R4, dann R2.
-const STUFEN = [{}, { r3: true }, { r3: true, r4: true }, { r3: true, r4: true, r2: true }];
+// Lockerungsstufen aus SPEC 3: zuerst R3, dann R4, dann R2. Es wird immer nur so wenig
+// wie nötig gelockert: R4 allein vor R3+R4, R2 allein vor R2 mit weiteren Regeln.
+const STUFEN = [
+  {},
+  { r3: true },
+  { r4: true },
+  { r3: true, r4: true },
+  { r2: true },
+  { r2: true, r3: true },
+  { r2: true, r4: true },
+  { r2: true, r3: true, r4: true },
+];
 const HINWEIS = {
   r3: "Regel 'keine Wiederholung aus Vorwoche' gelockert: zu wenige Favoriten",
   r4: "Regel 'mindestens ein Fisch- oder Geflügelgericht' gelockert: keine passende Kombination",
@@ -151,9 +161,30 @@ export function pruefePlan({ plan, recipes, state }) {
   return meldungen;
 }
 
-function hinweiseFuer(stufe, vorIds) {
-  return ["r3", "r4", "r2"].filter((k) => stufe[k] && (k !== "r3" || vorIds.size > 0)).map((k) => HINWEIS[k]);
+// Hinweise nur für Regeln, die im Ergebnis tatsächlich verletzt sind.
+// items: { A, B, C } mit Kandidaten- oder Info-Objekten; neuOk: R2 im Ergebnis erfüllt.
+function hinweiseFuer(items, vorIds, neuOk) {
+  const h = [];
+  if (SLOT_IDS.some((s) => items[s] && vorIds.has(items[s].id))) h.push(HINWEIS.r3);
+  if (SLOT_IDS.some((s) => items[s]) && !hatProtein(items)) h.push(HINWEIS.r4);
+  if (!neuOk) h.push(HINWEIS.r2);
+  return h;
 }
+
+// Bei gelockerter R3 trotzdem Gerichte ohne Vorwochen-Bezug bevorzugen, wenn es welche gibt.
+function bevorzuge(pool, stufe, vorIds) {
+  if (!stufe.r3) return pool;
+  const frisch = pool.filter((k) => !vorIds.has(k.id));
+  return frisch.length ? frisch : pool;
+}
+
+// SPEC 3: neuSlot ist nur gesetzt, wenn genau ein neues Rezept in A oder C liegt.
+function neuSlotAus(istNeu) {
+  const neue = SLOT_IDS.filter((s) => istNeu[s]);
+  return neue.length === 1 && neue[0] !== "B" ? neue[0] : null;
+}
+
+const ueberspringen = (stufe, vorIds) => stufe.r3 && vorIds.size === 0; // ohne Vorwoche bringt R3 lockern nichts
 
 // ---------- Planen ----------
 
@@ -185,24 +216,23 @@ function planeVersuch(kands, vorIds, stufe, rng) {
   let neuSlot = null;
   if (!stufe.r2) {
     neuSlot = rng() < 0.5 ? "A" : "C";
-    const neu = waehleNeu(kands.filter((k) => k.istNeuKandidat && ok(k, neuSlot)), rng);
+    const neu = waehleNeu(bevorzuge(kands.filter((k) => k.istNeuKandidat && ok(k, neuSlot)), stufe, vorIds), rng);
     if (!neu) return null;
     setze(neuSlot, neu);
     for (const s of ["B", neuSlot === "A" ? "C" : "A"]) {
-      const pool = kands.filter((k) => k.istFavorit && ok(k, s));
+      const pool = bevorzuge(kands.filter((k) => k.istFavorit && ok(k, s)), stufe, vorIds);
       if (!pool.length) return null;
       setze(s, wahl(pool, rng));
     }
   } else {
     for (const s of ["B", "A", "C"]) {
-      const pool = kands.filter((k) => (k.istFavorit || k.istNeuKandidat) && ok(k, s));
+      const pool = bevorzuge(kands.filter((k) => (k.istFavorit || k.istNeuKandidat) && ok(k, s)), stufe, vorIds);
       const favs = pool.filter((k) => k.istFavorit);
       const aus = favs.length ? favs : pool;
       if (!aus.length) return null;
       setze(s, wahl(aus, rng));
     }
-    const neue = SLOT_IDS.filter((s) => items[s].istNeuKandidat);
-    neuSlot = neue.length === 1 && neue[0] !== "B" ? neue[0] : null;
+    neuSlot = neuSlotAus(Object.fromEntries(SLOT_IDS.map((s) => [s, items[s].istNeuKandidat])));
   }
   if (!stufe.r4 && !hatProtein(items)) return null;
   return { items, neuSlot };
@@ -236,14 +266,14 @@ export function planeWoche({ recipes, state, heute, rng }) {
   };
 
   for (const stufe of STUFEN) {
-    if (stufe.r3 && !stufe.r4 && vorIds.size === 0) continue; // R3 lockern bringt ohne Vorwoche nichts
+    if (ueberspringen(stufe, vorIds)) continue;
     for (let i = 0; i < VERSUCHE; i++) {
       const v = planeVersuch(kands, vorIds, stufe, rng);
-      if (v) return baue(v.items, v.neuSlot, hinweiseFuer(stufe, vorIds));
+      if (v) return baue(v.items, v.neuSlot, hinweiseFuer(v.items, vorIds, v.neuSlot !== null));
     }
   }
   const items = notfall(kands, rng);
-  const hinweise = [...hinweiseFuer(STUFEN[3], vorIds), HINWEIS.r1];
+  const hinweise = [...hinweiseFuer(items, vorIds, false), HINWEIS.r1];
   if (SLOT_IDS.some((s) => !items[s])) hinweise.push("Zu wenige Rezepte vorhanden: Plan ist unvollständig");
   return baue(items, null, hinweise);
 }
@@ -259,8 +289,10 @@ export function wuerfleSlot({ recipes, state, plan, slot, rng }) {
   const andereProtein = andere.some((i) => R4_PROTEIN.includes(i.protein));
   const neuGewuenscht = plan.neuSlot === slot;
 
+  const kandVon = (e) => e && kands.find((k) => k.quelle === e.quelle && k.id === e.id);
+
   for (const stufe of STUFEN) {
-    if (stufe.r3 && !stufe.r4 && vorIds.size === 0) continue;
+    if (ueberspringen(stufe, vorIds)) continue;
     let pool = kands.filter((k) => {
       if (benutzt.has(k.id) || k.id === aktuell?.id) return false;
       if (k.haltbarTage < SLOTS[slot].minHaltbar) return false;
@@ -273,9 +305,16 @@ export function wuerfleSlot({ recipes, state, plan, slot, rng }) {
       const beste = Math.min(...pool.map((k) => k.prioritaet));
       pool = pool.filter((k) => k.prioritaet === beste);
     }
+    pool = bevorzuge(pool, stufe, vorIds);
     if (pool.length) {
-      const eintrag = baueEintrag(wahl(pool, rng), recipes, rng);
-      return { plan: setzeSlot(plan, slot, eintrag), hinweise: hinweiseFuer(stufe, vorIds) };
+      const k = wahl(pool, rng);
+      const neu = setzeSlot(plan, slot, baueEintrag(k, recipes, rng));
+      const items = {};
+      for (const s of SLOT_IDS) items[s] = s === slot ? k : eintragInfo(plan.slots[s], recipes, state);
+      if (stufe.r2) {
+        neu.neuSlot = neuSlotAus(Object.fromEntries(SLOT_IDS.map((s) => [s, s === slot ? k.istNeuKandidat : !!kandVon(plan.slots[s])?.istNeuKandidat])));
+      }
+      return { plan: neu, hinweise: hinweiseFuer(items, vorIds, !stufe.r2 || neu.neuSlot !== null) };
     }
   }
   return { plan: structuredClone(plan), hinweise: ["Keine andere Möglichkeit gefunden: das bisherige Gericht bleibt"] };
@@ -302,10 +341,12 @@ export function uebernehmePlan(state, plan) {
   const altNeu = alt && alt.wocheAb === p.wocheAb ? neuEintrag(alt) : null;
   const neuNeu = neuEintrag(p);
   const dasselbe = !!altNeu && !!neuNeu && altNeu.quelle === neuNeu.quelle && altNeu.id === neuNeu.id;
+  // Steht das alte neue Rezept noch in irgendeinem Slot des neuen Plans, wird nichts zurückgenommen.
+  const nochImPlan = !!altNeu && SLOT_IDS.some((s) => p.slots?.[s]?.quelle === altNeu.quelle && p.slots?.[s]?.id === altNeu.id);
 
   if (alt && alt.wocheAb !== p.wocheAb) {
     neu.verlauf = [...neu.verlauf, alt].slice(-8);
-  } else if (altNeu && !dasselbe) {
+  } else if (altNeu && !dasselbe && !nochImPlan) {
     if (altNeu.quelle === "link") {
       const link = neu.links.find((l) => l.id === altNeu.id);
       if (link && link.geplantAm === alt.wocheAb) link.geplantAm = null;
