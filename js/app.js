@@ -26,6 +26,9 @@ let store = null;
 let state = null;
 let haushaltId = null;
 let lokalHinweis = "";
+let modus = "lokal"; // "lokal" | "firebase"
+let verbindungsFehler = "";
+const FEHLER_TEXT = "Keine Verbindung zum Haushalt. Stimmt die Haushalts-ID?";
 const ui = { tab: "woche", aendern: null, hinweise: [], poolOffen: false };
 
 // ---------- Hilfen ----------
@@ -137,8 +140,16 @@ async function setze(neuerState, hinweise = []) {
   render();
   try {
     await store.speichern(state);
+    if (modus === "firebase" && verbindungsFehler) {
+      verbindungsFehler = "";
+      render();
+    }
   } catch (e) {
     console.error(e);
+    if (modus === "firebase") {
+      verbindungsFehler = FEHLER_TEXT;
+      render();
+    }
     toast("Speichern fehlgeschlagen");
   }
 }
@@ -346,9 +357,18 @@ function renderRezepte() {
   const favLinks = (state.links ?? []).filter((l) => favSet().has(l.id));
   const pool = recipes.filter((r) => !istFavorit(r.id));
   const links = (state.links ?? []).filter((l) => !favSet().has(l.id));
-  const haushalt = haushaltId
-    ? `<p>Haushalts-ID gespeichert. ${esc(lokalHinweis)}</p><button class="btn" data-action="einladung">Einladungslink kopieren</button>`
-    : "<p>Firebase ist nicht verbunden. Die Daten liegen nur auf diesem Gerät.</p>";
+  let haushalt;
+  if (modus === "firebase") {
+    const status = verbindungsFehler ? esc(verbindungsFehler) : "Mit dem Haushalt verbunden.";
+    const lokalPlan = ladeLokalenState()?.aktuellerPlan;
+    const uebernehmen = lokalPlan && !state.aktuellerPlan
+      ? '<button class="btn" data-action="lokalUebernehmen">Lokale Daten in Haushalt übernehmen</button>'
+      : "";
+    haushalt = `<p>${status}</p><button class="btn" data-action="einladung">Einladungslink kopieren</button>${uebernehmen}
+      <button class="btn" data-action="haushaltWechseln">Haushalts-ID ändern</button>`;
+  } else {
+    haushalt = `<p>Firebase ist nicht verbunden. Die Daten liegen nur auf diesem Gerät.${haushaltId ? ` ${esc(lokalHinweis)}` : ""}</p>`;
+  }
   return `<h1>Rezepte</h1>
     <h2>Favoriten</h2>
     <ul class="liste">${favRezepte.map(rezeptZeile).join("")}${favLinks.map(linkZeile).join("")}</ul>
@@ -372,7 +392,12 @@ function render() {
   if (!state) return;
   const inhalt = { woche: renderWoche, einkauf: renderEinkauf, rezepte: renderRezepte }[ui.tab]();
   const tab = (id, label) => `<button data-action="tab" data-tab="${id}" ${ui.tab === id ? 'aria-current="page"' : ""}>${label}</button>`;
-  const banner = `<p class="banner" role="note">Lokaler Modus: nur auf diesem Gerät gespeichert${lokalHinweis ? `. ${esc(lokalHinweis)}` : ""}</p>`;
+  let banner = "";
+  if (modus === "lokal") {
+    banner = `<p class="banner" role="note">Lokaler Modus: nur auf diesem Gerät gespeichert${lokalHinweis ? `. ${esc(lokalHinweis)}` : ""}</p>`;
+  } else if (verbindungsFehler) {
+    banner = `<p class="banner" role="alert">${esc(verbindungsFehler)}</p>`;
+  }
   root.innerHTML = `${banner}<main>${inhalt}</main>
     <nav class="nav" aria-label="Hauptnavigation">${tab("woche", "Woche")}${tab("einkauf", "Einkauf")}${tab("rezepte", "Rezepte")}</nav>`;
 }
@@ -403,30 +428,63 @@ function leseHaushaltId() {
   return lies(KEY_HAUSHALT);
 }
 
+function ladeLokalenState() {
+  try {
+    const roh = localStorage.getItem("essensplaner-state");
+    return roh ? JSON.parse(roh) : null;
+  } catch {
+    return null;
+  }
+}
+
+// Kein stillschweigender Wechsel in den lokalen Modus: Fehler von Firebase werden angezeigt.
 async function waehleStore() {
   if (firebaseConfig.apiKey && haushaltId) {
-    try {
-      const modul = await import("./store-firebase.js");
-      lokalHinweis = "";
-      return await modul.erstelleStore({ haushaltId, config: firebaseConfig });
-    } catch (e) {
-      console.warn("Firebase-Speicher nicht verfügbar, lokaler Modus:", e);
-      lokalHinweis = "Firebase ist nicht erreichbar.";
-    }
-  } else if (haushaltId) {
-    lokalHinweis = "Haushalts-ID gespeichert, Firebase ist noch nicht eingerichtet.";
+    const modul = await import("./store-firebase.js");
+    modus = "firebase";
+    return modul.erstelleStore({ haushaltId, config: firebaseConfig });
   }
+  modus = "lokal";
+  if (haushaltId) lokalHinweis = "Haushalts-ID gespeichert, Firebase ist noch nicht eingerichtet.";
   const { erstelleStore } = await import("./store-local.js");
   return erstelleStore();
 }
 
+function renderVerbindungsfehler() {
+  root.innerHTML = `<main class="start">
+    <h1>Essensplaner</h1>
+    <p class="fehler" role="alert">${esc(FEHLER_TEXT)}</p>
+    <button class="btn primary big" data-action="nochmal">Nochmal versuchen</button>
+    <button class="btn big" data-action="haushaltWechseln">Andere Haushalts-ID eingeben</button>
+  </main>`;
+}
+
+let abmelden = null;
+
 async function starte() {
-  store = await waehleStore();
-  state = await store.laden();
-  store.abonnieren((neu) => {
-    state = neu;
-    render();
-  });
+  abmelden?.();
+  abmelden = null;
+  verbindungsFehler = "";
+  try {
+    store = await waehleStore();
+    state = await store.laden();
+  } catch (e) {
+    console.error(e);
+    if (modus === "firebase") return renderVerbindungsfehler();
+    throw e;
+  }
+  abmelden = store.abonnieren(
+    (neu) => {
+      state = neu;
+      if (verbindungsFehler) verbindungsFehler = "";
+      render();
+    },
+    (e) => {
+      console.error(e);
+      verbindungsFehler = FEHLER_TEXT;
+      render();
+    },
+  );
   render();
 }
 
@@ -436,6 +494,23 @@ document.addEventListener("click", (e) => {
   if (el.dataset.action === "lokal") {
     schreibe(KEY_LOKAL, "1");
     return starte();
+  }
+  if (el.dataset.action === "nochmal") return starte();
+  if (el.dataset.action === "haushaltWechseln") {
+    abmelden?.();
+    abmelden = null;
+    try {
+      localStorage.removeItem(KEY_HAUSHALT);
+    } catch {
+      /* egal */
+    }
+    haushaltId = null;
+    return renderStart();
+  }
+  if (el.dataset.action === "lokalUebernehmen") {
+    const lokal = ladeLokalenState();
+    if (lokal?.aktuellerPlan) setze({ ...state, ...lokal }, ui.hinweise).then(() => toast("Lokale Daten übernommen"));
+    return;
   }
   aktionen[el.dataset.action]?.(el);
 });
