@@ -80,6 +80,7 @@ ${schritte.map((s) => `<li>${esc(s)}</li>`).join("\n")}
 // Erzeugt { dateiname, html } für jede Seite (Rezept ohne Varianten bzw. jede Kombination).
 export function baueSeiten(daten) {
   const seiten = [];
+  const dateinamen = new Set();
   for (const r of daten.rezepte) {
     for (const kombi of kombinationen(r.variantenGruppen ?? [])) {
       const variante = Object.fromEntries(kombi.map(({ gruppe, option }) => [gruppe.id, option.id]));
@@ -88,6 +89,8 @@ export function baueSeiten(daten) {
         : r.name;
       const zutaten = [...r.zutaten, ...kombi.flatMap(({ option }) => option.zutaten)];
       const dateiname = basename(rezeptSeitenPfad({ quelle: "rezept", id: r.id, variante }, daten.rezepte));
+      if (dateinamen.has(dateiname)) throw new Error(`Mehrere Rezeptvarianten erzeugen denselben Dateinamen: ${dateiname}`);
+      dateinamen.add(dateiname);
       seiten.push({
         dateiname,
         html: seite({

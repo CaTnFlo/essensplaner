@@ -253,6 +253,7 @@ Erzeugt durch `node scripts/build-pages.mjs` aus `data/recipes.json`.
 - Inhalt: Titel, Portionen, Dauer, Zutatenliste, Schritte, Link zurück zur App
 - Im `<head>` ein `<script type="application/ld+json">` mit schema.org `Recipe`: `name`, `recipeYield` ("4 Portionen"), `totalTime` (ISO 8601, z.B. "PT75M"), `recipeIngredient` (Strings wie "500 g Rinderhack", bei `menge: null` nur der Name), `recipeInstructions` (Array aus `HowToStep` mit `text`)
 - Das Skript löscht vorher alle `.html` in `rezepte/` und schreibt sie neu. Es ist idempotent.
+- Vor dem Löschen prüft das Skript die erzeugten Dateinamen auf Kollisionen zwischen Variantenkombinationen. Bei einer Kollision bricht es mit Fehler ab und lässt die vorhandenen Seiten unverändert.
 
 ### 5.5 Speicher
 

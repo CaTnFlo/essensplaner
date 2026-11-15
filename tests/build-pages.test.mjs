@@ -1,6 +1,6 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { mkdtempSync, readFileSync, readdirSync, rmSync } from "node:fs";
+import { mkdtempSync, readFileSync, readdirSync, rmSync, writeFileSync, mkdirSync } from "node:fs";
 import { spawnSync } from "node:child_process";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
@@ -117,5 +117,29 @@ test("zweiter Lauf des Skripts ändert nichts", () => {
     assert.deepEqual(zweiter, erster);
   } finally {
     rmSync(ziel, { recursive: true, force: true });
+  }
+});
+
+test("kollidierende Varianten-Dateinamen brechen ab, bevor vorhandene Seiten gelöscht werden", () => {
+  const dir = mkdtempSync(join(tmpdir(), "rezepte-kollision-"));
+  try {
+    const r = echt().rezepte.find(r => r.typ === "favorit");
+    const option = id => ({ id, name: id, zutaten: [r.zutaten[0]] });
+    r.variantenGruppen = [
+      { id: "eins", name: "Eins", optionen: [option("a-b"), option("a")] },
+      { id: "zwei", name: "Zwei", optionen: [option("c"), option("b-c")] },
+    ];
+    const input = join(dir, "input.json");
+    const output = join(dir, "pages");
+    mkdirSync(output);
+    writeFileSync(input, JSON.stringify({ version: 1, rezepte: [r] }));
+    writeFileSync(join(output, "existing.html"), "Keep this page");
+    const result = spawnSync("node", [skript, input, output], { encoding: "utf8" });
+    assert.equal(result.status, 1);
+    assert.match(result.stderr, /denselben Dateinamen/);
+    assert.deepEqual(readdirSync(output), ["existing.html"]);
+    assert.equal(readFileSync(join(output, "existing.html"), "utf8"), "Keep this page");
+  } finally {
+    rmSync(dir, { recursive: true, force: true });
   }
 });
