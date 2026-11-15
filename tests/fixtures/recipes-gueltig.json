@@ -1,0 +1,75 @@
+{
+  "version": 1,
+  "rezepte": [
+    {
+      "id": "nudel-baukasten",
+      "name": "Nudeln mit Hähnchen",
+      "typ": "favorit",
+      "protein": "gefluegel",
+      "haltbarTage": 1,
+      "portionen": 4,
+      "dauerMin": 30,
+      "airfryer": false,
+      "tags": ["pfanne", "schnell"],
+      "zutaten": [
+        { "name": "Hähnchenbrust", "menge": 500, "einheit": "g", "kategorie": "fleisch-fisch", "frisch": true, "vorrat": false },
+        { "name": "Nudeln", "menge": 400, "einheit": "g", "kategorie": "vorrat", "frisch": false, "vorrat": false },
+        { "name": "Salz", "menge": null, "einheit": null, "kategorie": "gewuerze", "frisch": false, "vorrat": true }
+      ],
+      "schritte": ["Nudeln kochen.", "Hähnchen anbraten.", "Alles mischen."],
+      "variantenGruppen": [
+        {
+          "id": "beilage",
+          "name": "Beilage",
+          "optionen": [
+            { "id": "brokkoli", "name": "Brokkoli", "zutaten": [{ "name": "Brokkoli", "menge": 1, "einheit": "Stück", "kategorie": "obst-gemuese", "frisch": false, "vorrat": false }] },
+            { "id": "bohnen", "name": "Bohnen", "zutaten": [{ "name": "Grüne Bohnen", "menge": 300, "einheit": "g", "kategorie": "obst-gemuese", "frisch": false, "vorrat": false }] }
+          ]
+        },
+        {
+          "id": "sosse",
+          "name": "Soße",
+          "optionen": [
+            { "id": "sahne", "name": "Sahnesoße", "zutaten": [{ "name": "Kochsahne 15 %", "menge": 200, "einheit": "ml", "kategorie": "kuehlregal", "frisch": false, "vorrat": false }] },
+            { "id": "tomate", "name": "Tomatensoße", "zutaten": [{ "name": "Passierte Tomaten", "menge": 1, "einheit": "Packung", "kategorie": "vorrat", "frisch": false, "vorrat": false }] }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "lasagne",
+      "name": "Lasagne Bolognese",
+      "typ": "favorit",
+      "protein": "hack",
+      "haltbarTage": 3,
+      "portionen": 4,
+      "dauerMin": 75,
+      "airfryer": false,
+      "tags": ["ofen"],
+      "zutaten": [
+        { "name": "Rinderhack", "menge": 500, "einheit": "g", "kategorie": "fleisch-fisch", "frisch": true, "vorrat": false },
+        { "name": "Lasagneplatten", "menge": 250, "einheit": "g", "kategorie": "vorrat", "frisch": false, "vorrat": false },
+        { "name": "Möhre", "menge": 2, "einheit": "Stück", "kategorie": "obst-gemuese", "frisch": false, "vorrat": false }
+      ],
+      "schritte": ["Gemüse würfeln.", "Hack anbraten und Soße kochen.", "Schichten und backen."],
+      "variantenGruppen": []
+    },
+    {
+      "id": "lachs-ofen",
+      "name": "Ofenlachs mit Gemüse",
+      "typ": "pool",
+      "protein": "fisch",
+      "haltbarTage": 1,
+      "portionen": 4,
+      "dauerMin": 35,
+      "airfryer": true,
+      "tags": ["ofen", "airfryer", "schnell"],
+      "zutaten": [
+        { "name": "Lachsfilet", "menge": 4, "einheit": "Stück", "kategorie": "fleisch-fisch", "frisch": true, "vorrat": false },
+        { "name": "Zucchini", "menge": 2, "einheit": "Stück", "kategorie": "obst-gemuese", "frisch": false, "vorrat": false },
+        { "name": "Zitrone", "menge": 1, "einheit": "Stück", "kategorie": "obst-gemuese", "frisch": false, "vorrat": false }
+      ],
+      "schritte": ["Gemüse schneiden.", "Lachs würzen.", "Alles garen."]
+    }
+  ]
+}

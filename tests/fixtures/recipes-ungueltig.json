@@ -1,0 +1,100 @@
+{
+  "version": 1,
+  "rezepte": [
+    {
+      "id": "fall-einheit",
+      "name": "Fehler: Einheit",
+      "typ": "pool", "protein": "hack", "haltbarTage": 2, "portionen": 4, "dauerMin": 30, "airfryer": false, "tags": [],
+      "zutaten": [
+        { "name": "A", "menge": 1, "einheit": "gramm", "kategorie": "vorrat", "frisch": false, "vorrat": false },
+        { "name": "B", "menge": 1, "einheit": "g", "kategorie": "vorrat", "frisch": false, "vorrat": false },
+        { "name": "C", "menge": 1, "einheit": "g", "kategorie": "vorrat", "frisch": false, "vorrat": false }
+      ],
+      "schritte": ["Eins.", "Zwei.", "Drei."]
+    },
+    {
+      "id": "Fall_ID",
+      "name": "Fehler: ID nicht kebab-case",
+      "typ": "pool", "protein": "hack", "haltbarTage": 2, "portionen": 4, "dauerMin": 30, "airfryer": false, "tags": [],
+      "zutaten": [
+        { "name": "A", "menge": 1, "einheit": "g", "kategorie": "vorrat", "frisch": false, "vorrat": false },
+        { "name": "B", "menge": 1, "einheit": "g", "kategorie": "vorrat", "frisch": false, "vorrat": false },
+        { "name": "C", "menge": 1, "einheit": "g", "kategorie": "vorrat", "frisch": false, "vorrat": false }
+      ],
+      "schritte": ["Eins.", "Zwei.", "Drei."]
+    },
+    {
+      "id": "fall-doppelt",
+      "name": "Fehler: ID doppelt (1)",
+      "typ": "pool", "protein": "hack", "haltbarTage": 2, "portionen": 4, "dauerMin": 30, "airfryer": false, "tags": [],
+      "zutaten": [
+        { "name": "A", "menge": 1, "einheit": "g", "kategorie": "vorrat", "frisch": false, "vorrat": false },
+        { "name": "B", "menge": 1, "einheit": "g", "kategorie": "vorrat", "frisch": false, "vorrat": false },
+        { "name": "C", "menge": 1, "einheit": "g", "kategorie": "vorrat", "frisch": false, "vorrat": false }
+      ],
+      "schritte": ["Eins.", "Zwei.", "Drei."]
+    },
+    {
+      "id": "fall-doppelt",
+      "name": "Fehler: ID doppelt (2)",
+      "typ": "pool", "protein": "hack", "haltbarTage": 2, "portionen": 4, "dauerMin": 30, "airfryer": false, "tags": [],
+      "zutaten": [
+        { "name": "A", "menge": 1, "einheit": "g", "kategorie": "vorrat", "frisch": false, "vorrat": false },
+        { "name": "B", "menge": 1, "einheit": "g", "kategorie": "vorrat", "frisch": false, "vorrat": false },
+        { "name": "C", "menge": 1, "einheit": "g", "kategorie": "vorrat", "frisch": false, "vorrat": false }
+      ],
+      "schritte": ["Eins.", "Zwei.", "Drei."]
+    },
+    {
+      "id": "fall-bereiche",
+      "name": "Fehler: Bereiche und Enums",
+      "typ": "gericht", "protein": "tofu", "haltbarTage": 7, "portionen": 2, "dauerMin": 5, "airfryer": "ja", "tags": ["grill"],
+      "zutaten": [
+        { "name": "A", "menge": 1, "einheit": "g", "kategorie": "vorrat", "frisch": false, "vorrat": false },
+        { "name": "B", "menge": 1, "einheit": "g", "kategorie": "vorrat", "frisch": false, "vorrat": false },
+        { "name": "C", "menge": 1, "einheit": "g", "kategorie": "vorrat", "frisch": false, "vorrat": false }
+      ],
+      "schritte": ["Eins.", "Zwei.", "Drei."]
+    },
+    {
+      "id": "fall-zutaten",
+      "name": "Fehler: zu wenige Zutaten, Schritte",
+      "typ": "pool", "protein": "hack", "haltbarTage": 2, "portionen": 4, "dauerMin": 30, "airfryer": false, "tags": [],
+      "zutaten": [
+        { "name": "A", "menge": 1, "einheit": "g", "kategorie": "vorrat", "frisch": false, "vorrat": false }
+      ],
+      "schritte": ["Eins."]
+    },
+    {
+      "id": "fall-menge-einheit",
+      "name": "Fehler: menge und einheit passen nicht",
+      "typ": "pool", "protein": "hack", "haltbarTage": 2, "portionen": 4, "dauerMin": 30, "airfryer": false, "tags": [],
+      "zutaten": [
+        { "name": "A", "menge": null, "einheit": "g", "kategorie": "vorrat", "frisch": false, "vorrat": false },
+        { "name": "B", "menge": 2, "einheit": null, "kategorie": "vorrat", "frisch": false, "vorrat": false },
+        { "name": "C", "menge": 0, "einheit": "g", "kategorie": "kueche", "frisch": "ja", "vorrat": false }
+      ],
+      "schritte": ["Eins.", "Zwei.", "Drei."]
+    },
+    {
+      "id": "fall-varianten",
+      "name": "Fehler: Varianten",
+      "typ": "pool", "protein": "hack", "haltbarTage": 2, "portionen": 4, "dauerMin": 30, "airfryer": false, "tags": [],
+      "zutaten": [
+        { "name": "A", "menge": 1, "einheit": "g", "kategorie": "vorrat", "frisch": false, "vorrat": false },
+        { "name": "B", "menge": 1, "einheit": "g", "kategorie": "vorrat", "frisch": false, "vorrat": false },
+        { "name": "C", "menge": 1, "einheit": "g", "kategorie": "vorrat", "frisch": false, "vorrat": false }
+      ],
+      "schritte": ["Eins.", "Zwei.", "Drei."],
+      "variantenGruppen": [
+        {
+          "id": "beilage", "name": "Beilage",
+          "optionen": [
+            { "id": "reis", "name": "Reis", "zutaten": [{ "name": "Reis", "menge": 200, "einheit": "g", "kategorie": "vorrat", "frisch": false, "vorrat": false }] },
+            { "id": "reis", "name": "Reis 2", "zutaten": [] }
+          ]
+        }
+      ]
+    }
+  ]
+}
