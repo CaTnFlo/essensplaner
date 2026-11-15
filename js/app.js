@@ -171,6 +171,7 @@ async function setze(neuerState, hinweise = []) {
       verbindungsFehler = "";
       render();
     }
+    return true;
   } catch (e) {
     console.error(e);
     if (modus === "firebase") {
@@ -178,6 +179,7 @@ async function setze(neuerState, hinweise = []) {
       render();
     }
     toast("Speichern fehlgeschlagen");
+    return false;
   }
 }
 
@@ -537,7 +539,7 @@ document.addEventListener("click", (e) => {
   }
   if (el.dataset.action === "lokalUebernehmen") {
     const lokal = ladeLokalenState();
-    if (lokal?.aktuellerPlan) setze({ ...state, ...lokal }, ui.hinweise).then(() => toast("Lokale Daten übernommen"));
+    if (lokal?.aktuellerPlan) setze({ ...state, ...lokal }, ui.hinweise).then((ok) => { if (ok) toast("Lokale Daten übernommen"); });
     return;
   }
   aktionen[el.dataset.action]?.(el);
@@ -565,7 +567,7 @@ document.addEventListener("submit", (e) => {
     if (!gueltig) return (fehler.textContent = "Die URL muss mit https:// beginnen.");
     const neu = structuredClone(state);
     neu.links = [...(neu.links ?? []), { id: `link-${Date.now()}`, titel, url, hinzugefuegt: heuteIso(), geplantAm: null }];
-    setze(neu, ui.hinweise).then(() => toast("Link hinzugefügt"));
+    setze(neu, ui.hinweise).then((ok) => { if (ok) toast("Link hinzugefügt"); });
   }
 });
 

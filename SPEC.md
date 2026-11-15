@@ -262,6 +262,7 @@ export async function erstelleStore(optionen)
 // -> { laden(): Promise<State>, speichern(state): Promise<void>, abonnieren(callback): () => void }
 ```
 - `laden` liefert einen leeren State (`aktuellerPlan: null`, leere Arrays), wenn noch nichts gespeichert ist.
+- Erfolgsmeldungen für hinzugefügte Links und übernommene lokale Daten erscheinen erst nach erfolgreichem Speichern. Bei einem Fehler bleibt die Fehlermeldung sichtbar und wird nicht durch eine Erfolgsmeldung ersetzt.
 - `abonnieren` ruft den Callback bei jeder Änderung von außen mit dem neuen State auf (bei Firebase über `onSnapshot`). Gibt eine Abmelde-Funktion zurück.
 - `store-local.js`: `localStorage`-Schlüssel `essensplaner-state`. `abonnieren` reagiert auf das `storage`-Event.
 - `store-firebase.js`: siehe Abschnitt 7.

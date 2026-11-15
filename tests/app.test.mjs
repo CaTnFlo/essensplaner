@@ -61,3 +61,33 @@ test("gültige HTTPS-Links bleiben mit Query und Fragment nutzbar", () => {
   assert.match(ui.root.innerHTML, /href="https:\/\/example.org\/rezept\?a=1&amp;b=2#zutaten"/);
   assert.ok(ui.root.innerHTML.includes(encodeURIComponent(url)));
 });
+
+for (const failure of [false, true]) {
+  test(`Link-Formular meldet den tatsächlichen Speicherstatus (${failure ? "Fehler" : "Erfolg"})`, async () => {
+    const ui = app();
+    let saved;
+    ui.context.testStore = { speichern: async state => {
+      if (failure) throw new Error("Test: quota exceeded");
+      saved = state;
+    } };
+    ui.run("store = testStore");
+    ui.events.submit({
+      preventDefault() {},
+      target: { id: "link-form", querySelector: selector => ({ value: selector === "#link-titel" ? "Testgericht" : "https://example.org/rezept" }) },
+    });
+    await new Promise(resolve => setImmediate(resolve));
+    assert.equal(ui.status.textContent, failure ? "Speichern fehlgeschlagen" : "Link hinzugefügt");
+    if (!failure) assert.equal(saved.links.at(-1).titel, "Testgericht");
+  });
+}
+
+test("fehlgeschlagene lokale Datenübernahme meldet keinen Erfolg", async () => {
+  const ui = app();
+  ui.context.localStorage = { getItem: () => JSON.stringify(ui.context.fixture) };
+  ui.context.testStore = { speichern: async () => { throw new Error("Test: permission denied"); } };
+  ui.run('store = testStore; modus = "firebase"');
+  ui.events.click({ target: { closest: () => ({ dataset: { action: "lokalUebernehmen" } }) } });
+  await new Promise(resolve => setImmediate(resolve));
+  assert.equal(ui.status.textContent, "Speichern fehlgeschlagen");
+  assert.match(ui.root.innerHTML, /Keine Verbindung zum Haushalt/);
+});
