@@ -126,11 +126,28 @@ function eintragFuer(k, rng) {
 }
 
 function rezeptUrl(eintrag) {
-  if (eintrag.quelle === "link") return linkVon(eintrag.id)?.url ?? "#";
+  if (eintrag.quelle === "link") return sichereLinkUrl(linkVon(eintrag.id)?.url);
   return new URL(rezeptSeitenPfad(eintrag, recipes), location.href).href;
 }
 function bringUrl(eintrag) {
-  return bringLink(rezeptUrl(eintrag));
+  const url = rezeptUrl(eintrag);
+  return url ? bringLink(url) : null;
+}
+
+// Auch gespeicherte Links sind Eingaben: HTML-Escaping prüft kein URL-Protokoll.
+function sichereLinkUrl(wert) {
+  if (typeof wert !== "string" || !wert.startsWith("https://")) return null;
+  try {
+    const url = new URL(wert);
+    return url.protocol === "https:" && url.hostname ? url.href : null;
+  } catch {
+    return null;
+  }
+}
+
+function externerLink(url, text, label = text) {
+  if (!url) return `<button class="btn" disabled title="Ungültiger Rezept-Link" aria-label="${esc(label)}: ungültiger Rezept-Link">${esc(text)}</button>`;
+  return `<a class="btn" href="${esc(url)}" target="_blank" rel="noopener" aria-label="${esc(label)}">${esc(text)}</a>`;
 }
 
 // Rezept-Eintrag ohne Variantenwahl, nur für Links zur Rezeptseite im Rezepte-Tab.
@@ -273,8 +290,8 @@ function slotKarte(slot, plan) {
     <div class="row">
       <button class="btn" data-action="wuerfeln" data-slot="${slot}">Neu würfeln</button>
       <button class="btn" data-action="aendern" data-slot="${slot}" aria-expanded="${ui.aendern === slot}">Ändern</button>
-      <a class="btn" href="${esc(bringUrl(eintrag))}" target="_blank" rel="noopener">Zu Bring</a>
-      <a class="btn" href="${esc(rezeptUrl(eintrag))}" target="_blank" rel="noopener">Rezept</a>
+      ${externerLink(bringUrl(eintrag), "Zu Bring")}
+      ${externerLink(rezeptUrl(eintrag), "Rezept")}
       ${geschmeckt}
     </div>
     ${auswahl}
@@ -326,13 +343,13 @@ function renderEinkauf() {
     .map((s) => {
       const e = plan.slots[s];
       return `<li><span class="name">${esc(anzeigeName(e, recipes, state))}</span>
-        <a class="btn" href="${esc(bringUrl(e))}" target="_blank" rel="noopener" aria-label="${esc(anzeigeName(e, recipes, state))} zu Bring">Zu Bring</a></li>`;
+        ${externerLink(bringUrl(e), "Zu Bring", `${anzeigeName(e, recipes, state)} zu Bring`)}</li>`;
     })
     .join("");
   const links = liste.links.length
     ? `<h2>Eigene Rezepte</h2><ul class="liste">${liste.links
         .map((l) => `<li><span class="name">${esc(l.titel)}<br><span class="small muted">Zutaten siehe Rezept</span></span>
-          <a class="btn" href="${esc(l.url)}" target="_blank" rel="noopener">Rezept</a></li>`)
+          ${externerLink(sichereLinkUrl(l.url), "Rezept")}</li>`)
         .join("")}</ul>`
     : "";
   return `<h1>Einkauf</h1>
@@ -357,7 +374,7 @@ function rezeptZeile(r) {
 function linkZeile(l) {
   const fav = favSet().has(l.id);
   return `<li><span class="name">${esc(l.titel)}<br><span class="small muted">${l.geplantAm ? "schon geplant" : "noch offen"}</span></span>
-    <a class="btn" href="${esc(l.url)}" target="_blank" rel="noopener" aria-label="${esc(l.titel)}: Rezept">Rezept</a>
+    ${externerLink(sichereLinkUrl(l.url), "Rezept", `${l.titel}: Rezept`)}
     <button class="btn" data-action="favorit" data-id="${esc(l.id)}" aria-pressed="${fav}">Favorit</button>
     <button class="btn danger" data-action="linkloeschen" data-id="${esc(l.id)}" aria-label="${esc(l.titel)} löschen">Löschen</button></li>`;
 }
@@ -543,12 +560,7 @@ document.addEventListener("submit", (e) => {
     const titel = e.target.querySelector("#link-titel").value.trim();
     const url = e.target.querySelector("#link-url").value.trim();
     const fehler = document.getElementById("link-fehler");
-    let gueltig = false;
-    try {
-      gueltig = url.startsWith("https://") && !!new URL(url).hostname;
-    } catch {
-      /* ungültig */
-    }
+    const gueltig = sichereLinkUrl(url) !== null;
     if (!titel) return (fehler.textContent = "Bitte einen Titel eingeben.");
     if (!gueltig) return (fehler.textContent = "Die URL muss mit https:// beginnen.");
     const neu = structuredClone(state);

@@ -298,6 +298,7 @@ Navigation oben (bleibt beim Scrollen sichtbar) mit drei Tabs, jeweils mit eigen
 - Liste aller Favoriten, darunter alle Pool-Rezepte (zugeklappt) und eigene Links.
 - Bei Pool-Rezepten und Links: Schalter "Favorit".
 - Formular "Rezept-Link hinzufügen": Titel, URL (muss mit `https://` beginnen). Neue Links haben `geplantAm: null`.
+- HTTPS-URLs werden auch beim Anzeigen gespeicherter Links geprüft. Ungültige URLs aus dem State deaktivieren die zugehörigen Rezept- und Bring-Aktionen in allen Tabs. Titel bleiben HTML-escaped.
 - Links löschen möglich (mit Bestätigung).
 - Bereich "Haushalt": zeigt, ob Firebase verbunden ist; Button "Einladungslink kopieren" (siehe 7).
 
