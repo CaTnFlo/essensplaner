@@ -50,6 +50,18 @@ test("zu wenige Zutaten und Schritte", () => {
   assert.ok(f.some((x) => x.startsWith("fall-zutaten.schritte:")));
 });
 
+test("Tag schnell ist bei 30 Minuten erlaubt und oberhalb davon ungültig", () => {
+  const d = gueltig();
+  const r = d.rezepte[0];
+  r.tags = ["schnell"];
+  r.dauerMin = 30;
+  assert.deepEqual(validiere(d), []);
+  r.dauerMin = 31;
+  assert.ok(validiere(d).some(f => f.startsWith(`${r.id}.tags[0]:`) && f.includes("dauerMin <= 30")));
+  r.tags = [];
+  assert.deepEqual(validiere(d), []);
+});
+
 test("einheit ist genau dann null, wenn menge null ist", () => {
   const f = validiere(ungueltig());
   assert.ok(f.some((x) => x.startsWith("fall-menge-einheit.zutaten[0].einheit:")));

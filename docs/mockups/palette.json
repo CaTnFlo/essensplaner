@@ -1,0 +1,24 @@
+{
+  "status": "Selected visual direction; documentation only, not implemented",
+  "scope": "The week board shows the selected palette. Other boards illustrate the UX flow in the original neutral styling; use these token values for implementation.",
+  "light": {
+    "canvas": "#F5F6F7",
+    "surface": "#FCFCFD",
+    "text": "#1F2426",
+    "muted": "#5C656A",
+    "primaryFill": "#E66D20",
+    "primaryText": "#F8FAFB",
+    "accentText": "#C14F13"
+  },
+  "dark": {
+    "canvas": "#121214",
+    "surface": "#232326",
+    "raised": "#2C2C30",
+    "navigation": "#1C1C20",
+    "text": "#F2F2F4",
+    "muted": "#B8B8C0",
+    "primaryFill": "#E66D20",
+    "primaryText": "#F8FAFB",
+    "accentText": "#FF9B5D"
+  }
+}

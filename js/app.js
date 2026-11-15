@@ -1,5 +1,8 @@
+import { aenderung, anwenden, rueckgaengigChange } from "./state-change.js";
+import { icon } from "./icons.js";
+import { installPlanDrag } from "./plan-drag.js";
 // UI, Navigation, Events (SPEC 6, 7). Planungslogik liegt in planner.js / shopping.js / bring.js.
-import { SLOTS, erzeugeRng, planeWoche, wuerfleSlot, setzeSlot, pruefePlan, uebernehmePlan, anzeigeName, kandidaten } from "./planner.js";
+import { SLOTS, erzeugeRng, planeWoche, wuerfleSlot, setzeSlot, pruefePlan, uebernehmePlan, anzeigeName, kandidaten, tauscheSlots, planeMitWunsch, wunschGrund, filterKandidaten } from "./planner.js";
 import { einkaufsliste } from "./shopping.js";
 import { bringLink, rezeptSeitenPfad } from "./bring.js";
 import { firebaseConfig } from "./firebase-config.js";
@@ -39,7 +42,7 @@ let lokalHinweis = "";
 let modus = "lokal"; // "lokal" | "firebase"
 let verbindungsFehler = "";
 const FEHLER_TEXT = "Keine Verbindung zum Haushalt. Stimmt die Haushalts-ID?";
-const ui = { tab: "woche", aendern: null, hinweise: [], poolOffen: false };
+const ui = { tab: "woche", aendern: null, hinweise: [], poolOffen: false, einkauf: "samstag" };
 
 // ---------- Hilfen ----------
 
@@ -61,12 +64,18 @@ const schreibe = (k, v) => {
   }
 };
 
+let pending = null, saving = false, undo = null, savedState = null;
+let sheet = null, sheetTrigger = null, sheetTriggerSelector = null, sheetHistory = false, cancelDrag = () => {};
 let toastTimer;
 function toast(text) {
   statusEl.textContent = text;
+  if (undo && /neu geplant$/.test(text)) statusEl.insertAdjacentHTML?.('beforeend', ' <button class="btn" data-action="undo">Rückgängig</button>');
   statusEl.classList.add("zeigen");
   clearTimeout(toastTimer);
-  toastTimer = setTimeout(() => statusEl.classList.remove("zeigen"), 2200);
+  toastTimer = setTimeout(() => {
+    if (statusEl.contains?.(document.activeElement)) return;
+    statusEl.classList.remove("zeigen"); statusEl.textContent = text;
+  }, 2200);
 }
 
 async function kopiere(text) {
@@ -79,9 +88,10 @@ async function kopiere(text) {
     ta.style.opacity = "0";
     document.body.appendChild(ta);
     ta.select();
-    const ok = document.execCommand("copy");
+    let ok = false;
+    try { ok = document.execCommand("copy"); } catch { /* selectable fallback below */ }
     ta.remove();
-    if (!ok) return toast("Kopieren nicht möglich");
+    if (!ok) { oeffneSheet('copy'); sheet.text = text; zeichneSheet(); return; }
   }
   toast("Kopiert");
 }
@@ -126,11 +136,28 @@ function eintragFuer(k, rng) {
 }
 
 function rezeptUrl(eintrag) {
-  if (eintrag.quelle === "link") return linkVon(eintrag.id)?.url ?? "#";
+  if (eintrag.quelle === "link") return sichereLinkUrl(linkVon(eintrag.id)?.url);
   return new URL(rezeptSeitenPfad(eintrag, recipes), location.href).href;
 }
 function bringUrl(eintrag) {
-  return bringLink(rezeptUrl(eintrag));
+  const url = rezeptUrl(eintrag);
+  return url ? bringLink(url) : null;
+}
+
+// Auch gespeicherte Links sind Eingaben: HTML-Escaping prüft kein URL-Protokoll.
+function sichereLinkUrl(wert) {
+  if (typeof wert !== "string" || !wert.startsWith("https://")) return null;
+  try {
+    const url = new URL(wert);
+    return url.protocol === "https:" && url.hostname ? url.href : null;
+  } catch {
+    return null;
+  }
+}
+
+function externerLink(url, text, label = text) {
+  if (!url) return `<button class="btn" disabled title="Ungültiger Rezept-Link" aria-label="${esc(label)}: ungültiger Rezept-Link">${esc(text)}</button>`;
+  return `<a class="btn" href="${esc(url)}" target="_blank" rel="noopener" aria-label="${esc(label)}">${esc(text)}</a>`;
 }
 
 // Rezept-Eintrag ohne Variantenwahl, nur für Links zur Rezeptseite im Rezepte-Tab.
@@ -143,32 +170,67 @@ function standardEintrag(r) {
 
 // ---------- Zustand ändern ----------
 
-async function setze(neuerState, hinweise = []) {
-  state = neuerState;
-  ui.hinweise = hinweise;
-  ui.aendern = null;
-  render();
+async function setze(neuerState, hinweise = [], options = {}) {
+  if (saving || pending) return false;
+  const base = structuredClone(state);
+  pending = { change: aenderung(base, neuerState), hinweise, options, before: base };
+  return speicherePending();
+}
+async function speicherePending() {
+  if (!pending || saving) return false;
+  const job = pending;
+  saving = true;
+  state = job.change.next;
+  ui.hinweise = job.hinweise;
+  render(); zeichneSave();
   try {
-    await store.speichern(state);
-    if (modus === "firebase" && verbindungsFehler) {
-      verbindungsFehler = "";
-      render();
-    }
+    const result = await store.speichern(state, job.change);
+    const committed = result ?? anwenden(savedState ?? job.before, job.change);
+    const newer = (savedState?.changeSequence ?? 0) > (committed.changeSequence ?? 0);
+    state = newer ? structuredClone(savedState) : committed;
+    savedState = structuredClone(state);
+    const planChanged = JSON.stringify(job.before.aktuellerPlan) !== JSON.stringify(state.aktuellerPlan);
+    if (planChanged) undo = job.options.undo && state.planRevision === committed.planRevision ? { before: job.before, after: structuredClone(state), intended: job.change.next } : null;
+    pending = null; saving = false;
+    render(); zeichneSave();
+    if (job.options.close) schliesseSheet();
+    else if (sheet && ['menu','details'].includes(sheet.type)) zeichneSheet();
+    clearTimeout(toastTimer); statusEl.classList.remove('zeigen'); statusEl.textContent = '';
+    if (job.options.message) toast(job.options.message);
+    return true;
   } catch (e) {
-    console.error(e);
-    if (modus === "firebase") {
-      verbindungsFehler = FEHLER_TEXT;
-      render();
-    }
+    console.error(e); saving = false;
+    pending.error = e.name === "Konflikt" ? e.message : "Bitte prüfe die Verbindung und den verfügbaren Gerätespeicher und versuche es erneut.";
+    render(); zeichneSave();
     toast("Speichern fehlgeschlagen");
+    return false;
   }
+}
+function zeichneSave() {
+  const el = document.getElementById('save-status');
+  if (!el) return;
+  el.innerHTML = pending ? saving ? 'Wird gespeichert…' :
+    `<strong>Nicht gespeichert</strong><p>Deine Änderungen sind noch hier.</p><p>${esc(pending.error)}</p>
+     <button class="btn" data-action="retry">Erneut versuchen</button>
+     <button class="btn" data-action="discard">Änderung verwerfen</button>` : '';
+  const modalStatus = document.getElementById('sheet-save');
+  if (modalStatus) modalStatus.innerHTML = el.innerHTML;
 }
 
 const rng = () => erzeugeRng(Date.now());
 
-function planen() {
-  const { plan, hinweise } = planeWoche({ recipes, state, heute: new Date(), rng: rng() });
-  return setze(uebernehmePlan(state, plan), hinweise);
+async function planen() {
+  const wish = state.aktuellerPlan?.wunsch;
+  const result = wish ? planeMitWunsch({ recipes, state, heute: new Date(), rng: rng(), wunsch: wish }) :
+    planeWoche({ recipes, state, heute: new Date(), rng: rng() });
+  if (!result.plan) return toast(result.hinweise.join(' '));
+  return setze(uebernehmePlan(state, result.plan), result.hinweise,
+    { undo: true, message: wish ? '2 Gerichte neu geplant' : 'Woche neu geplant', close: true });
+}
+async function verschiebe(von, nach) {
+  const plan = tauscheSlots(state.aktuellerPlan, von, nach);
+  const ok = await setze(uebernehmePlan(state, plan), [], { close: true, message: `Gericht nach ${SLOTS[nach].isstTage.join(' + ')} verschoben` });
+  if (ok) document.querySelector(`[data-action="details"][data-slot="${nach}"]`)?.focus();
 }
 
 const aktionen = {
@@ -180,21 +242,56 @@ const aktionen = {
   },
   planen,
   neuplanen: () => {
-    if (confirm("Aktuellen Plan ersetzen?")) planen();
+    return planen();
   },
   wuerfeln: (el) => {
+    if (state.aktuellerPlan.wunsch?.slot === el.dataset.slot) return oeffneSheet("wish");
     const { plan, hinweise } = wuerfleSlot({ recipes, state, plan: state.aktuellerPlan, slot: el.dataset.slot, rng: rng() });
-    return setze(uebernehmePlan(state, plan), hinweise);
+    return setze(uebernehmePlan(state, plan), hinweise, { close: true });
   },
-  aendern: (el) => {
-    ui.aendern = ui.aendern === el.dataset.slot ? null : el.dataset.slot;
-    render();
+  aendern: (el) => oeffneSheet(state.aktuellerPlan.wunsch?.slot === el.dataset.slot ? 'wish' : 'replace', el.dataset.slot),
+  wish: () => oeffneSheet('wish'),
+  details: el => oeffneSheet('details', el.dataset.slot),
+  menu: el => oeffneSheet('menu', el.dataset.slot),
+  weekmenu: () => oeffneSheet('weekmenu'),
+  move: el => oeffneSheet('move', el.dataset.slot),
+  destination: el => verschiebe(sheet.slot, el.dataset.slot),
+  close: () => schliesseSheet(),
+  shoppingday: el => { ui.einkauf = el.dataset.day; render(); },
+  retry: () => speicherePending(),
+  discard: () => { pending = null; state = structuredClone(savedState ?? state); render(); zeichneSave(); },
+  reconnect: () => reconnect(),
+  undo: async () => {
+    if (!undo) return;
+    try {
+      const change = rueckgaengigChange(undo.before, undo.after, state, undo.intended);
+      await setze(anwenden(state, change), [], { close: true, message: 'Vorheriger Plan wiederhergestellt' });
+    } catch (e) { undo = null; toast(e.message); render(); }
+  },
+  filter: el => {
+    const key = el.dataset.filter;
+    if (sheet.filter.includes(key)) sheet.filter = sheet.filter.filter(x => x !== key);
+    else { if (['neu','favoriten'].includes(key)) sheet.filter = sheet.filter.filter(x => !['neu','favoriten'].includes(x)); sheet.filter.push(key); }
+    zeichneErgebnisse();
+  },
+  resetfilter: () => { sheet.filter = []; sheet.suche = ''; document.getElementById('sheet-search').value = ''; zeichneErgebnisse(); },
+  selectwish: el => {
+    const k = kandidaten(recipes, state).find(k => k.id === el.dataset.id && k.quelle === el.dataset.quelle);
+    if (!k) return;
+    sheet.eintrag = eintragFuer(k, rng()); sheet.preview = null; zeichneWunsch(); zeichneErgebnisse();
+  },
+  wishday: el => { sheet.day = el.dataset.day; sheet.preview = null; zeichneWunsch(); },
+  applywish: () => uebernehmeWunsch(),
+  releasewish: () => {
+    const plan = structuredClone(state.aktuellerPlan); delete plan.wunsch;
+    return setze(uebernehmePlan(state, plan), [], { close: true, message: 'Wunsch gelöst. Dein Gericht bleibt im Plan.' });
   },
   waehle: (el) => {
     const k = kandidaten(recipes, state).find((x) => x.quelle === el.dataset.quelle && x.id === el.dataset.id);
-    if (!k) return;
+    if (!k || k.haltbarTage < SLOTS[el.dataset.slot].minHaltbar) return;
+    if (state.aktuellerPlan.wunsch?.slot === el.dataset.slot) return oeffneSheet("wish");
     const plan = setzeSlot(state.aktuellerPlan, el.dataset.slot, eintragFuer(k, rng()));
-    return setze(uebernehmePlan(state, plan), []);
+    return setze(uebernehmePlan(state, plan), [], { close: true });
   },
   geschmeckt: (el) => {
     const id = state.aktuellerPlan.slots[el.dataset.slot].id;
@@ -230,71 +327,35 @@ const aktionen = {
 // ---------- Rendern: Woche ----------
 
 function slotKarte(slot, plan) {
-  const eintrag = plan.slots[slot];
-  const cfg = SLOTS[slot];
-  const ist = cfg.isstTage.join(" + ");
-  const kochen = `${TAGE[cfg.kochtag]} ${slot === "B" ? "vorkochen" : "kochen"} · ${ist}`;
-  if (!eintrag) return `<section class="card"><p class="tag">${esc(kochen)}</p><h3>Kein Gericht</h3></section>`;
-
-  const name = anzeigeName(eintrag, recipes, state);
-  const r = eintrag.quelle === "rezept" ? rezeptVon(eintrag.id) : null;
-  const istNeu = plan.neuSlot === slot;
-  const badges = [];
-  if (istNeu) badges.push('<li class="badge neu">Neu</li>');
-  if (r && PROTEIN_BADGE[r.protein]) badges.push(`<li class="badge">${PROTEIN_BADGE[r.protein]}</li>`);
-  if (r?.airfryer) badges.push('<li class="badge">Airfryer</li>');
-  if (r) badges.push(`<li class="badge">${r.dauerMin} Min.</li>`);
-  if (eintrag.quelle === "link") badges.push('<li class="badge">Eigener Link</li>');
-
-  const fav = istFavorit(eintrag.id);
-  const geschmeckt = istNeu
-    ? fav
-      ? '<p class="small muted" style="margin:8px 0 0">Ist jetzt Favorit</p>'
-      : `<button class="btn" data-action="geschmeckt" data-slot="${slot}">Hat geschmeckt</button>`
-    : "";
-
-  let auswahl = "";
-  if (ui.aendern === slot) {
-    const gueltig = kandidaten(recipes, state)
-      .filter((k) => k.haltbarTage >= cfg.minHaltbar && k.id !== eintrag.id)
-      .sort((a, b) => Number(b.istFavorit) - Number(a.istFavorit) || a.name.localeCompare(b.name, "de"));
-    auswahl = `<ul class="auswahl" aria-label="Kandidaten für Slot ${slot}">${gueltig
-      .map(
-        (k) => `<li><button data-action="waehle" data-slot="${slot}" data-quelle="${k.quelle}" data-id="${esc(k.id)}">
-          <span>${esc(k.name)}</span><span class="small muted">${k.istFavorit ? "Favorit" : k.quelle === "link" ? "Link" : "Pool"}</span></button></li>`,
-      )
-      .join("")}</ul>`;
-  }
-
-  return `<section class="card" aria-label="Slot ${slot}">
-    <p class="tag">${esc(kochen)}</p>
-    <h3>${esc(name)}</h3>
-    <ul class="badges">${badges.join("")}</ul>
-    <div class="row">
-      <button class="btn" data-action="wuerfeln" data-slot="${slot}">Neu würfeln</button>
-      <button class="btn" data-action="aendern" data-slot="${slot}" aria-expanded="${ui.aendern === slot}">Ändern</button>
-      <a class="btn" href="${esc(bringUrl(eintrag))}" target="_blank" rel="noopener">Zu Bring</a>
-      <a class="btn" href="${esc(rezeptUrl(eintrag))}" target="_blank" rel="noopener">Rezept</a>
-      ${geschmeckt}
-    </div>
-    ${auswahl}
+  const e = plan.slots[slot], cfg = SLOTS[slot];
+  const r = e?.quelle === 'rezept' ? rezeptVon(e.id) : null;
+  const name = e ? anzeigeName(e, recipes, state) : 'Kein Gericht';
+  const wish = plan.wunsch?.slot === slot;
+  return `<section class="card" data-plan-slot="${slot}" aria-label="${cfg.isstTage.join(' + ')}">
+    <div class="card-heading"><h2>${icon('calendar')}${cfg.isstTage.join(' + ')}</h2>
+      ${wish ? `<span class="pin">${icon('pin')}Dein Wunsch</span>` : plan.neuSlot === slot ? `<span class="badge neu">${icon('star')}Neu</span>` : ''}
+      <button class="btn icon-button" data-action="menu" data-slot="${slot}" aria-label="Aktionen für ${cfg.isstTage.join(' + ')}">${icon('more')}</button></div>
+    <button class="recipe-title" data-action="details" data-slot="${slot}" ${!e ? 'disabled' : ''}>${esc(name)}</button>
+    <div class="metadata">${icon('clock')}${r ? `${r.dauerMin} Min.` : 'Keine Zeitangabe'}
+      ${r?.protein && PROTEIN_BADGE[r.protein] ? `<span>${icon(r.protein === "fisch" ? "fish" : "bird")}${PROTEIN_BADGE[r.protein]}</span>` : ''}${r?.airfryer ? `<span>${icon('pot')}Airfryer</span>` : ''}</div>
+    <div class="preparation"><p>${TAGE[cfg.kochtag]} ${slot === 'B' ? 'vorkochen' : 'kochen'}</p>
+      <button class="btn drag-handle" data-drag="${slot}" data-action="move" data-slot="${slot}" aria-label="${esc(name)} verschieben">${icon('move')}</button></div>
   </section>`;
 }
-
 function renderWoche() {
   const plan = state.aktuellerPlan;
-  if (!plan) {
-    return `<h1>Woche</h1><p class="muted">Noch kein Plan. Ein Klick, und die Woche steht.</p>
-      <button class="btn primary big" data-action="planen">Woche planen</button>`;
-  }
-  const meldungen = [...ui.hinweise, ...pruefePlan({ plan, recipes, state })];
-  const kasten = meldungen.length
-    ? `<div class="hinweise" role="status"><ul>${meldungen.map((m) => `<li>${esc(m)}</li>`).join("")}</ul></div>`
-    : "";
-  return `<h1>Woche ab ${wochentagKurz(plan.wocheAb)}, ${datumKurz(plan.wocheAb)}</h1>
-    ${["A", "B", "C"].map((s) => slotKarte(s, plan)).join("")}
-    ${kasten}
-    <button class="btn big" data-action="neuplanen">Woche neu planen</button>`;
+  const header = `<div class="page-heading"><h1>Deine Woche</h1><button class="btn icon-button" data-action="weekmenu" aria-label="Wochenaktionen">${icon('more')}</button></div>`;
+  if (!plan) return `${header}<p class="muted">Noch kein Plan. Ein Klick, und die Woche steht.</p>
+    <button class="btn wish-action" data-action="wish">${icon('pin')}Wunschgericht</button>
+    <button class="btn primary big" data-action="planen">Woche planen</button>`;
+  const meldungen = [...new Set([...ui.hinweise, ...pruefePlan({ plan, recipes, state })])];
+  return `${header}<p class="week-date">Ab ${wochentagKurz(plan.wocheAb)}, ${datumKurz(plan.wocheAb)}</p>
+    <button class="btn wish-action" data-action="wish">${icon('pin')}${plan.wunsch ? 'Wunsch ändern' : 'Wunschgericht'}</button>
+    ${['A','B','C'].map(s => slotKarte(s, plan)).join('')}
+    ${meldungen.length ? `<div class="hinweise" role="status"><ul>${meldungen.map(m => `<li>${esc(m)}</li>`).join('')}</ul></div>` : ''}
+    <button class="btn primary big" data-action="neuplanen">${icon('shuffle')}${plan.wunsch ? '2 Gerichte neu planen' : 'Woche neu planen'}</button>
+    ${plan.wunsch ? `<p class="wish-note">${esc(anzeigeName(plan.wunsch.eintrag, recipes, state))} bleibt gesetzt.</p>` : ''}
+    ${undo ? '<div class="undo-status" role="status">Plan gespeichert. <button class="btn" data-action="undo">Rückgängig</button></div>' : ''}`;
 }
 
 // ---------- Rendern: Einkauf ----------
@@ -310,11 +371,11 @@ function abschnitt(titel, key, posten) {
     g.items.push(p);
   }
   const zeile = (p) =>
-    `<li>${esc(postenText(p))}<span class="rezepte">${esc(p.rezepte.join(", "))}</span></li>`;
+    `<li><details><summary><span>${esc(p.name)}</span><span class="amount">${esc([fmtMenge(p.menge), p.einheit].filter(Boolean).join(" "))}</span></summary><p class="rezepte">${esc(p.rezepte.join(", "))}</p></details></li>`;
   return `<h2>${esc(titel)}</h2>
     <button class="btn" data-action="kopieren" data-liste="${key}">Liste kopieren</button>
-    ${gruppen.map((g) => `<p class="kategorie">${esc(KATEGORIE_NAMEN[g.k] ?? g.k)}</p><ul class="posten">${g.items.map(zeile).join("")}</ul>`).join("")}
-    ${vorrat.length ? `<p class="kategorie">Habt ihr wahrscheinlich da</p><ul class="posten vorrat">${vorrat.map(zeile).join("")}</ul>` : ""}`;
+    ${gruppen.map((g) => `<h3 class="kategorie">${icon("box")}${esc(KATEGORIE_NAMEN[g.k] ?? g.k)}</h3><ul class="posten">${g.items.map(zeile).join("")}</ul>`).join("")}
+    ${vorrat.length ? `<details class="pantry"><summary>Habt ihr wahrscheinlich da</summary><ul class="posten vorrat">${vorrat.map(zeile).join("")}</ul></details>` : ""}`;
 }
 
 function renderEinkauf() {
@@ -326,20 +387,19 @@ function renderEinkauf() {
     .map((s) => {
       const e = plan.slots[s];
       return `<li><span class="name">${esc(anzeigeName(e, recipes, state))}</span>
-        <a class="btn" href="${esc(bringUrl(e))}" target="_blank" rel="noopener" aria-label="${esc(anzeigeName(e, recipes, state))} zu Bring">Zu Bring</a></li>`;
+        ${externerLink(bringUrl(e), "Zu Bring", `${anzeigeName(e, recipes, state)} zu Bring`)}</li>`;
     })
     .join("");
   const links = liste.links.length
     ? `<h2>Eigene Rezepte</h2><ul class="liste">${liste.links
         .map((l) => `<li><span class="name">${esc(l.titel)}<br><span class="small muted">Zutaten siehe Rezept</span></span>
-          <a class="btn" href="${esc(l.url)}" target="_blank" rel="noopener">Rezept</a></li>`)
+          ${externerLink(sichereLinkUrl(l.url), "Rezept")}</li>`)
         .join("")}</ul>`
     : "";
   return `<h1>Einkauf</h1>
-    <h2>Gerichte</h2><ul class="liste">${gerichte}</ul>
-    ${abschnitt("Samstag (Großeinkauf)", "samstag", liste.samstag)}
-    ${abschnitt("Donnerstag (Nachkauf)", "donnerstag", liste.donnerstag)}
-    ${links}`;
+    <div class="shopping-tabs" aria-label="Einkaufstag">${['samstag','donnerstag'].map(day => `<button class="btn" data-action="shoppingday" data-day="${day}" aria-pressed="${ui.einkauf === day}">${icon('calendar')}${day === 'samstag' ? 'Samstag' : 'Donnerstag'}${ui.einkauf === day ? '<span aria-hidden="true">✓</span>' : ''}</button>`).join('')}</div>
+    ${abschnitt(ui.einkauf === 'samstag' ? 'Samstag' : 'Donnerstag', ui.einkauf, liste[ui.einkauf])}
+    ${links}<h2>Zu Bring hinzufügen</h2><ul class="liste">${gerichte}</ul>`;
 }
 
 // ---------- Rendern: Rezepte ----------
@@ -357,7 +417,7 @@ function rezeptZeile(r) {
 function linkZeile(l) {
   const fav = favSet().has(l.id);
   return `<li><span class="name">${esc(l.titel)}<br><span class="small muted">${l.geplantAm ? "schon geplant" : "noch offen"}</span></span>
-    <a class="btn" href="${esc(l.url)}" target="_blank" rel="noopener" aria-label="${esc(l.titel)}: Rezept">Rezept</a>
+    ${externerLink(sichereLinkUrl(l.url), "Rezept", `${l.titel}: Rezept`)}
     <button class="btn" data-action="favorit" data-id="${esc(l.id)}" aria-pressed="${fav}">Favorit</button>
     <button class="btn danger" data-action="linkloeschen" data-id="${esc(l.id)}" aria-label="${esc(l.titel)} löschen">Löschen</button></li>`;
 }
@@ -400,6 +460,9 @@ function renderRezepte() {
 
 function render() {
   if (!state) return;
+  const inputs = [...(root.querySelectorAll?.('input') ?? [])].map(el => ({ id: el.id, value: el.value, start: el.selectionStart, end: el.selectionEnd }));
+  const focused = document.activeElement?.id;
+  const scroll = globalThis.scrollY ?? 0;
   const inhalt = { woche: renderWoche, einkauf: renderEinkauf, rezepte: renderRezepte }[ui.tab]();
   const tab = (id, label) =>
     `<button data-action="tab" data-tab="${id}" ${ui.tab === id ? 'aria-current="page"' : ""}>${TAB_ICONS[id]}<span>${label}</span></button>`;
@@ -407,10 +470,16 @@ function render() {
   if (modus === "lokal") {
     banner = `<p class="banner" role="note">Lokaler Modus: nur auf diesem Gerät gespeichert${lokalHinweis ? `. ${esc(lokalHinweis)}` : ""}</p>`;
   } else if (verbindungsFehler) {
-    banner = `<p class="banner" role="alert">${esc(verbindungsFehler)}</p>`;
+    banner = `<div class="banner" role="alert">Aktualisierung unterbrochen. ${esc(verbindungsFehler)}<button class="btn" data-action="reconnect">Neu verbinden</button></div>`;
   }
   root.innerHTML = `<nav class="nav" aria-label="Hauptnavigation">${tab("woche", "Woche")}${tab("einkauf", "Einkauf")}${tab("rezepte", "Rezepte")}</nav>
-    ${banner}<main>${inhalt}</main>`;
+    ${banner}<main>${inhalt}<div id="save-status" role="status" aria-live="polite"></div></main>`;
+  for (const input of inputs) {
+    const el = document.getElementById(input.id);
+    if (el && 'value' in el) { el.value = input.value; if (focused === input.id) { el.focus(); try { el.setSelectionRange(input.start, input.end); } catch {} } }
+  }
+  globalThis.window?.scrollTo?.(0, scroll);
+  zeichneSave();
 }
 
 function renderStart(fehler = "") {
@@ -484,24 +553,47 @@ async function starte() {
     if (modus === "firebase") return renderVerbindungsfehler();
     throw e;
   }
-  abmelden = store.abonnieren(
-    (neu) => {
-      state = neu;
-      if (verbindungsFehler) verbindungsFehler = "";
-      render();
-    },
-    (e) => {
-      console.error(e);
-      verbindungsFehler = FEHLER_TEXT;
-      render();
-    },
-  );
+  savedState = structuredClone(state);
+  abonnieren();
   render();
+}
+
+function abonnieren() {
+  abmelden = store.abonnieren(neu => {
+    const changed = JSON.stringify(neu.aktuellerPlan) !== JSON.stringify(savedState?.aktuellerPlan);
+    savedState = structuredClone(neu);
+    if (pending) return; // retry rebases inside transaction; never lose the unsaved change
+    state = neu;
+    if (changed) {
+      cancelDrag();
+      if (sheet?.type === 'move') { schliesseSheet(); toast('Der Plan wurde inzwischen geändert.'); }
+      if (undo && undo.after.planRevision !== neu.planRevision) { undo = null; toast('Der Plan wurde inzwischen geändert.'); }
+    }
+    render();
+    if (sheet?.type === 'replace' || sheet?.type === 'wish') { zeichneErgebnisse(); if (sheet.type === 'wish') zeichneWunsch(); }
+  }, e => { console.error(e); verbindungsFehler = FEHLER_TEXT; render(); });
+}
+async function reconnect() {
+  abmelden?.();
+  try {
+    const neu = await store.laden();
+    if (!pending && (neu.planRevision ?? null) !== (state.planRevision ?? null)) {
+      cancelDrag(); undo = null;
+      if (sheet?.type === 'move') schliesseSheet();
+      toast('Der Plan wurde inzwischen geändert.');
+    }
+    savedState = structuredClone(neu);
+    if (!pending) state = neu;
+    verbindungsFehler = ''; abonnieren(); render();
+  } catch (e) { verbindungsFehler = FEHLER_TEXT; render(); }
 }
 
 document.addEventListener("click", (e) => {
   const el = e.target.closest("[data-action]");
   if (!el) return;
+  if (el.disabled) return;
+  if ((saving || pending) && !['retry','discard','close','tab','reconnect'].includes(el.dataset.action)) return;
+
   if (el.dataset.action === "lokal") {
     schreibe(KEY_LOKAL, "1");
     return starte();
@@ -520,7 +612,7 @@ document.addEventListener("click", (e) => {
   }
   if (el.dataset.action === "lokalUebernehmen") {
     const lokal = ladeLokalenState();
-    if (lokal?.aktuellerPlan) setze({ ...state, ...lokal }, ui.hinweise).then(() => toast("Lokale Daten übernommen"));
+    if (lokal?.aktuellerPlan) setze({ ...state, ...lokal }, ui.hinweise).then((ok) => { if (ok) toast("Lokale Daten übernommen"); });
     return;
   }
   aktionen[el.dataset.action]?.(el);
@@ -543,17 +635,13 @@ document.addEventListener("submit", (e) => {
     const titel = e.target.querySelector("#link-titel").value.trim();
     const url = e.target.querySelector("#link-url").value.trim();
     const fehler = document.getElementById("link-fehler");
-    let gueltig = false;
-    try {
-      gueltig = url.startsWith("https://") && !!new URL(url).hostname;
-    } catch {
-      /* ungültig */
-    }
+    const gueltig = sichereLinkUrl(url) !== null;
     if (!titel) return (fehler.textContent = "Bitte einen Titel eingeben.");
     if (!gueltig) return (fehler.textContent = "Die URL muss mit https:// beginnen.");
+    if (saving || pending) return;
     const neu = structuredClone(state);
     neu.links = [...(neu.links ?? []), { id: `link-${Date.now()}`, titel, url, hinzugefuegt: heuteIso(), geplantAm: null }];
-    setze(neu, ui.hinweise).then(() => toast("Link hinzugefügt"));
+    setze(neu, ui.hinweise).then((ok) => { if (ok) toast("Link hinzugefügt"); });
   }
 });
 
@@ -570,3 +658,137 @@ document.addEventListener("submit", (e) => {
   if (!haushaltId && lies(KEY_LOKAL) !== "1") return renderStart();
   starte();
 })();
+
+// The dialog is outside the rerendered app: remote events cannot erase drafts,
+// focus, selection or sheet scroll. Native showModal supplies focus containment.
+function oeffneSheet(type, slot) {
+  const existing = document.getElementById('sheet');
+  if (existing) { existing.close(); existing.remove(); }
+  else {
+    sheetTrigger = document.activeElement;
+    sheetTriggerSelector = focusSelector(sheetTrigger);
+    history.pushState({ mealSheet: true }, ''); sheetHistory = true;
+  }
+  sheet = { type, slot, suche: '', filter: [], day: state.aktuellerPlan?.wunsch?.slot ?? '',
+    eintrag: structuredClone(state.aktuellerPlan?.wunsch?.eintrag ?? null), revision: state.planRevision };
+  const dialog = document.createElement('dialog'); dialog.id = 'sheet';
+  dialog.setAttribute('aria-labelledby', 'sheet-title'); dialog.dataset.kind = type;
+  dialog.addEventListener('cancel', e => { e.preventDefault(); schliesseSheet(); });
+  document.body.append(dialog); zeichneSheet(); dialog.showModal(); passeSheetHoeheAn();
+  dialog.querySelector('[data-action="close"]')?.focus();
+}
+function schliesseSheet(fromBack = false) {
+  const dialog = document.getElementById('sheet');
+  dialog?.close(); dialog?.remove(); sheet = null;
+  if (sheetHistory && !fromBack) history.back();
+  sheetHistory = false;
+  if (sheetTrigger?.isConnected) sheetTrigger.focus();
+  else (sheetTriggerSelector && document.querySelector(sheetTriggerSelector) || document.querySelector('[data-action="wish"]'))?.focus();
+}
+globalThis.window?.addEventListener('popstate', () => { if (sheet) schliesseSheet(true); });
+function zeichneSheet() {
+  if (!sheet) return;
+  const { type, slot } = sheet;
+  const label = slot ? SLOTS[slot].isstTage.join(' + ') : '';
+  const entry = state.aktuellerPlan?.slots[slot];
+  const title = { wish: 'Wunschgericht', replace: `Gericht für ${label} ändern`, menu: `Gericht für ${label}`,
+    details: entry ? anzeigeName(entry, recipes, state) : 'Gericht', move: 'Gericht verschieben', weekmenu: 'Deine Woche', copy: 'Liste kopieren' }[type];
+  let content = '';
+  if (['wish','replace'].includes(type)) {
+    content = `<label for="sheet-search">Gericht suchen</label><input id="sheet-search" type="search" value="${esc(sheet.suche)}" autocomplete="off">
+      <div class="filters">${[['favoriten','Favoriten'],['neu','Neu'],['kurz','Bis 30 Min.'],['airfryer','Airfryer'],['fisch','Fisch'],['gefluegel','Geflügel']].map(([id,text]) => `<button class="btn" data-action="filter" data-filter="${id}" aria-pressed="false">${text}<span class="selected-mark" aria-hidden="true"> ✓</span></button>`).join('')}</div>
+      <div id="wish-values"></div><p id="result-count" role="status" aria-live="polite"></p><button class="btn" data-action="resetfilter">Filter zurücksetzen</button><ul class="auswahl" id="sheet-results"></ul>`;
+  } else if (['menu','details'].includes(type) && entry) {
+    content = `<p class="muted">${slot === 'B' ? 'Sonntag vorkochen' : `${TAGE[SLOTS[slot].kochtag]} kochen`} · Vier Portionen</p><div class="sheet-actions">
+      ${externerLink(rezeptUrl(entry), 'Rezept öffnen')}
+      <button class="btn" data-action="aendern" data-slot="${slot}">Gericht ändern</button>
+      <button class="btn" data-action="wuerfeln" data-slot="${slot}">Neu würfeln</button>
+      <button class="btn" data-action="move" data-slot="${slot}">Verschieben</button>
+      ${externerLink(bringUrl(entry), 'Zu Bring')}
+      ${state.aktuellerPlan.neuSlot === slot ? istFavorit(entry.id) ? '<p>Ist jetzt Favorit</p>' : `<button class="btn" data-action="geschmeckt" data-slot="${slot}">Hat geschmeckt</button>` : ''}</div>`;
+  } else if (type === 'menu' && !entry) {
+    content = `<button class="btn" data-action="aendern" data-slot="${slot}">Gericht auswählen</button>`;
+  } else if (type === 'move') {
+    content = `<div class="sheet-actions">${Object.keys(SLOTS).filter(s => s !== slot).map(s => `<button class="btn" data-action="destination" data-slot="${s}">${state.aktuellerPlan.slots[s] ? 'Mit' : 'Nach'} ${SLOTS[s].isstTage.join(' + ')} ${state.aktuellerPlan.slots[s] ? 'tauschen' : 'verschieben'}</button>`).join('')}</div>`;
+  } else if (type === 'weekmenu') {
+    content = `<div class="sheet-actions"><button class="btn" data-action="wish">${state.aktuellerPlan?.wunsch ? 'Wunsch ändern' : 'Wunschgericht'}</button>
+      <button class="btn" data-action="planen">${state.aktuellerPlan?.wunsch ? '2 Gerichte neu planen' : 'Woche planen'}</button>${undo ? '<button class="btn" data-action="undo">Rückgängig</button>' : ''}</div>`;
+  } else if (type === 'copy') content = `<p>Kopieren nicht möglich. Du kannst den Text hier markieren und kopieren.</p><textarea readonly aria-label="Einkaufsliste">${esc(sheet.text)}</textarea>`;
+  document.getElementById('sheet').innerHTML = `<header class="sheet-heading"><h2 id="sheet-title">${esc(title)}</h2><button class="btn icon-button" data-action="close" aria-label="Schließen">${icon('x')}</button></header><div class="sheet-body">${content}</div><footer id="sheet-footer"></footer><div id="sheet-save" role="status"></div>`;
+  if (['wish','replace'].includes(type)) {
+    document.getElementById('sheet-search').addEventListener('input', e => { sheet.suche = e.target.value; zeichneErgebnisse(); });
+    zeichneErgebnisse(); if (type === 'wish') zeichneWunsch();
+  }
+  zeichneSave();
+}
+function zeichneErgebnisse() {
+  if (!sheet || !['wish','replace'].includes(sheet.type)) return;
+  const results = filterKandidaten({ recipes, state, slot: sheet.type === 'replace' ? sheet.slot : null,
+    suche: sheet.suche, filter: sheet.filter, aktuell: sheet.type === 'replace' ? state.aktuellerPlan?.slots[sheet.slot]?.id : null });
+  document.getElementById('result-count').textContent = `${results.length} Gerichte`;
+  document.querySelectorAll('[data-filter]').forEach(el => el.setAttribute('aria-pressed', String(sheet.filter.includes(el.dataset.filter))));
+  stableHTML('sheet-results', results.map(k => {
+    const r = k.quelle === 'rezept' ? rezeptVon(k.id) : null;
+    const selected = sheet.type === 'wish' && sheet.eintrag?.id === k.id;
+    const neu = !k.istFavorit && (k.quelle === 'rezept' ? !(state.probiert ?? []).includes(k.id) : k.istNeuKandidat);
+    return `<li><button data-action="${sheet.type === 'wish' ? 'selectwish' : 'waehle'}" data-slot="${sheet.slot ?? ''}" data-quelle="${k.quelle}" data-id="${esc(k.id)}" ${sheet.type === 'wish' ? `aria-pressed="${selected}"` : ''}>
+      <span><strong>${esc(k.name)}${selected ? ' ✓' : ''}</strong><span class="candidate-meta">${r ? `${r.dauerMin} Min.` : 'Keine Zeitangabe'}${k.istFavorit ? ' · Favorit' : neu ? ' · Neu' : ''}${r?.airfryer ? ' · Airfryer' : ''}${PROTEIN_BADGE[r?.protein] ? ` · ${PROTEIN_BADGE[r.protein]}` : ''}</span></span></button></li>`;
+  }).join('') || '<li><p>Keine passenden Gerichte. Suche leeren oder Filter zurücksetzen.</p></li>');
+}
+function wunschVorschlag() {
+  if (!sheet.eintrag) return null;
+  const k = kandidaten(recipes, state).find(k => k.id === sheet.eintrag.id && k.quelle === sheet.eintrag.quelle);
+  const days = sheet.day ? [sheet.day] : ['A','B','C'];
+  let result;
+  for (const slot of days) {
+    if (wunschGrund(k, slot)) continue;
+    result = planeMitWunsch({ recipes, state, heute: new Date(), rng: erzeugeRng(42),
+      wunsch: { slot, eintrag: sheet.eintrag }, erhalten: !!state.aktuellerPlan });
+    if (result.plan) return result;
+  }
+  return result ?? { plan: null, hinweise: ['Kein passender Plan. Bitte Wunschgericht oder Tag ändern.'] };
+}
+function zeichneWunsch() {
+  if (sheet?.type !== 'wish') return;
+  const k = kandidaten(recipes, state).find(k => k.id === sheet.eintrag?.id && k.quelle === sheet.eintrag?.quelle);
+  const result = wunschVorschlag(); sheet.preview = result; sheet.previewRevision = state.planRevision;
+  const affected = result?.plan && state.aktuellerPlan ? Object.keys(SLOTS).filter(s => JSON.stringify(result.plan.slots[s]) !== JSON.stringify(state.aktuellerPlan.slots[s])) : [];
+  stableHTML('wish-values', `<h3>${sheet.eintrag ? esc(anzeigeName(sheet.eintrag, recipes, state)) : 'Wähle dein Wunschgericht'}</h3>
+    <div class="wish-days">${['','A','B','C'].map(day => {
+      const reason = day && k ? wunschGrund(k, day) : '';
+      return `<div><button class="btn" data-action="wishday" data-day="${day}" aria-pressed="${sheet.day === day}" ${reason ? 'disabled' : ''}>${icon('calendar')}${day ? SLOTS[day].isstTage.join(' + ') : 'Tag egal'}${sheet.day === day ? ' ✓' : ''}</button>${reason ? `<small>${esc(reason)}</small>` : ''}</div>`;
+    }).join('')}</div>${affected.length ? `<p class="muted">Wird geändert: ${affected.map(s => SLOTS[s].isstTage.join(' + ')).join(', ')}.</p>` : ''}
+    ${result && !result.plan ? `<p class="fehler">${esc(result.hinweise.join(' '))}</p>` : ''}`);
+  document.getElementById('sheet-footer').innerHTML = `<button class="btn primary big" data-action="applywish" ${!result?.plan ? 'disabled' : ''}>${state.aktuellerPlan ? 'Wunsch übernehmen' : 'Woche damit planen'}</button>
+    ${state.aktuellerPlan?.wunsch ? '<button class="btn" data-action="releasewish">Wunsch lösen</button>' : ''}`;
+}
+function uebernehmeWunsch() {
+  if (!sheet?.preview?.plan) return;
+  if (sheet.previewRevision !== state.planRevision) { zeichneWunsch(); return toast('Der Plan wurde inzwischen geändert. Bitte Vorschau prüfen.'); }
+  const { plan, hinweise } = sheet.preview;
+  return setze(uebernehmePlan(state, plan), hinweise, { close: true, message: 'Wunsch gespeichert' });
+}
+if (root.addEventListener) cancelDrag = installPlanDrag({ root, revision: () => state?.planRevision,
+  move: (from, to) => { if (!pending && !saving) verschiebe(from, to); }, announce: toast });
+
+function passeSheetHoeheAn() {
+  const dialog = document.getElementById('sheet');
+  if (dialog && window.visualViewport) dialog.style.maxHeight = `${Math.floor(window.visualViewport.height * .94)}px`;
+}
+globalThis.window?.visualViewport?.addEventListener('resize', passeSheetHoeheAn);
+
+function focusSelector(el) {
+  if (!el) return null;
+  if (el.id) return `#${CSS.escape(el.id)}`;
+  if (!el.dataset?.action) return null;
+  return ['action','slot','id','quelle','filter','day'].filter(key => el.dataset[key] !== undefined)
+    .map(key => `[data-${key}="${CSS.escape(el.dataset[key])}"]`).join('');
+}
+function stableHTML(id, html) {
+  const target = document.getElementById(id);
+  if (target.innerHTML === html) return;
+  const focused = target.contains(document.activeElement) ? focusSelector(document.activeElement) : null;
+  const top = target.scrollTop;
+  target.innerHTML = html; target.scrollTop = top;
+  if (focused) (target.querySelector(focused) ?? document.getElementById('sheet-search'))?.focus({preventScroll:true});
+}

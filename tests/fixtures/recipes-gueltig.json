@@ -63,7 +63,7 @@
       "portionen": 4,
       "dauerMin": 35,
       "airfryer": true,
-      "tags": ["ofen", "airfryer", "schnell"],
+      "tags": ["ofen", "airfryer"],
       "zutaten": [
         { "name": "Lachsfilet", "menge": 4, "einheit": "Stück", "kategorie": "fleisch-fisch", "frisch": true, "vorrat": false },
         { "name": "Zucchini", "menge": 2, "einheit": "Stück", "kategorie": "obst-gemuese", "frisch": false, "vorrat": false },

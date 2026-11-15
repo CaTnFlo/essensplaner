@@ -1,3 +1,4 @@
+import { anwenden } from "./state-change.js";
 // Lokaler Speicher im Browser (SPEC 5.5). Gleiche Schnittstelle wie store-firebase.js.
 
 const SCHLUESSEL = "essensplaner-state";
@@ -21,8 +22,13 @@ export async function erstelleStore() {
     async laden() {
       return lies();
     },
-    async speichern(state) {
-      localStorage.setItem(SCHLUESSEL, JSON.stringify(state));
+    async speichern(state, change) {
+      const write = () => {
+        const next = change ? anwenden(lies(), change) : state;
+        localStorage.setItem(SCHLUESSEL, JSON.stringify(next));
+        return next;
+      };
+      return globalThis.navigator?.locks ? navigator.locks.request(SCHLUESSEL, write) : write();
     },
     abonnieren(callback) {
       const handler = (e) => {

@@ -81,6 +81,7 @@ function pruefeRezept(r, pfad, fehler) {
   } else {
     r.tags.forEach((t, i) => {
       if (!TAGS.includes(t)) fehler.push(`${p}.tags[${i}]: ${anzeige(t)} ist kein erlaubter Tag`);
+      if (t === "schnell" && r.dauerMin > 30) fehler.push(`${p}.tags[${i}]: schnell ist nur bei dauerMin <= 30 erlaubt`);
     });
   }
 

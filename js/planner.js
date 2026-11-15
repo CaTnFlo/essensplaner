@@ -372,3 +372,88 @@ export function uebernehmePlan(state, plan) {
   }
   return neu;
 }
+
+
+// Manual movement preserves the complete entry, variants, new marker and wish.
+export function tauscheSlots(plan, von, nach) {
+  if (!SLOT_IDS.includes(von) || !SLOT_IDS.includes(nach)) throw new Error("Ungültiger Slot");
+  const neu = structuredClone(plan);
+  if (von === nach) return neu;
+  [neu.slots[von], neu.slots[nach]] = [neu.slots[nach] ?? null, neu.slots[von] ?? null];
+  if (neu.neuSlot === von) neu.neuSlot = nach;
+  else if (neu.neuSlot === nach) neu.neuSlot = von;
+  if (neu.wunsch?.slot === von) { neu.wunsch.slot = nach; neu.wunsch.manuell = true; }
+  else if (neu.wunsch?.slot === nach) { neu.wunsch.slot = von; neu.wunsch.manuell = true; }
+  return neu;
+}
+
+export function wunschGrund(k, slot) {
+  if (!k) return "Bitte ein Gericht wählen.";
+  if (!SLOT_IDS.includes(slot)) return "Ungültiger Tag.";
+  if (k.haltbarTage < SLOTS[slot].minHaltbar) return "Braucht mindestens drei Tage Haltbarkeit.";
+  if (!k.istFavorit && slot === "B") return "Neue Gerichte werden Sonntag oder Donnerstag gekocht.";
+  return "";
+}
+
+// Exhaustive search: a small catalog allows proving that the strictest feasible
+// relaxation was used, rather than failing a wish because random attempts ran out.
+export function planeMitWunsch({ recipes, state, heute, rng, wunsch, erhalten = false }) {
+  const alt = state.aktuellerPlan;
+  const wocheAb = erhalten && alt ? alt.wocheAb : naechsterSonntag(heute);
+  const ks = kandidaten(recipes, state).map(k => {
+    const currentNew = alt?.neuSlot && alt.slots[alt.neuSlot];
+    return erhalten && currentNew?.quelle === 'link' && k.quelle === 'link' && currentNew.id === k.id && !k.istFavorit
+      ? { ...k, istNeuKandidat: true, prioritaet: 1 } : k;
+  });
+  const k = ks.find(x => x.id === wunsch.eintrag.id && x.quelle === wunsch.eintrag.quelle);
+  const slot = wunsch.slot;
+  // An explicitly moved wish may stay in B; automatic initial assignment may not.
+  const manuell = alt?.wunsch?.slot === slot && alt.wunsch.eintrag.id === k?.id && alt.wunsch.manuell;
+  const grund = wunschGrund(k, slot);
+  if (grund && !manuell) return { plan: null, hinweise: [grund] };
+  if (!k) return { plan: null, hinweise: ["Das Wunschgericht ist nicht mehr verfügbar."] };
+  const vorIds = vorwocheIds(state, wocheAb);
+  const frei = SLOT_IDS.filter(s => s !== slot);
+  for (const stufe of STUFEN) {
+    let beste = null, score = -Infinity, gleich = 0;
+    for (const a of ks) for (const b of ks) {
+      const items = { [slot]: k, [frei[0]]: a, [frei[1]]: b };
+      if (new Set([k.id, a.id, b.id]).size !== 3) continue;
+      if (SLOT_IDS.some(s => items[s].haltbarTage < SLOTS[s].minHaltbar && !(s === slot && manuell))) continue;
+      if ([a, b].some(x => !x.istFavorit && !x.istNeuKandidat)) continue;
+      if (!stufe.r3 && SLOT_IDS.some(s => vorIds.has(items[s].id))) continue;
+      if (!stufe.r4 && !hatProtein(items)) continue;
+      const neue = SLOT_IDS.filter(s => !items[s].istFavorit);
+      if (!stufe.r2 && (neue.length !== 1 || (neue[0] === "B" && !manuell))) continue;
+      if (neue.includes("B") && !(slot === "B" && manuell)) continue;
+      const neuSlot = neue.length === 1 ? neue[0] : null;
+      const behalten = frei.filter(s => alt?.slots[s]?.id === items[s].id).length;
+      const prioritaet = [a,b].reduce((n,x) => n + (x.prioritaet ?? 5), 0);
+      const wert = (erhalten ? behalten * 100 : 0) - prioritaet;
+      if (wert > score) { score = wert; gleich = 0; }
+      if (wert === score && rng() < 1 / ++gleich) beste = { items, neuSlot };
+    }
+    if (beste) {
+      const slots = Object.fromEntries(SLOT_IDS.map(s => [s,
+        s === slot ? structuredClone(wunsch.eintrag) :
+          erhalten && alt?.slots[s]?.id === beste.items[s].id ? structuredClone(alt.slots[s]) : baueEintrag(beste.items[s], recipes, rng)]));
+      return { plan: { wocheAb, erstellt: heute.toISOString(), slots, neuSlot: beste.neuSlot,
+        wunsch: structuredClone(wunsch) }, hinweise: hinweiseFuer(beste.items, vorIds, beste.neuSlot !== null) };
+    }
+  }
+  return { plan: null, hinweise: ["Kein passender Plan. Bitte Wunschgericht oder Tag ändern."] };
+}
+
+export function filterKandidaten({ recipes, state, slot, suche = "", filter = [], aktuell }) {
+  return kandidaten(recipes, state).filter(k => {
+    if (slot && k.haltbarTage < SLOTS[slot].minHaltbar) return false;
+    if (k.id === aktuell || !k.name.toLocaleLowerCase("de").includes(suche.toLocaleLowerCase("de"))) return false;
+    const r = k.quelle === "rezept" ? recipes.find(r => r.id === k.id) : null;
+    if (filter.includes("favoriten") && !k.istFavorit) return false;
+    if (filter.includes("neu") && (k.istFavorit || (k.quelle === "rezept" ? (state.probiert ?? []).includes(k.id) : !k.istNeuKandidat))) return false;
+    if (filter.includes("kurz") && !(r?.dauerMin <= 30)) return false;
+    if (filter.includes("airfryer") && r?.airfryer !== true) return false;
+    const protein = filter.filter(x => R4_PROTEIN.includes(x));
+    return !protein.length || protein.includes(r?.protein);
+  }).sort((a,b) => Number(b.istFavorit) - Number(a.istFavorit) || a.name.localeCompare(b.name, "de"));
+}
