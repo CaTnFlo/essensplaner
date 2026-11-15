@@ -1,1 +1,319 @@
-{"version": 1, "rezepte": []}
+{
+  "version": 1,
+  "rezepte": [
+    {
+      "id": "lachs-spinat-nudeln",
+      "name": "Lachs-Spinat-Nudeln",
+      "typ": "favorit",
+      "protein": "fisch",
+      "haltbarTage": 1,
+      "portionen": 4,
+      "dauerMin": 30,
+      "airfryer": false,
+      "tags": ["pfanne", "schnell"],
+      "zutaten": [
+        { "name": "Lachsfilet", "menge": 600, "einheit": "g", "kategorie": "fleisch-fisch", "frisch": true, "vorrat": false },
+        { "name": "Vollkornnudeln", "menge": 400, "einheit": "g", "kategorie": "vorrat", "frisch": false, "vorrat": false },
+        { "name": "Blattspinat", "menge": 300, "einheit": "g", "kategorie": "obst-gemuese", "frisch": true, "vorrat": false },
+        { "name": "Kochsahne 15 %", "menge": 200, "einheit": "ml", "kategorie": "kuehlregal", "frisch": false, "vorrat": false },
+        { "name": "Zitrone", "menge": 1, "einheit": "Stück", "kategorie": "obst-gemuese", "frisch": false, "vorrat": false },
+        { "name": "Knoblauch", "menge": 2, "einheit": "Zehe", "kategorie": "obst-gemuese", "frisch": false, "vorrat": false },
+        { "name": "Olivenöl", "menge": 1, "einheit": "EL", "kategorie": "vorrat", "frisch": false, "vorrat": true },
+        { "name": "Salz", "menge": null, "einheit": null, "kategorie": "gewuerze", "frisch": false, "vorrat": true },
+        { "name": "Pfeffer", "menge": null, "einheit": null, "kategorie": "gewuerze", "frisch": false, "vorrat": true }
+      ],
+      "schritte": [
+        "Nudeln in Salzwasser al dente kochen.",
+        "Lachs in Stücke schneiden und salzen.",
+        "Knoblauch in Öl kurz anschwitzen, Spinat zugeben und zusammenfallen lassen.",
+        "Kochsahne und abgeriebene Zitronenschale einrühren und kurz köcheln lassen.",
+        "Lachs in die Soße geben und 3 bis 4 Minuten garen.",
+        "Nudeln abgießen, untermischen und mit Zitronensaft, Salz und Pfeffer abschmecken."
+      ],
+      "variantenGruppen": []
+    },
+    {
+      "id": "lasagne",
+      "name": "Lasagne Bolognese",
+      "typ": "favorit",
+      "protein": "hack",
+      "haltbarTage": 3,
+      "portionen": 4,
+      "dauerMin": 90,
+      "airfryer": false,
+      "tags": ["ofen"],
+      "zutaten": [
+        { "name": "Rinderhack", "menge": 500, "einheit": "g", "kategorie": "fleisch-fisch", "frisch": true, "vorrat": false },
+        { "name": "Lasagneplatten", "menge": 250, "einheit": "g", "kategorie": "vorrat", "frisch": false, "vorrat": false },
+        { "name": "Passierte Tomaten", "menge": 700, "einheit": "g", "kategorie": "vorrat", "frisch": false, "vorrat": false },
+        { "name": "Tomatenmark", "menge": 2, "einheit": "EL", "kategorie": "vorrat", "frisch": false, "vorrat": false },
+        { "name": "Zwiebel", "menge": 1, "einheit": "Stück", "kategorie": "obst-gemuese", "frisch": false, "vorrat": false },
+        { "name": "Möhre", "menge": 2, "einheit": "Stück", "kategorie": "obst-gemuese", "frisch": false, "vorrat": false },
+        { "name": "Knoblauch", "menge": 2, "einheit": "Zehe", "kategorie": "obst-gemuese", "frisch": false, "vorrat": false },
+        { "name": "Mozzarella light", "menge": 125, "einheit": "g", "kategorie": "kuehlregal", "frisch": false, "vorrat": false },
+        { "name": "Parmesan", "menge": 40, "einheit": "g", "kategorie": "kuehlregal", "frisch": false, "vorrat": false },
+        { "name": "Olivenöl", "menge": 1, "einheit": "EL", "kategorie": "vorrat", "frisch": false, "vorrat": true },
+        { "name": "Oregano", "menge": 1, "einheit": "TL", "kategorie": "gewuerze", "frisch": false, "vorrat": true },
+        { "name": "Salz", "menge": null, "einheit": null, "kategorie": "gewuerze", "frisch": false, "vorrat": true },
+        { "name": "Pfeffer", "menge": null, "einheit": null, "kategorie": "gewuerze", "frisch": false, "vorrat": true }
+      ],
+      "schritte": [
+        "Zwiebel, Möhre und Knoblauch fein würfeln.",
+        "Gemüse in Öl anbraten, Hack zugeben und krümelig braten.",
+        "Tomatenmark und passierte Tomaten einrühren, mit Oregano, Salz und Pfeffer 20 Minuten köcheln lassen.",
+        "Ofen auf 180 Grad Ober- und Unterhitze vorheizen.",
+        "Soße, Lasagneplatten und Mozzarella schichtweise in eine Auflaufform geben, oben mit Parmesan bestreuen.",
+        "40 Minuten backen und vor dem Anschneiden kurz ruhen lassen."
+      ],
+      "variantenGruppen": []
+    },
+    {
+      "id": "curry",
+      "name": "Hähnchen-Curry mit Reis",
+      "typ": "favorit",
+      "protein": "gefluegel",
+      "haltbarTage": 3,
+      "portionen": 4,
+      "dauerMin": 40,
+      "airfryer": false,
+      "tags": ["pfanne"],
+      "zutaten": [
+        { "name": "Hähnchenbrust", "menge": 600, "einheit": "g", "kategorie": "fleisch-fisch", "frisch": true, "vorrat": false },
+        { "name": "Basmatireis", "menge": 300, "einheit": "g", "kategorie": "vorrat", "frisch": false, "vorrat": false },
+        { "name": "Kokosmilch light", "menge": 400, "einheit": "ml", "kategorie": "vorrat", "frisch": false, "vorrat": false },
+        { "name": "Paprika rot", "menge": 2, "einheit": "Stück", "kategorie": "obst-gemuese", "frisch": false, "vorrat": false },
+        { "name": "Zucchini", "menge": 1, "einheit": "Stück", "kategorie": "obst-gemuese", "frisch": false, "vorrat": false },
+        { "name": "Zwiebel", "menge": 1, "einheit": "Stück", "kategorie": "obst-gemuese", "frisch": false, "vorrat": false },
+        { "name": "Currypaste", "menge": 2, "einheit": "EL", "kategorie": "gewuerze", "frisch": false, "vorrat": false },
+        { "name": "Olivenöl", "menge": 1, "einheit": "EL", "kategorie": "vorrat", "frisch": false, "vorrat": true },
+        { "name": "Salz", "menge": null, "einheit": null, "kategorie": "gewuerze", "frisch": false, "vorrat": true },
+        { "name": "Pfeffer", "menge": null, "einheit": null, "kategorie": "gewuerze", "frisch": false, "vorrat": true }
+      ],
+      "schritte": [
+        "Reis nach Packungsanweisung kochen.",
+        "Hähnchen in Würfel schneiden und in Öl rundherum anbraten.",
+        "Zwiebel und Paprika in Würfel schneiden und kurz mitbraten.",
+        "Currypaste einrühren und 1 Minute mitrösten.",
+        "Kokosmilch angießen, Zucchini in Scheiben zugeben und 10 bis 12 Minuten köcheln lassen.",
+        "Mit Salz und Pfeffer abschmecken und mit dem Reis servieren."
+      ],
+      "variantenGruppen": []
+    },
+    {
+      "id": "hack-brokkoli-auflauf",
+      "name": "Hack-Brokkoli-Auflauf",
+      "typ": "favorit",
+      "protein": "hack",
+      "haltbarTage": 3,
+      "portionen": 4,
+      "dauerMin": 50,
+      "airfryer": false,
+      "tags": ["ofen"],
+      "zutaten": [
+        { "name": "Hackfleisch gemischt", "menge": 500, "einheit": "g", "kategorie": "fleisch-fisch", "frisch": true, "vorrat": false },
+        { "name": "Penne", "menge": 300, "einheit": "g", "kategorie": "vorrat", "frisch": false, "vorrat": false },
+        { "name": "Brokkoli", "menge": 500, "einheit": "g", "kategorie": "obst-gemuese", "frisch": true, "vorrat": false },
+        { "name": "Zwiebel", "menge": 1, "einheit": "Stück", "kategorie": "obst-gemuese", "frisch": false, "vorrat": false },
+        { "name": "Knoblauch", "menge": 1, "einheit": "Zehe", "kategorie": "obst-gemuese", "frisch": false, "vorrat": false },
+        { "name": "Kochsahne 15 %", "menge": 200, "einheit": "ml", "kategorie": "kuehlregal", "frisch": false, "vorrat": false },
+        { "name": "Reibekäse light", "menge": 100, "einheit": "g", "kategorie": "kuehlregal", "frisch": false, "vorrat": false },
+        { "name": "Olivenöl", "menge": 1, "einheit": "EL", "kategorie": "vorrat", "frisch": false, "vorrat": true },
+        { "name": "Paprikapulver edelsüß", "menge": 1, "einheit": "TL", "kategorie": "gewuerze", "frisch": false, "vorrat": true },
+        { "name": "Salz", "menge": null, "einheit": null, "kategorie": "gewuerze", "frisch": false, "vorrat": true },
+        { "name": "Pfeffer", "menge": null, "einheit": null, "kategorie": "gewuerze", "frisch": false, "vorrat": true }
+      ],
+      "schritte": [
+        "Penne in Salzwasser kochen, nach 5 Minuten den Brokkoli dazugeben und abgießen.",
+        "Zwiebel und Knoblauch in Öl glasig dünsten.",
+        "Hack zugeben, krümelig anbraten und mit Paprikapulver, Salz und Pfeffer würzen.",
+        "Kochsahne einrühren und kurz aufkochen lassen.",
+        "Penne und Brokkoli untermischen und in eine Auflaufform geben.",
+        "Käse darüberstreuen und bei 200 Grad 15 bis 20 Minuten überbacken."
+      ],
+      "variantenGruppen": []
+    },
+    {
+      "id": "chili-con-carne",
+      "name": "Chili con carne",
+      "typ": "favorit",
+      "protein": "hack",
+      "haltbarTage": 3,
+      "portionen": 4,
+      "dauerMin": 60,
+      "airfryer": false,
+      "tags": ["topf"],
+      "zutaten": [
+        { "name": "Rinderhack", "menge": 500, "einheit": "g", "kategorie": "fleisch-fisch", "frisch": true, "vorrat": false },
+        { "name": "Kidneybohnen", "menge": 2, "einheit": "Dose", "kategorie": "vorrat", "frisch": false, "vorrat": false },
+        { "name": "Mais", "menge": 1, "einheit": "Dose", "kategorie": "vorrat", "frisch": false, "vorrat": false },
+        { "name": "Passierte Tomaten", "menge": 500, "einheit": "g", "kategorie": "vorrat", "frisch": false, "vorrat": false },
+        { "name": "Tomatenmark", "menge": 2, "einheit": "EL", "kategorie": "vorrat", "frisch": false, "vorrat": false },
+        { "name": "Paprika rot", "menge": 2, "einheit": "Stück", "kategorie": "obst-gemuese", "frisch": false, "vorrat": false },
+        { "name": "Zwiebel", "menge": 2, "einheit": "Stück", "kategorie": "obst-gemuese", "frisch": false, "vorrat": false },
+        { "name": "Knoblauch", "menge": 2, "einheit": "Zehe", "kategorie": "obst-gemuese", "frisch": false, "vorrat": false },
+        { "name": "Basmatireis", "menge": 300, "einheit": "g", "kategorie": "vorrat", "frisch": false, "vorrat": false },
+        { "name": "Chilipulver", "menge": 1, "einheit": "TL", "kategorie": "gewuerze", "frisch": false, "vorrat": true },
+        { "name": "Kreuzkümmel", "menge": 1, "einheit": "TL", "kategorie": "gewuerze", "frisch": false, "vorrat": true },
+        { "name": "Olivenöl", "menge": 1, "einheit": "EL", "kategorie": "vorrat", "frisch": false, "vorrat": true },
+        { "name": "Salz", "menge": null, "einheit": null, "kategorie": "gewuerze", "frisch": false, "vorrat": true }
+      ],
+      "schritte": [
+        "Reis nach Packungsanweisung kochen.",
+        "Zwiebel und Knoblauch in Öl glasig dünsten.",
+        "Hack zugeben und krümelig anbraten.",
+        "Paprika würfeln, mit dem Tomatenmark zum Hack geben und 3 Minuten mitbraten.",
+        "Passierte Tomaten, Kidneybohnen und Mais zugeben, mit Chili, Kreuzkümmel und Salz würzen.",
+        "20 Minuten köcheln lassen und mit dem Reis servieren."
+      ],
+      "variantenGruppen": []
+    },
+    {
+      "id": "nudel-baukasten",
+      "name": "Nudeln mit Hähnchen",
+      "typ": "favorit",
+      "protein": "gefluegel",
+      "haltbarTage": 1,
+      "portionen": 4,
+      "dauerMin": 30,
+      "airfryer": false,
+      "tags": ["pfanne", "schnell"],
+      "zutaten": [
+        { "name": "Nudeln", "menge": 400, "einheit": "g", "kategorie": "vorrat", "frisch": false, "vorrat": false },
+        { "name": "Hähnchenbrust", "menge": 600, "einheit": "g", "kategorie": "fleisch-fisch", "frisch": true, "vorrat": false },
+        { "name": "Zwiebel", "menge": 1, "einheit": "Stück", "kategorie": "obst-gemuese", "frisch": false, "vorrat": false },
+        { "name": "Knoblauch", "menge": 2, "einheit": "Zehe", "kategorie": "obst-gemuese", "frisch": false, "vorrat": false },
+        { "name": "Olivenöl", "menge": 1, "einheit": "EL", "kategorie": "vorrat", "frisch": false, "vorrat": true },
+        { "name": "Salz", "menge": null, "einheit": null, "kategorie": "gewuerze", "frisch": false, "vorrat": true },
+        { "name": "Pfeffer", "menge": null, "einheit": null, "kategorie": "gewuerze", "frisch": false, "vorrat": true }
+      ],
+      "schritte": [
+        "Nudeln in Salzwasser nach Packung kochen.",
+        "Hähnchen in Streifen schneiden und salzen.",
+        "Zwiebel und Knoblauch in Öl anschwitzen, Hähnchen zugeben und goldbraun braten.",
+        "Beilage in Stücke schneiden, zum Hähnchen geben und 5 bis 8 Minuten mitgaren.",
+        "Soße zubereiten: Sahnesoße mit Brühe aufkochen und Parmesan einrühren, Tomatensoße 5 Minuten köcheln lassen.",
+        "Nudeln abgießen, mit Hähnchen, Gemüse und Soße mischen und mit Pfeffer abschmecken."
+      ],
+      "variantenGruppen": [
+        {
+          "id": "beilage",
+          "name": "Beilage",
+          "optionen": [
+            {
+              "id": "brokkoli",
+              "name": "Brokkoli",
+              "zutaten": [
+                { "name": "Brokkoli", "menge": 500, "einheit": "g", "kategorie": "obst-gemuese", "frisch": true, "vorrat": false }
+              ]
+            },
+            {
+              "id": "bohnen",
+              "name": "Grüne Bohnen",
+              "zutaten": [
+                { "name": "Grüne Bohnen", "menge": 400, "einheit": "g", "kategorie": "obst-gemuese", "frisch": true, "vorrat": false }
+              ]
+            },
+            {
+              "id": "blumenkohl",
+              "name": "Blumenkohl",
+              "zutaten": [
+                { "name": "Blumenkohl", "menge": 1, "einheit": "Stück", "kategorie": "obst-gemuese", "frisch": true, "vorrat": false }
+              ]
+            },
+            {
+              "id": "pilze",
+              "name": "Champignons",
+              "zutaten": [
+                { "name": "Champignons", "menge": 300, "einheit": "g", "kategorie": "obst-gemuese", "frisch": true, "vorrat": false }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "sosse",
+          "name": "Soße",
+          "optionen": [
+            {
+              "id": "sahne",
+              "name": "Sahnesoße",
+              "zutaten": [
+                { "name": "Kochsahne 15 %", "menge": 200, "einheit": "ml", "kategorie": "kuehlregal", "frisch": false, "vorrat": false },
+                { "name": "Gemüsebrühe", "menge": 250, "einheit": "ml", "kategorie": "vorrat", "frisch": false, "vorrat": true },
+                { "name": "Parmesan", "menge": 30, "einheit": "g", "kategorie": "kuehlregal", "frisch": false, "vorrat": false }
+              ]
+            },
+            {
+              "id": "tomate",
+              "name": "Tomatensoße",
+              "zutaten": [
+                { "name": "Passierte Tomaten", "menge": 500, "einheit": "g", "kategorie": "vorrat", "frisch": false, "vorrat": false },
+                { "name": "Tomatenmark", "menge": 1, "einheit": "EL", "kategorie": "vorrat", "frisch": false, "vorrat": false },
+                { "name": "Oregano", "menge": 1, "einheit": "TL", "kategorie": "gewuerze", "frisch": false, "vorrat": true }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ofengemuese",
+      "name": "Ofengemüse mit Kartoffeln und Süßkartoffeln",
+      "typ": "favorit",
+      "protein": "vegetarisch",
+      "haltbarTage": 1,
+      "portionen": 4,
+      "dauerMin": 60,
+      "airfryer": false,
+      "tags": ["ofen"],
+      "zutaten": [
+        { "name": "Kartoffeln", "menge": 800, "einheit": "g", "kategorie": "obst-gemuese", "frisch": false, "vorrat": false },
+        { "name": "Süßkartoffeln", "menge": 500, "einheit": "g", "kategorie": "obst-gemuese", "frisch": false, "vorrat": false },
+        { "name": "Champignons", "menge": 250, "einheit": "g", "kategorie": "obst-gemuese", "frisch": true, "vorrat": false },
+        { "name": "Paprika rot", "menge": 2, "einheit": "Stück", "kategorie": "obst-gemuese", "frisch": false, "vorrat": false },
+        { "name": "Zucchini", "menge": 2, "einheit": "Stück", "kategorie": "obst-gemuese", "frisch": false, "vorrat": false },
+        { "name": "Olivenöl", "menge": 2, "einheit": "EL", "kategorie": "vorrat", "frisch": false, "vorrat": true },
+        { "name": "Paprikapulver edelsüß", "menge": 1, "einheit": "TL", "kategorie": "gewuerze", "frisch": false, "vorrat": true },
+        { "name": "Salz", "menge": null, "einheit": null, "kategorie": "gewuerze", "frisch": false, "vorrat": true },
+        { "name": "Pfeffer", "menge": null, "einheit": null, "kategorie": "gewuerze", "frisch": false, "vorrat": true }
+      ],
+      "schritte": [
+        "Ofen auf 220 Grad Ober- und Unterhitze vorheizen.",
+        "Kartoffeln und Süßkartoffeln in Spalten schneiden, Paprika und Zucchini in Stücke schneiden.",
+        "Kartoffeln und Süßkartoffeln mit Öl, Paprikapulver, Salz und Pfeffer mischen und 20 Minuten vorbacken.",
+        "Paprika, Zucchini und Champignons dazugeben und weitere 25 Minuten backen.",
+        "Steaks in der Pfanne je nach Dicke 2 bis 3 Minuten pro Seite braten und kurz ruhen lassen.",
+        "Ofenkäse auf das Gemüse legen und 10 Minuten überbacken."
+      ],
+      "variantenGruppen": [
+        {
+          "id": "dazu",
+          "name": "Dazu",
+          "optionen": [
+            {
+              "id": "steak",
+              "name": "Grillsteak",
+              "zutaten": [
+                { "name": "Rumpsteak", "menge": 4, "einheit": "Stück", "kategorie": "fleisch-fisch", "frisch": true, "vorrat": false }
+              ]
+            },
+            {
+              "id": "ofenkaese",
+              "name": "Ofenkäse",
+              "zutaten": [
+                { "name": "Ofenkäse", "menge": 4, "einheit": "Stück", "kategorie": "kuehlregal", "frisch": false, "vorrat": false }
+              ]
+            },
+            {
+              "id": "beides",
+              "name": "Grillsteak und Ofenkäse",
+              "zutaten": [
+                { "name": "Rumpsteak", "menge": 2, "einheit": "Stück", "kategorie": "fleisch-fisch", "frisch": true, "vorrat": false },
+                { "name": "Ofenkäse", "menge": 2, "einheit": "Stück", "kategorie": "kuehlregal", "frisch": false, "vorrat": false }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
