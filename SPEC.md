@@ -147,7 +147,7 @@ Ein Objekt, für beide Personen geteilt:
 // Link
 { id: "link-<zeitstempel>", titel: "Gnocchi-Pfanne", url: "https://...", hinzugefuegt: "2026-11-15", geplantAm: null | "2026-11-22" }
 // Plan
-{ wocheAb: "2026-11-22", erstellt: "<ISO-Zeitpunkt>", neuSlot: "A" | "C" | null, probiertHinzugefuegt: true | false,
+{ wocheAb: "2026-11-22", erstellt: "<ISO-Zeitpunkt>", neuSlot: "A" | "B" | "C" | null, probiertHinzugefuegt: true | false,
   slots: { A: SlotEintrag, B: SlotEintrag, C: SlotEintrag } }
 // SlotEintrag
 { quelle: "rezept", id: "nudel-baukasten", variante: { "beilage": "brokkoli", "sosse": "sahne" } }
@@ -204,6 +204,9 @@ export function kandidaten(recipes, state)             // -> Kandidat[]
 // Kandidat: { quelle, id, name, haltbarTage, protein, istFavorit, istNeuKandidat, prioritaet }
 export function planeWoche({ recipes, state, heute, rng })          // -> { plan, hinweise: string[] }
 export function wuerfleSlot({ recipes, state, plan, slot, rng })    // -> { plan, hinweise }
+export function planeMitWunsch({ recipes, state, heute, rng, wunsch, erhalten }) // -> { plan | null, hinweise }
+export function tauscheSlots(plan, von, nach)                       // -> cloned plan; rejects unknown slots
+export function filterKandidaten({ recipes, state, slot, suche, filter, aktuell })
 export function setzeSlot(plan, slot, eintrag)                      // -> neuer Plan (unverändertes Original)
 export function pruefePlan({ plan, recipes, state })                // -> string[] Regelverstöße, leer = ok
 export function uebernehmePlan(state, plan)                         // -> neuer State
@@ -261,7 +264,7 @@ Beide Speicher-Module exportieren dieselbe Schnittstelle:
 
 ```js
 export async function erstelleStore(optionen)
-// -> { laden(): Promise<State>, speichern(state): Promise<void>, abonnieren(callback): () => void }
+// -> { laden(): Promise<State>, speichern(state, change): Promise<State>, abonnieren(callback): () => void }
 ```
 - `laden` liefert einen leeren State (`aktuellerPlan: null`, leere Arrays), wenn noch nichts gespeichert ist.
 - Erfolgsmeldungen für hinzugefügte Links und übernommene lokale Daten erscheinen erst nach erfolgreichem Speichern. Bei einem Fehler bleibt die Fehlermeldung sichtbar und wird nicht durch eine Erfolgsmeldung ersetzt.
@@ -273,29 +276,26 @@ export async function erstelleStore(optionen)
 
 ## 6. Oberfläche
 
-Deutsch, mobil zuerst (375 px breit muss sauber aussehen), helles und dunkles Farbschema über `prefers-color-scheme`. Keine Frameworks, keine externen Schriften. Als Homescreen-App installierbar (`manifest.webmanifest`, `display: standalone`, Icons).
+Deutsch, mobil zuerst (360, 393 und 412 px breit müssen sauber aussehen), helles und dunkles Farbschema über `prefers-color-scheme`. Keine Frameworks, keine externen Schriften. Als Homescreen-App installierbar (`manifest.webmanifest`, `display: standalone`, Icons).
 
-Navigation oben (bleibt beim Scrollen sichtbar) mit drei Tabs, jeweils mit eigenem Icon: Woche (Kalender), Einkauf (Korb), Rezepte (Buch). Akzentfarbe Orange.
+Navigation unten (bleibt beim Scrollen sichtbar) mit drei Tabs, jeweils mit eigenem Icon: Woche (Kalender), Einkauf (Korb), Rezepte (Buch). Akzentfarbe Orange.
 
-### 6.1 Woche
-- Überschrift: "Woche ab So, 22.11."
-- Kein Plan vorhanden: großer Button "Woche planen".
-- Plan vorhanden: drei Karten in der Reihenfolge A, B, C. Jede Karte zeigt:
-  - Kochtag und Esstage, z.B. "Sonntag kochen · So + Mo", bei B "Sonntag vorkochen · Di + Mi"
-  - Gerichtname (inkl. Variante), kleine Badges: "Neu", "Fisch", "Geflügel", "Airfryer", Dauer in Minuten
-  - Buttons: "Neu würfeln", "Ändern", "Zu Bring", "Rezept"
-  - nur beim neuen Rezept: "Hat geschmeckt" (macht es zum Favoriten, danach Text "Ist jetzt Favorit")
-- "Ändern" öffnet eine Liste aller Kandidaten, die R1 für diesen Slot erfüllen, Favoriten zuerst. Auswahl setzt den Slot über `setzeSlot`.
-- Unter den Karten: Hinweise aus dem Planer und Ergebnisse von `pruefePlan` in einem dezenten Kasten.
-- Ganz unten: Button "Woche neu planen" mit Bestätigung ("Aktuellen Plan ersetzen?").
-- "Rezept" öffnet die Rezeptseite (bei Links die externe URL) in einem neuen Tab.
+### 6.1 Week
 
-### 6.2 Einkauf
-- Zwei Abschnitte: "Samstag (Großeinkauf)" und "Donnerstag (Nachkauf)", jeweils nach Kategorie gruppiert mit deutschen Kategorienamen.
-- Posten: Menge, Einheit, Name; darunter klein die Rezepte. Vorrats-Posten grau unter "Habt ihr wahrscheinlich da".
-- Pro Abschnitt ein Button "Liste kopieren" (Text, eine Zeile pro Posten, z.B. "500 g Rinderhack").
-- Pro Gericht ein Button "Zu Bring" (gleicher Link wie in 6.1).
-- Links-Rezepte: "Zutaten siehe Rezept" mit Link.
+The heading is “Deine Woche” with the week's date underneath. Three cards show
+So + Mo, Di + Mi and Do + Fr, with separate cooking instructions. The title opens
+details; one menu contains replacement, reroll, Bring and movement. The new recipe
+keeps “Hat geschmeckt”. Optional wishes, replanning and undo follow sections 11–12.
+Replacement uses a searchable, filtered modal and commits through `setzeSlot`.
+Warnings remain visible below the cards. Recipe links open in a new tab.
+
+### 6.2 Shopping
+
+Saturday and Thursday selectors show one list at a time. Ingredients are grouped
+by category; amount and name share a row. Expanding a row reveals source recipes.
+Only pantry-flagged ingredients start in the collapsed pantry section. Copy uses
+the selected day's list and supplies a text fallback on failure. Per-dish Bring
+links follow the ingredients; external recipes retain “Zutaten siehe Rezept”.
 
 ### 6.3 Rezepte
 - Liste aller Favoriten, darunter alle Pool-Rezepte (zugeklappt) und eigene Links.
@@ -326,7 +326,7 @@ service cloud.firestore {
 ```
   Die echte ID wird nur in der Firebase-Konsole eingetragen.
 - Firebase-SDK als ES-Module von `https://www.gstatic.com/firebasejs/<feste Version>/...`, eine feste Versionsnummer, nie "latest".
-- Gleichzeitige Änderungen: last write wins, kein Merge. Vor jedem Speichern wird der zuletzt per `onSnapshot` empfangene State als Basis genommen.
+- Concurrent changes use Firestore transactions and field-level merging. Stale plan revisions fail rather than overwrite a newer plan; see section 11.
 - `js/firebase-config.js` enthält die öffentliche Web-Konfiguration (`apiKey`, `authDomain`, `projectId`, `appId`). Das ist bei Firebase üblich und kein Geheimnis; der Schutz liegt in den Regeln.
 
 ## 8. Nicht im Umfang (Version 1)
@@ -346,3 +346,80 @@ service cloud.firestore {
 - App läuft lokal (`python3 -m http.server 8000`) im lokalen Modus und auf GitHub Pages mit Firebase
 - Zwei Browser mit derselben Haushalts-ID sehen Änderungen des anderen innerhalb weniger Sekunden
 - Bring-Import einer Rezeptseite manuell geprüft (Ergebnis in P8 dokumentiert)
+
+
+## 11. Weekly wish, movement and concurrent writes (15 November 2026)
+
+The approved UI contract is `docs/mockups/README.md`; colors are defined in
+`docs/mockups/palette.json`. This section describes implemented behavior.
+
+A plan may contain `wunsch: { slot, eintrag, manuell? }`. There is at most one
+shared wish. Initial placement checks storage compatibility and permits a new
+recipe only in A or C. “Tag egal” assigns a compatible slot once. Applying a wish
+to an existing plan prefers unchanged entries, including their variants, within
+the strictest feasible rule tier. The preview lists changed slots. Replanning
+keeps the exact wish entry and assigned slot. A wish counts toward the new-recipe
+quota; the R3/R4/R2 relaxation order from section 3 remains. Wish planning never
+uses the emergency fallback that violates storage or distinctness. No feasible
+combination leaves the saved plan untouched. Releasing a wish removes only its
+constraint. Wishes belong to the plan rather than a separate user preference.
+
+`tauscheSlots` exchanges complete entries, moves `neuSlot` and the wish with the
+entry, accepts empty destinations and rejects unknown slot identifiers. A same-slot
+operation is a no-op. A manually moved new recipe may therefore have `neuSlot: B`,
+while automatic initial placement remains A/C only. Manual wishes carry `manuell`
+so replanning does not silently relocate a manually placed dish; existing rule
+warnings remain visible. Movement and replacement pass through `uebernehmePlan`,
+which keeps and reverses tried/link provenance. Shopping is derived from the
+resulting slots, including fresh ingredients crossing C.
+
+Each successful plan mutation receives a UUID `planRevision`; every write also
+receives `revision` and an increasing `changeSequence`. The sequence distinguishes
+a buffered older listener event from a newer update when a write finishes. Storage takes a field-level change with its base and intended
+state. Firestore uses `runTransaction` to reapply that change to the latest document.
+Favorite and tried additions/removals merge by identity. Link edits merge by field;
+conflicting fields, deleted links and stale plan revisions fail instead of replacing
+newer data. Local tabs use the Web Locks API when available and storage events.
+Browsers without Web Locks have no cross-tab atomicity guarantee.
+
+Successful replanning offers one-step undo until the next plan mutation. The undo
+control stays in the week screen and menu after transient feedback disappears.
+It restores the previous plan, wish and only the planning provenance changed by
+that operation. Favorites, other links and unrelated tried entries survive. A
+partner plan revision invalidates undo and cancels a move or drag. Failed saves
+retain the intended change in memory, with persistent retry/discard controls;
+this is not reload persistence. Retry still checks the original plan revision.
+Write success never clears a listener failure. Reconnect preserves current form
+and sheet drafts; initial load failures still use the existing start recovery.
+
+## 12. Mobile interaction contract (15 November 2026)
+
+Woche, Einkauf and Rezepte use fixed bottom navigation with safe-area padding.
+Week cards separate eating days from the cooking instruction. Their title opens
+a detail sheet, and the overflow menu contains replacement, reroll, Bring and
+movement. The new recipe retains “Hat geschmeckt”. A 300 ms hold on the dedicated
+handle starts pointer movement; the card body keeps native scrolling. Cancellation,
+outside release and lost capture do not save. The destination sheet offers the
+same movement function for keyboard and assistive technology.
+
+Replacement filters enforce R1 before search. Favorites are first, the current
+entry is excluded, and status filters are mutually exclusive. “Neu” excludes tried
+pool recipes and planned non-favorite links. Duration is numeric, protein filters
+use OR within that pair and AND with other filters. Unknown link metadata never
+matches duration/appliance/protein filters. Selection commits via `setzeSlot` and
+`uebernehmePlan`. Modal dialogs contain focus; Escape, close and browser Back cancel
+without applying drafts and restore the trigger. Search and wish drafts remain
+outside the rerendered app shell. Replacement results have their own scroll area.
+
+Shopping has Saturday/Thursday selectors. Copy uses the selected day and provides
+a selectable text fallback after clipboard failure. Ingredient groups start open,
+source recipe names are disclosed per row, and only items carrying the pantry
+flag start in the collapsed pantry section. Bring actions follow the ingredients.
+Recipe titles take a full row with actions below; link input, selection and focus
+survive household updates.
+
+Controls are at least 48 by 48 CSS pixels. The shared neutral palette supports both
+themes, reduced motion and enlarged text. Primary orange buttons use 20 px or larger
+bold light labels; small text uses the separate accent token. Physical iPhone and
+Samsung checks and live Firebase verification are release checks, not claims made
+by browser emulation or the transaction transport tests.

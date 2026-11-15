@@ -54,6 +54,7 @@ function seite(werte) {
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>${esc(titel)}</title>
 <link rel="stylesheet" href="../css/rezept.css">
+<link rel="icon" href="../icons/icon.svg" type="image/svg+xml">
 <script type="application/ld+json">
 ${jsonLd(werte)}
 </script>

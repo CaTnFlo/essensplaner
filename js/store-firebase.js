@@ -1,3 +1,4 @@
+import { anwenden } from "./state-change.js";
 // Speicher in Firestore (SPEC 5.5 und 7). Gleiche Schnittstelle wie store-local.js.
 // Fehler werden geworfen bzw. an den Fehler-Callback gemeldet, nie stillschweigend geschluckt.
 
@@ -28,10 +29,15 @@ export async function erstelleStore({ haushaltId, config }) {
       const snap = await fs.getDoc(ref);
       return snap.exists() ? ausDokument(snap.data()) : leererState();
     },
-    async speichern(state) {
-      // JSON-Roundtrip entfernt undefined-Werte, die Firestore ablehnt.
-      const daten = JSON.parse(JSON.stringify(state));
-      await fs.setDoc(ref, { ...daten, aktualisiert: fs.serverTimestamp() });
+    async speichern(state, change) {
+      if (!change) throw new Error("Änderungsbasis fehlt");
+      return fs.runTransaction(fs.getFirestore(app), async transaction => {
+        const snapshot = await transaction.get(ref);
+        const next = anwenden(snapshot.exists() ? ausDokument(snapshot.data()) : leererState(), change);
+        const daten = JSON.parse(JSON.stringify(next));
+        transaction.set(ref, { ...daten, aktualisiert: fs.serverTimestamp() });
+        return next;
+      });
     },
     abonnieren(callback, fehlerCallback) {
       return fs.onSnapshot(
