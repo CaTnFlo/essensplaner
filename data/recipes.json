@@ -314,6 +314,3413 @@
           ]
         }
       ]
+    },
+    {
+      "id": "haehnchen-fajitas",
+      "name": "Hähnchen-Fajitas mit Paprika und Zwiebeln",
+      "typ": "pool",
+      "protein": "gefluegel",
+      "haltbarTage": 1,
+      "portionen": 4,
+      "dauerMin": 30,
+      "airfryer": true,
+      "tags": [
+        "airfryer",
+        "schnell"
+      ],
+      "zutaten": [
+        {
+          "name": "Hähnchenbrustfilet",
+          "menge": 600,
+          "einheit": "g",
+          "kategorie": "fleisch-fisch",
+          "frisch": true,
+          "vorrat": false
+        },
+        {
+          "name": "Paprika rot",
+          "menge": 2,
+          "einheit": "Stück",
+          "kategorie": "obst-gemuese",
+          "frisch": false,
+          "vorrat": false
+        },
+        {
+          "name": "Zwiebel",
+          "menge": 2,
+          "einheit": "Stück",
+          "kategorie": "obst-gemuese",
+          "frisch": false,
+          "vorrat": false
+        },
+        {
+          "name": "Limette",
+          "menge": 1,
+          "einheit": "Stück",
+          "kategorie": "obst-gemuese",
+          "frisch": false,
+          "vorrat": false
+        },
+        {
+          "name": "Weizentortilla",
+          "menge": 8,
+          "einheit": "Stück",
+          "kategorie": "backwaren",
+          "frisch": false,
+          "vorrat": false
+        },
+        {
+          "name": "Naturjoghurt",
+          "menge": 200,
+          "einheit": "g",
+          "kategorie": "kuehlregal",
+          "frisch": false,
+          "vorrat": false
+        },
+        {
+          "name": "Paprikapulver edelsüß",
+          "menge": 1,
+          "einheit": "TL",
+          "kategorie": "gewuerze",
+          "frisch": false,
+          "vorrat": true
+        },
+        {
+          "name": "Kreuzkümmel",
+          "menge": 1,
+          "einheit": "TL",
+          "kategorie": "gewuerze",
+          "frisch": false,
+          "vorrat": true
+        },
+        {
+          "name": "Olivenöl",
+          "menge": 2,
+          "einheit": "EL",
+          "kategorie": "vorrat",
+          "frisch": false,
+          "vorrat": true
+        },
+        {
+          "name": "Salz",
+          "menge": null,
+          "einheit": null,
+          "kategorie": "gewuerze",
+          "frisch": false,
+          "vorrat": true
+        }
+      ],
+      "schritte": [
+        "Hähnchen in dünne Streifen schneiden und mit Paprikapulver, Kreuzkümmel, 1 EL Öl und Salz mischen.",
+        "Paprika und Zwiebeln in Streifen schneiden.",
+        "Hähnchen im Airfryer bei 200 °C etwa 12 Minuten garen, nach der Hälfte schütteln.",
+        "Paprika und Zwiebeln in der Pfanne mit dem restlichen Öl 8 Minuten braten und salzen.",
+        "Joghurt mit Limettenabrieb und etwas Saft zu einem Dip verrühren.",
+        "Tortillas kurz erwärmen und mit Hähnchen, Gemüse und Dip füllen."
+      ]
+    },
+    {
+      "id": "haehnchen-gyros-pitabrot",
+      "name": "Hähnchen-Gyros mit Pitabrot und Tzatziki",
+      "typ": "pool",
+      "protein": "gefluegel",
+      "haltbarTage": 2,
+      "portionen": 4,
+      "dauerMin": 35,
+      "airfryer": false,
+      "tags": [
+        "pfanne"
+      ],
+      "zutaten": [
+        {
+          "name": "Hähnchenbrustfilet",
+          "menge": 600,
+          "einheit": "g",
+          "kategorie": "fleisch-fisch",
+          "frisch": true,
+          "vorrat": false
+        },
+        {
+          "name": "Pitabrot",
+          "menge": 4,
+          "einheit": "Stück",
+          "kategorie": "backwaren",
+          "frisch": false,
+          "vorrat": false
+        },
+        {
+          "name": "Salatgurke",
+          "menge": 1,
+          "einheit": "Stück",
+          "kategorie": "obst-gemuese",
+          "frisch": false,
+          "vorrat": false
+        },
+        {
+          "name": "Tomate",
+          "menge": 2,
+          "einheit": "Stück",
+          "kategorie": "obst-gemuese",
+          "frisch": false,
+          "vorrat": false
+        },
+        {
+          "name": "Zwiebel rot",
+          "menge": 1,
+          "einheit": "Stück",
+          "kategorie": "obst-gemuese",
+          "frisch": false,
+          "vorrat": false
+        },
+        {
+          "name": "Knoblauch",
+          "menge": 2,
+          "einheit": "Zehe",
+          "kategorie": "obst-gemuese",
+          "frisch": false,
+          "vorrat": false
+        },
+        {
+          "name": "Naturjoghurt",
+          "menge": 250,
+          "einheit": "g",
+          "kategorie": "kuehlregal",
+          "frisch": false,
+          "vorrat": false
+        },
+        {
+          "name": "Minze",
+          "menge": 1,
+          "einheit": "Bund",
+          "kategorie": "obst-gemuese",
+          "frisch": true,
+          "vorrat": false
+        },
+        {
+          "name": "Zitrone",
+          "menge": 1,
+          "einheit": "Stück",
+          "kategorie": "obst-gemuese",
+          "frisch": false,
+          "vorrat": false
+        },
+        {
+          "name": "Oregano getrocknet",
+          "menge": 1,
+          "einheit": "TL",
+          "kategorie": "gewuerze",
+          "frisch": false,
+          "vorrat": true
+        },
+        {
+          "name": "Paprikapulver edelsüß",
+          "menge": 1,
+          "einheit": "TL",
+          "kategorie": "gewuerze",
+          "frisch": false,
+          "vorrat": true
+        },
+        {
+          "name": "Olivenöl",
+          "menge": 2,
+          "einheit": "EL",
+          "kategorie": "vorrat",
+          "frisch": false,
+          "vorrat": true
+        },
+        {
+          "name": "Salz",
+          "menge": null,
+          "einheit": null,
+          "kategorie": "gewuerze",
+          "frisch": false,
+          "vorrat": true
+        }
+      ],
+      "schritte": [
+        "Hähnchen in dünne Streifen schneiden und mit Oregano, Paprikapulver, 1 EL Öl, Salz und einer geriebenen Knoblauchzehe mischen.",
+        "Hähnchen in einer heißen Pfanne in 6 Minuten rundum braten.",
+        "Gurke grob reiben, gut ausdrücken und mit Joghurt, Minze, Zitronensaft, Salz und der zweiten Knoblauchzehe zu Tzatziki verrühren.",
+        "Tomaten und Zwiebel würfeln und mit Salz und Öl mischen.",
+        "Pitabrot kurz in der Pfanne oder im Ofen warm machen.",
+        "Pitabrot mit Hähnchen, Tzatziki und Tomaten-Zwiebel-Salat füllen."
+      ]
+    },
+    {
+      "id": "haehnchen-kichererbsen-topf",
+      "name": "Hähnchen-Kichererbsen-Topf mit Zucchini",
+      "typ": "pool",
+      "protein": "gefluegel",
+      "haltbarTage": 3,
+      "portionen": 4,
+      "dauerMin": 45,
+      "airfryer": false,
+      "tags": [
+        "topf"
+      ],
+      "zutaten": [
+        {
+          "name": "Hähnchenoberschenkel ohne Haut",
+          "menge": 800,
+          "einheit": "g",
+          "kategorie": "fleisch-fisch",
+          "frisch": true,
+          "vorrat": false
+        },
+        {
+          "name": "Kichererbsen",
+          "menge": 2,
+          "einheit": "Dose",
+          "kategorie": "vorrat",
+          "frisch": false,
+          "vorrat": false
+        },
+        {
+          "name": "Zucchini",
+          "menge": 2,
+          "einheit": "Stück",
+          "kategorie": "obst-gemuese",
+          "frisch": false,
+          "vorrat": false
+        },
+        {
+          "name": "Paprika rot",
+          "menge": 1,
+          "einheit": "Stück",
+          "kategorie": "obst-gemuese",
+          "frisch": false,
+          "vorrat": false
+        },
+        {
+          "name": "Zwiebel",
+          "menge": 1,
+          "einheit": "Stück",
+          "kategorie": "obst-gemuese",
+          "frisch": false,
+          "vorrat": false
+        },
+        {
+          "name": "Knoblauch",
+          "menge": 2,
+          "einheit": "Zehe",
+          "kategorie": "obst-gemuese",
+          "frisch": false,
+          "vorrat": false
+        },
+        {
+          "name": "Tomaten, gehackt",
+          "menge": 2,
+          "einheit": "Dose",
+          "kategorie": "vorrat",
+          "frisch": false,
+          "vorrat": false
+        },
+        {
+          "name": "Gemüsebrühe",
+          "menge": 500,
+          "einheit": "ml",
+          "kategorie": "vorrat",
+          "frisch": false,
+          "vorrat": true
+        },
+        {
+          "name": "Kreuzkümmel",
+          "menge": 1,
+          "einheit": "TL",
+          "kategorie": "gewuerze",
+          "frisch": false,
+          "vorrat": true
+        },
+        {
+          "name": "Paprikapulver edelsüß",
+          "menge": 1,
+          "einheit": "TL",
+          "kategorie": "gewuerze",
+          "frisch": false,
+          "vorrat": true
+        },
+        {
+          "name": "Olivenöl",
+          "menge": 2,
+          "einheit": "EL",
+          "kategorie": "vorrat",
+          "frisch": false,
+          "vorrat": true
+        },
+        {
+          "name": "Petersilie",
+          "menge": 1,
+          "einheit": "Bund",
+          "kategorie": "obst-gemuese",
+          "frisch": true,
+          "vorrat": false
+        },
+        {
+          "name": "Salz",
+          "menge": null,
+          "einheit": null,
+          "kategorie": "gewuerze",
+          "frisch": false,
+          "vorrat": true
+        }
+      ],
+      "schritte": [
+        "Zwiebel und Knoblauch würfeln, Hähnchen in mundgerechte Stücke schneiden.",
+        "Öl im Topf erhitzen und das Hähnchen rundum 5 Minuten anbraten, herausnehmen.",
+        "Zwiebel, Paprika und Zucchini in Würfeln mit Knoblauch 5 Minuten dünsten, mit Kreuzkümmel und Paprikapulver würzen.",
+        "Tomaten, Brühe und abgetropfte Kichererbsen zugeben, Hähnchen wieder dazugeben.",
+        "Alles 25 Minuten köcheln lassen, mit Salz abschmecken.",
+        "Petersilie hacken und vor dem Servieren darüberstreuen."
+      ]
+    },
+    {
+      "id": "putenschnitzel-zucchini-kartoffeln",
+      "name": "Putenschnitzel mit Zucchini-Tomaten-Gemüse und Kartoffeln",
+      "typ": "pool",
+      "protein": "gefluegel",
+      "haltbarTage": 1,
+      "portionen": 4,
+      "dauerMin": 35,
+      "airfryer": false,
+      "tags": [
+        "pfanne"
+      ],
+      "zutaten": [
+        {
+          "name": "Putenschnitzel",
+          "menge": 600,
+          "einheit": "g",
+          "kategorie": "fleisch-fisch",
+          "frisch": true,
+          "vorrat": false
+        },
+        {
+          "name": "Kartoffeln, festkochend",
+          "menge": 800,
+          "einheit": "g",
+          "kategorie": "obst-gemuese",
+          "frisch": false,
+          "vorrat": false
+        },
+        {
+          "name": "Zucchini",
+          "menge": 2,
+          "einheit": "Stück",
+          "kategorie": "obst-gemuese",
+          "frisch": false,
+          "vorrat": false
+        },
+        {
+          "name": "Kirschtomaten",
+          "menge": 500,
+          "einheit": "g",
+          "kategorie": "obst-gemuese",
+          "frisch": false,
+          "vorrat": false
+        },
+        {
+          "name": "Zwiebel",
+          "menge": 1,
+          "einheit": "Stück",
+          "kategorie": "obst-gemuese",
+          "frisch": false,
+          "vorrat": false
+        },
+        {
+          "name": "Knoblauch",
+          "menge": 1,
+          "einheit": "Zehe",
+          "kategorie": "obst-gemuese",
+          "frisch": false,
+          "vorrat": false
+        },
+        {
+          "name": "Basilikum",
+          "menge": 1,
+          "einheit": "Bund",
+          "kategorie": "obst-gemuese",
+          "frisch": true,
+          "vorrat": false
+        },
+        {
+          "name": "Olivenöl",
+          "menge": 2,
+          "einheit": "EL",
+          "kategorie": "vorrat",
+          "frisch": false,
+          "vorrat": true
+        },
+        {
+          "name": "Oregano getrocknet",
+          "menge": 1,
+          "einheit": "TL",
+          "kategorie": "gewuerze",
+          "frisch": false,
+          "vorrat": true
+        },
+        {
+          "name": "Salz",
+          "menge": null,
+          "einheit": null,
+          "kategorie": "gewuerze",
+          "frisch": false,
+          "vorrat": true
+        },
+        {
+          "name": "Pfeffer",
+          "menge": null,
+          "einheit": null,
+          "kategorie": "gewuerze",
+          "frisch": false,
+          "vorrat": true
+        }
+      ],
+      "schritte": [
+        "Kartoffeln waschen, halbieren und in Salzwasser 15 Minuten garen, abgießen.",
+        "Zucchini würfeln, Zwiebel und Knoblauch fein hacken.",
+        "Schnitzel salzen, pfeffern und in 1 EL Öl je Seite 3 bis 4 Minuten braten. Warm stellen.",
+        "Zwiebel und Knoblauch im Bratfett glasig dünsten, Zucchini 5 Minuten mitbraten.",
+        "Kirschtomaten zugeben, 3 Minuten weich werden lassen und mit Oregano würzen.",
+        "Basilikum unterheben und mit Schnitzeln und Kartoffeln servieren."
+      ]
+    },
+    {
+      "id": "haehnchen-basilikum-wok",
+      "name": "Hähnchen-Basilikum-Wok mit Jasminreis",
+      "typ": "pool",
+      "protein": "gefluegel",
+      "haltbarTage": 1,
+      "portionen": 4,
+      "dauerMin": 25,
+      "airfryer": false,
+      "tags": [
+        "pfanne",
+        "schnell",
+        "scharf"
+      ],
+      "zutaten": [
+        {
+          "name": "Hähnchenbrustfilet",
+          "menge": 600,
+          "einheit": "g",
+          "kategorie": "fleisch-fisch",
+          "frisch": true,
+          "vorrat": false
+        },
+        {
+          "name": "Jasminreis",
+          "menge": 300,
+          "einheit": "g",
+          "kategorie": "vorrat",
+          "frisch": false,
+          "vorrat": false
+        },
+        {
+          "name": "Paprika rot",
+          "menge": 2,
+          "einheit": "Stück",
+          "kategorie": "obst-gemuese",
+          "frisch": false,
+          "vorrat": false
+        },
+        {
+          "name": "Zuckerschoten",
+          "menge": 200,
+          "einheit": "g",
+          "kategorie": "obst-gemuese",
+          "frisch": false,
+          "vorrat": false
+        },
+        {
+          "name": "Frühlingszwiebel",
+          "menge": 4,
+          "einheit": "Stück",
+          "kategorie": "obst-gemuese",
+          "frisch": false,
+          "vorrat": false
+        },
+        {
+          "name": "Knoblauch",
+          "menge": 2,
+          "einheit": "Zehe",
+          "kategorie": "obst-gemuese",
+          "frisch": false,
+          "vorrat": false
+        },
+        {
+          "name": "Chili",
+          "menge": 1,
+          "einheit": "Stück",
+          "kategorie": "obst-gemuese",
+          "frisch": false,
+          "vorrat": false
+        },
+        {
+          "name": "Thai-Basilikum",
+          "menge": 1,
+          "einheit": "Bund",
+          "kategorie": "obst-gemuese",
+          "frisch": true,
+          "vorrat": false
+        },
+        {
+          "name": "Sojasoße",
+          "menge": 3,
+          "einheit": "EL",
+          "kategorie": "vorrat",
+          "frisch": false,
+          "vorrat": true
+        },
+        {
+          "name": "Honig",
+          "menge": 1,
+          "einheit": "TL",
+          "kategorie": "vorrat",
+          "frisch": false,
+          "vorrat": true
+        },
+        {
+          "name": "Pflanzenöl",
+          "menge": 2,
+          "einheit": "EL",
+          "kategorie": "vorrat",
+          "frisch": false,
+          "vorrat": true
+        }
+      ],
+      "schritte": [
+        "Reis nach Packungsanweisung garen.",
+        "Hähnchen in Streifen schneiden und mit 2 EL Sojasoße und dem Honig mischen.",
+        "Paprika und Zuckerschoten in Stücke, Frühlingszwiebeln in Ringe schneiden. Knoblauch und Chili fein hacken.",
+        "Öl im Wok stark erhitzen, Hähnchen 4 bis 5 Minuten braten und herausnehmen.",
+        "Gemüse, Knoblauch und Chili 3 Minuten braten, Hähnchen zurückgeben und mit der restlichen Sojasoße ablöschen.",
+        "Basilikum unterheben und mit dem Reis servieren."
+      ]
+    },
+    {
+      "id": "haehnchen-schenkel-couscous",
+      "name": "Airfryer-Hähnchenschenkel mit Paprika-Couscous",
+      "typ": "pool",
+      "protein": "gefluegel",
+      "haltbarTage": 3,
+      "portionen": 4,
+      "dauerMin": 50,
+      "airfryer": true,
+      "tags": [
+        "airfryer"
+      ],
+      "zutaten": [
+        {
+          "name": "Hähnchenoberschenkel ohne Haut",
+          "menge": 800,
+          "einheit": "g",
+          "kategorie": "fleisch-fisch",
+          "frisch": true,
+          "vorrat": false
+        },
+        {
+          "name": "Couscous",
+          "menge": 300,
+          "einheit": "g",
+          "kategorie": "vorrat",
+          "frisch": false,
+          "vorrat": false
+        },
+        {
+          "name": "Paprika gelb",
+          "menge": 2,
+          "einheit": "Stück",
+          "kategorie": "obst-gemuese",
+          "frisch": false,
+          "vorrat": false
+        },
+        {
+          "name": "Kirschtomaten",
+          "menge": 250,
+          "einheit": "g",
+          "kategorie": "obst-gemuese",
+          "frisch": false,
+          "vorrat": false
+        },
+        {
+          "name": "Zwiebel rot",
+          "menge": 1,
+          "einheit": "Stück",
+          "kategorie": "obst-gemuese",
+          "frisch": false,
+          "vorrat": false
+        },
+        {
+          "name": "Zitrone",
+          "menge": 1,
+          "einheit": "Stück",
+          "kategorie": "obst-gemuese",
+          "frisch": false,
+          "vorrat": false
+        },
+        {
+          "name": "Petersilie",
+          "menge": 1,
+          "einheit": "Bund",
+          "kategorie": "obst-gemuese",
+          "frisch": true,
+          "vorrat": false
+        },
+        {
+          "name": "Gemüsebrühe",
+          "menge": 300,
+          "einheit": "ml",
+          "kategorie": "vorrat",
+          "frisch": false,
+          "vorrat": true
+        },
+        {
+          "name": "Olivenöl",
+          "menge": 2,
+          "einheit": "EL",
+          "kategorie": "vorrat",
+          "frisch": false,
+          "vorrat": true
+        },
+        {
+          "name": "Paprikapulver edelsüß",
+          "menge": 1,
+          "einheit": "TL",
+          "kategorie": "gewuerze",
+          "frisch": false,
+          "vorrat": true
+        },
+        {
+          "name": "Thymian getrocknet",
+          "menge": 1,
+          "einheit": "TL",
+          "kategorie": "gewuerze",
+          "frisch": false,
+          "vorrat": true
+        },
+        {
+          "name": "Salz",
+          "menge": null,
+          "einheit": null,
+          "kategorie": "gewuerze",
+          "frisch": false,
+          "vorrat": true
+        }
+      ],
+      "schritte": [
+        "Hähnchen mit 1 EL Öl, Paprikapulver, Thymian, Salz und dem Abrieb einer halben Zitrone einreiben.",
+        "Im Airfryer bei 200 °C 25 bis 30 Minuten garen, nach der Hälfte wenden.",
+        "Paprika und Zwiebel würfeln, Tomaten halbieren.",
+        "Couscous mit der kochenden Brühe übergießen und zugedeckt 5 Minuten quellen lassen.",
+        "Paprika, Zwiebel und Tomaten mit dem restlichen Öl 6 Minuten braten.",
+        "Couscous mit dem Gemüse mischen, mit Zitronensaft und Petersilie abschmecken und das Hähnchen daneben anrichten."
+      ]
+    },
+    {
+      "id": "haehnchen-satay-spiesse",
+      "name": "Hähnchen-Satay-Spieße mit Erdnusssoße und Reis",
+      "typ": "pool",
+      "protein": "gefluegel",
+      "haltbarTage": 1,
+      "portionen": 4,
+      "dauerMin": 40,
+      "airfryer": true,
+      "tags": [
+        "airfryer",
+        "scharf"
+      ],
+      "zutaten": [
+        {
+          "name": "Hähnchenbrustfilet",
+          "menge": 600,
+          "einheit": "g",
+          "kategorie": "fleisch-fisch",
+          "frisch": true,
+          "vorrat": false
+        },
+        {
+          "name": "Basmatireis",
+          "menge": 300,
+          "einheit": "g",
+          "kategorie": "vorrat",
+          "frisch": false,
+          "vorrat": false
+        },
+        {
+          "name": "Erdnussbutter ohne Zucker",
+          "menge": 6,
+          "einheit": "EL",
+          "kategorie": "vorrat",
+          "frisch": false,
+          "vorrat": true
+        },
+        {
+          "name": "Sojasoße",
+          "menge": 3,
+          "einheit": "EL",
+          "kategorie": "vorrat",
+          "frisch": false,
+          "vorrat": true
+        },
+        {
+          "name": "Limette",
+          "menge": 1,
+          "einheit": "Stück",
+          "kategorie": "obst-gemuese",
+          "frisch": false,
+          "vorrat": false
+        },
+        {
+          "name": "Knoblauch",
+          "menge": 1,
+          "einheit": "Zehe",
+          "kategorie": "obst-gemuese",
+          "frisch": false,
+          "vorrat": false
+        },
+        {
+          "name": "Ingwer, frisch",
+          "menge": 1,
+          "einheit": "Stück",
+          "kategorie": "obst-gemuese",
+          "frisch": false,
+          "vorrat": false
+        },
+        {
+          "name": "Salatgurke",
+          "menge": 1,
+          "einheit": "Stück",
+          "kategorie": "obst-gemuese",
+          "frisch": false,
+          "vorrat": false
+        },
+        {
+          "name": "Frühlingszwiebel",
+          "menge": 2,
+          "einheit": "Stück",
+          "kategorie": "obst-gemuese",
+          "frisch": false,
+          "vorrat": false
+        },
+        {
+          "name": "Chiliflocken",
+          "menge": 1,
+          "einheit": "Prise",
+          "kategorie": "gewuerze",
+          "frisch": false,
+          "vorrat": true
+        },
+        {
+          "name": "Pflanzenöl",
+          "menge": 1,
+          "einheit": "EL",
+          "kategorie": "vorrat",
+          "frisch": false,
+          "vorrat": true
+        }
+      ],
+      "schritte": [
+        "Reis nach Packungsanweisung garen.",
+        "Sojasoße, Limettensaft, geriebenen Knoblauch, Ingwer und Öl verrühren, Hähnchenwürfel darin 15 Minuten marinieren.",
+        "Hähnchen auf vorgewässerte Holzspieße stecken und im Airfryer bei 200 °C etwa 12 Minuten garen.",
+        "Erdnussbutter mit warmem Wasser und etwas Sojasoße zu einer dickflüssigen Soße rühren, mit Chiliflocken abschmecken.",
+        "Gurke in Scheiben, Frühlingszwiebeln in Ringe schneiden.",
+        "Spieße mit Reis, Gurke und Erdnusssoße servieren."
+      ]
+    },
+    {
+      "id": "haehnchen-senf-geschnetzeltes",
+      "name": "Hähnchen-Geschnetzeltes mit Senf und Champignons",
+      "typ": "pool",
+      "protein": "gefluegel",
+      "haltbarTage": 1,
+      "portionen": 4,
+      "dauerMin": 30,
+      "airfryer": false,
+      "tags": [
+        "pfanne",
+        "schnell"
+      ],
+      "zutaten": [
+        {
+          "name": "Hähnchenbrustfilet",
+          "menge": 500,
+          "einheit": "g",
+          "kategorie": "fleisch-fisch",
+          "frisch": true,
+          "vorrat": false
+        },
+        {
+          "name": "Kartoffeln, mehligkochend",
+          "menge": 800,
+          "einheit": "g",
+          "kategorie": "obst-gemuese",
+          "frisch": false,
+          "vorrat": false
+        },
+        {
+          "name": "Champignons",
+          "menge": 300,
+          "einheit": "g",
+          "kategorie": "obst-gemuese",
+          "frisch": true,
+          "vorrat": false
+        },
+        {
+          "name": "Zwiebel",
+          "menge": 1,
+          "einheit": "Stück",
+          "kategorie": "obst-gemuese",
+          "frisch": false,
+          "vorrat": false
+        },
+        {
+          "name": "Senf, mittelscharf",
+          "menge": 3,
+          "einheit": "EL",
+          "kategorie": "kuehlregal",
+          "frisch": false,
+          "vorrat": true
+        },
+        {
+          "name": "Naturjoghurt",
+          "menge": 200,
+          "einheit": "g",
+          "kategorie": "kuehlregal",
+          "frisch": false,
+          "vorrat": false
+        },
+        {
+          "name": "Gemüsebrühe",
+          "menge": 200,
+          "einheit": "ml",
+          "kategorie": "vorrat",
+          "frisch": false,
+          "vorrat": true
+        },
+        {
+          "name": "Mehl",
+          "menge": 1,
+          "einheit": "EL",
+          "kategorie": "vorrat",
+          "frisch": false,
+          "vorrat": true
+        },
+        {
+          "name": "Pflanzenöl",
+          "menge": 2,
+          "einheit": "EL",
+          "kategorie": "vorrat",
+          "frisch": false,
+          "vorrat": true
+        },
+        {
+          "name": "Petersilie",
+          "menge": 1,
+          "einheit": "Bund",
+          "kategorie": "obst-gemuese",
+          "frisch": true,
+          "vorrat": false
+        },
+        {
+          "name": "Salz",
+          "menge": null,
+          "einheit": null,
+          "kategorie": "gewuerze",
+          "frisch": false,
+          "vorrat": true
+        },
+        {
+          "name": "Pfeffer",
+          "menge": null,
+          "einheit": null,
+          "kategorie": "gewuerze",
+          "frisch": false,
+          "vorrat": true
+        }
+      ],
+      "schritte": [
+        "Kartoffeln schälen, würfeln und in 15 Minuten weich kochen.",
+        "Hähnchen in Streifen schneiden, salzen, pfeffern und in heißem Öl 4 Minuten anbraten.",
+        "Zwiebel in Streifen und Champignons in Scheiben schneiden und mit in die Pfanne geben, 5 Minuten braten.",
+        "Mehl darüberstäuben, mit der Brühe ablöschen und Senf und Joghurt unterrühren.",
+        "Hähnchen zurück in die Pfanne geben und 3 Minuten ziehen lassen.",
+        "Mit Petersilie bestreuen und mit den Kartoffeln servieren."
+      ]
+    },
+    {
+      "id": "haehnchen-quinoa-bowl",
+      "name": "Hähnchen-Quinoa-Bowl mit Avocado",
+      "typ": "pool",
+      "protein": "gefluegel",
+      "haltbarTage": 1,
+      "portionen": 4,
+      "dauerMin": 30,
+      "airfryer": false,
+      "tags": [
+        "pfanne",
+        "schnell"
+      ],
+      "zutaten": [
+        {
+          "name": "Hähnchenbrustfilet",
+          "menge": 500,
+          "einheit": "g",
+          "kategorie": "fleisch-fisch",
+          "frisch": true,
+          "vorrat": false
+        },
+        {
+          "name": "Quinoa",
+          "menge": 300,
+          "einheit": "g",
+          "kategorie": "vorrat",
+          "frisch": false,
+          "vorrat": false
+        },
+        {
+          "name": "Avocado",
+          "menge": 2,
+          "einheit": "Stück",
+          "kategorie": "obst-gemuese",
+          "frisch": false,
+          "vorrat": false
+        },
+        {
+          "name": "Kirschtomaten",
+          "menge": 300,
+          "einheit": "g",
+          "kategorie": "obst-gemuese",
+          "frisch": false,
+          "vorrat": false
+        },
+        {
+          "name": "Salatgurke",
+          "menge": 1,
+          "einheit": "Stück",
+          "kategorie": "obst-gemuese",
+          "frisch": false,
+          "vorrat": false
+        },
+        {
+          "name": "Rucola",
+          "menge": 1,
+          "einheit": "Packung",
+          "kategorie": "obst-gemuese",
+          "frisch": true,
+          "vorrat": false
+        },
+        {
+          "name": "Limette",
+          "menge": 1,
+          "einheit": "Stück",
+          "kategorie": "obst-gemuese",
+          "frisch": false,
+          "vorrat": false
+        },
+        {
+          "name": "Knoblauch",
+          "menge": 1,
+          "einheit": "Zehe",
+          "kategorie": "obst-gemuese",
+          "frisch": false,
+          "vorrat": false
+        },
+        {
+          "name": "Paprikapulver edelsüß",
+          "menge": 1,
+          "einheit": "TL",
+          "kategorie": "gewuerze",
+          "frisch": false,
+          "vorrat": true
+        },
+        {
+          "name": "Olivenöl",
+          "menge": 3,
+          "einheit": "EL",
+          "kategorie": "vorrat",
+          "frisch": false,
+          "vorrat": true
+        },
+        {
+          "name": "Salz",
+          "menge": null,
+          "einheit": null,
+          "kategorie": "gewuerze",
+          "frisch": false,
+          "vorrat": true
+        }
+      ],
+      "schritte": [
+        "Quinoa abspülen und in doppelt so viel Wasser 15 Minuten köcheln lassen, danach zugedeckt ausquellen lassen.",
+        "Hähnchen in Würfel schneiden, mit Paprikapulver, Salz und 1 EL Öl würzen und in der Pfanne 6 bis 8 Minuten braten.",
+        "Dressing aus Limettensaft, 2 EL Öl, geriebenem Knoblauch und Salz verrühren.",
+        "Gurke und Tomaten würfeln, Avocado in Scheiben schneiden.",
+        "Quinoa mit Rucola und Gemüse in Schüsseln verteilen, Hähnchen daraufsetzen.",
+        "Mit dem Dressing beträufeln und sofort servieren."
+      ]
+    },
+    {
+      "id": "haehnchen-ratatouille-baguette",
+      "name": "Hähnchen-Ratatouille mit Baguette",
+      "typ": "pool",
+      "protein": "gefluegel",
+      "haltbarTage": 3,
+      "portionen": 4,
+      "dauerMin": 45,
+      "airfryer": false,
+      "tags": [
+        "pfanne"
+      ],
+      "zutaten": [
+        {
+          "name": "Hähnchenbrustfilet",
+          "menge": 500,
+          "einheit": "g",
+          "kategorie": "fleisch-fisch",
+          "frisch": true,
+          "vorrat": false
+        },
+        {
+          "name": "Zucchini",
+          "menge": 2,
+          "einheit": "Stück",
+          "kategorie": "obst-gemuese",
+          "frisch": false,
+          "vorrat": false
+        },
+        {
+          "name": "Aubergine",
+          "menge": 1,
+          "einheit": "Stück",
+          "kategorie": "obst-gemuese",
+          "frisch": false,
+          "vorrat": false
+        },
+        {
+          "name": "Paprika rot",
+          "menge": 1,
+          "einheit": "Stück",
+          "kategorie": "obst-gemuese",
+          "frisch": false,
+          "vorrat": false
+        },
+        {
+          "name": "Zwiebel",
+          "menge": 1,
+          "einheit": "Stück",
+          "kategorie": "obst-gemuese",
+          "frisch": false,
+          "vorrat": false
+        },
+        {
+          "name": "Knoblauch",
+          "menge": 2,
+          "einheit": "Zehe",
+          "kategorie": "obst-gemuese",
+          "frisch": false,
+          "vorrat": false
+        },
+        {
+          "name": "Tomaten, gehackt",
+          "menge": 2,
+          "einheit": "Dose",
+          "kategorie": "vorrat",
+          "frisch": false,
+          "vorrat": false
+        },
+        {
+          "name": "Basilikum",
+          "menge": 1,
+          "einheit": "Bund",
+          "kategorie": "obst-gemuese",
+          "frisch": true,
+          "vorrat": false
+        },
+        {
+          "name": "Baguette",
+          "menge": 1,
+          "einheit": "Stück",
+          "kategorie": "backwaren",
+          "frisch": false,
+          "vorrat": false
+        },
+        {
+          "name": "Olivenöl",
+          "menge": 3,
+          "einheit": "EL",
+          "kategorie": "vorrat",
+          "frisch": false,
+          "vorrat": true
+        },
+        {
+          "name": "Thymian getrocknet",
+          "menge": 1,
+          "einheit": "TL",
+          "kategorie": "gewuerze",
+          "frisch": false,
+          "vorrat": true
+        },
+        {
+          "name": "Salz",
+          "menge": null,
+          "einheit": null,
+          "kategorie": "gewuerze",
+          "frisch": false,
+          "vorrat": true
+        },
+        {
+          "name": "Pfeffer",
+          "menge": null,
+          "einheit": null,
+          "kategorie": "gewuerze",
+          "frisch": false,
+          "vorrat": true
+        }
+      ],
+      "schritte": [
+        "Zucchini, Aubergine und Paprika würfeln, Zwiebel und Knoblauch fein hacken.",
+        "Hähnchen in Würfel schneiden und in 2 EL Öl rundum anbraten, herausnehmen.",
+        "Restliches Öl in die Pfanne geben, Zwiebel und Knoblauch dünsten, Aubergine 5 Minuten mitbraten.",
+        "Zucchini und Paprika zugeben und weitere 5 Minuten braten.",
+        "Tomaten, Thymian und Hähnchen zurückgeben und 15 Minuten köcheln lassen.",
+        "Mit Salz und Pfeffer abschmecken, mit Basilikum bestreuen und mit dem Baguette servieren."
+      ]
+    },
+    {
+      "id": "lachs-gemuese-couscous",
+      "name": "Ofenlachs mit Gemüse-Couscous",
+      "typ": "pool",
+      "protein": "fisch",
+      "haltbarTage": 1,
+      "portionen": 4,
+      "dauerMin": 35,
+      "airfryer": false,
+      "tags": [
+        "ofen"
+      ],
+      "zutaten": [
+        {
+          "name": "Lachsfilet ohne Haut",
+          "menge": 600,
+          "einheit": "g",
+          "kategorie": "fleisch-fisch",
+          "frisch": true,
+          "vorrat": false
+        },
+        {
+          "name": "Couscous",
+          "menge": 300,
+          "einheit": "g",
+          "kategorie": "vorrat",
+          "frisch": false,
+          "vorrat": false
+        },
+        {
+          "name": "Zucchini",
+          "menge": 1,
+          "einheit": "Stück",
+          "kategorie": "obst-gemuese",
+          "frisch": false,
+          "vorrat": false
+        },
+        {
+          "name": "Kirschtomaten",
+          "menge": 250,
+          "einheit": "g",
+          "kategorie": "obst-gemuese",
+          "frisch": false,
+          "vorrat": false
+        },
+        {
+          "name": "Zwiebel rot",
+          "menge": 1,
+          "einheit": "Stück",
+          "kategorie": "obst-gemuese",
+          "frisch": false,
+          "vorrat": false
+        },
+        {
+          "name": "Knoblauch",
+          "menge": 1,
+          "einheit": "Zehe",
+          "kategorie": "obst-gemuese",
+          "frisch": false,
+          "vorrat": false
+        },
+        {
+          "name": "Zitrone",
+          "menge": 1,
+          "einheit": "Stück",
+          "kategorie": "obst-gemuese",
+          "frisch": false,
+          "vorrat": false
+        },
+        {
+          "name": "Dill",
+          "menge": 1,
+          "einheit": "Bund",
+          "kategorie": "obst-gemuese",
+          "frisch": true,
+          "vorrat": false
+        },
+        {
+          "name": "Gemüsebrühe",
+          "menge": 300,
+          "einheit": "ml",
+          "kategorie": "vorrat",
+          "frisch": false,
+          "vorrat": true
+        },
+        {
+          "name": "Olivenöl",
+          "menge": 3,
+          "einheit": "EL",
+          "kategorie": "vorrat",
+          "frisch": false,
+          "vorrat": true
+        },
+        {
+          "name": "Salz",
+          "menge": null,
+          "einheit": null,
+          "kategorie": "gewuerze",
+          "frisch": false,
+          "vorrat": true
+        },
+        {
+          "name": "Pfeffer",
+          "menge": null,
+          "einheit": null,
+          "kategorie": "gewuerze",
+          "frisch": false,
+          "vorrat": true
+        }
+      ],
+      "schritte": [
+        "Backofen auf 200 °C vorheizen. Zucchini und Zwiebel würfeln, Tomaten halbieren und auf einem Blech mit 2 EL Öl 15 Minuten rösten.",
+        "Lachs salzen, pfeffern, mit etwas Zitronensaft und dem geriebenen Knoblauch bestreichen.",
+        "Lachs zwischen das Gemüse legen und weitere 12 Minuten garen.",
+        "Couscous mit der heißen Brühe übergießen, 5 Minuten quellen lassen und mit Öl und Zitronensaft auflockern.",
+        "Dill hacken und unter den Couscous mischen.",
+        "Lachs und Gemüse mit dem Couscous anrichten."
+      ]
+    },
+    {
+      "id": "garnelen-spinat-ciabatta",
+      "name": "Knoblauch-Garnelen mit Spinat und Ciabatta",
+      "typ": "pool",
+      "protein": "fisch",
+      "haltbarTage": 1,
+      "portionen": 4,
+      "dauerMin": 20,
+      "airfryer": false,
+      "tags": [
+        "pfanne",
+        "schnell"
+      ],
+      "zutaten": [
+        {
+          "name": "Garnelen, roh, geschält",
+          "menge": 500,
+          "einheit": "g",
+          "kategorie": "tiefkuehl",
+          "frisch": false,
+          "vorrat": false
+        },
+        {
+          "name": "Blattspinat",
+          "menge": 300,
+          "einheit": "g",
+          "kategorie": "obst-gemuese",
+          "frisch": true,
+          "vorrat": false
+        },
+        {
+          "name": "Kirschtomaten",
+          "menge": 300,
+          "einheit": "g",
+          "kategorie": "obst-gemuese",
+          "frisch": false,
+          "vorrat": false
+        },
+        {
+          "name": "Knoblauch",
+          "menge": 3,
+          "einheit": "Zehe",
+          "kategorie": "obst-gemuese",
+          "frisch": false,
+          "vorrat": false
+        },
+        {
+          "name": "Zitrone",
+          "menge": 1,
+          "einheit": "Stück",
+          "kategorie": "obst-gemuese",
+          "frisch": false,
+          "vorrat": false
+        },
+        {
+          "name": "Ciabatta",
+          "menge": 1,
+          "einheit": "Stück",
+          "kategorie": "backwaren",
+          "frisch": false,
+          "vorrat": false
+        },
+        {
+          "name": "Petersilie",
+          "menge": 1,
+          "einheit": "Bund",
+          "kategorie": "obst-gemuese",
+          "frisch": true,
+          "vorrat": false
+        },
+        {
+          "name": "Olivenöl",
+          "menge": 3,
+          "einheit": "EL",
+          "kategorie": "vorrat",
+          "frisch": false,
+          "vorrat": true
+        },
+        {
+          "name": "Chiliflocken",
+          "menge": 1,
+          "einheit": "Prise",
+          "kategorie": "gewuerze",
+          "frisch": false,
+          "vorrat": true
+        },
+        {
+          "name": "Salz",
+          "menge": null,
+          "einheit": null,
+          "kategorie": "gewuerze",
+          "frisch": false,
+          "vorrat": true
+        }
+      ],
+      "schritte": [
+        "Garnelen auftauen lassen und gut trocken tupfen.",
+        "Knoblauch in Scheiben schneiden und mit Öl und Chili in der Pfanne 1 Minute anschwitzen.",
+        "Tomaten halbieren, zugeben und 3 Minuten braten.",
+        "Garnelen dazugeben und 3 Minuten braten, bis sie rosa sind. Spinat unterheben und zusammenfallen lassen.",
+        "Mit Zitronensaft, Salz und gehackter Petersilie abschmecken.",
+        "Ciabatta dazu reichen."
+      ]
+    },
+    {
+      "id": "kabeljau-airfryer-brokkoli",
+      "name": "Airfryer-Kabeljau mit Zitronen-Brokkoli und Kartoffeln",
+      "typ": "pool",
+      "protein": "fisch",
+      "haltbarTage": 1,
+      "portionen": 4,
+      "dauerMin": 35,
+      "airfryer": true,
+      "tags": [
+        "airfryer"
+      ],
+      "zutaten": [
+        {
+          "name": "Kabeljaufilet",
+          "menge": 600,
+          "einheit": "g",
+          "kategorie": "fleisch-fisch",
+          "frisch": true,
+          "vorrat": false
+        },
+        {
+          "name": "Kartoffeln, festkochend",
+          "menge": 800,
+          "einheit": "g",
+          "kategorie": "obst-gemuese",
+          "frisch": false,
+          "vorrat": false
+        },
+        {
+          "name": "Brokkoli",
+          "menge": 500,
+          "einheit": "g",
+          "kategorie": "obst-gemuese",
+          "frisch": false,
+          "vorrat": false
+        },
+        {
+          "name": "Zitrone",
+          "menge": 1,
+          "einheit": "Stück",
+          "kategorie": "obst-gemuese",
+          "frisch": false,
+          "vorrat": false
+        },
+        {
+          "name": "Knoblauch",
+          "menge": 1,
+          "einheit": "Zehe",
+          "kategorie": "obst-gemuese",
+          "frisch": false,
+          "vorrat": false
+        },
+        {
+          "name": "Schnittlauch",
+          "menge": 1,
+          "einheit": "Bund",
+          "kategorie": "obst-gemuese",
+          "frisch": true,
+          "vorrat": false
+        },
+        {
+          "name": "Olivenöl",
+          "menge": 2,
+          "einheit": "EL",
+          "kategorie": "vorrat",
+          "frisch": false,
+          "vorrat": true
+        },
+        {
+          "name": "Paprikapulver geräuchert",
+          "menge": 1,
+          "einheit": "TL",
+          "kategorie": "gewuerze",
+          "frisch": false,
+          "vorrat": true
+        },
+        {
+          "name": "Salz",
+          "menge": null,
+          "einheit": null,
+          "kategorie": "gewuerze",
+          "frisch": false,
+          "vorrat": true
+        },
+        {
+          "name": "Pfeffer",
+          "menge": null,
+          "einheit": null,
+          "kategorie": "gewuerze",
+          "frisch": false,
+          "vorrat": true
+        }
+      ],
+      "schritte": [
+        "Kartoffeln waschen und in 20 Minuten in Salzwasser gar kochen, abgießen.",
+        "Brokkoli in Röschen teilen, mit 1 EL Öl, Salz und dem Abrieb der halben Zitrone mischen.",
+        "Brokkoli im Airfryer bei 190 °C 8 Minuten garen.",
+        "Kabeljau mit Zitronensaft, Knoblauch, Paprikapulver, Salz und Pfeffer würzen, mit restlichem Öl bestreichen und zum Brokkoli legen.",
+        "Weitere 8 Minuten garen, bis der Fisch leicht flockt.",
+        "Kartoffeln mit Schnittlauch bestreuen und mit Fisch und Brokkoli anrichten."
+      ]
+    },
+    {
+      "id": "thunfisch-bohnen-salat",
+      "name": "Thunfisch-Bohnen-Salat mit Fenchel",
+      "typ": "pool",
+      "protein": "fisch",
+      "haltbarTage": 1,
+      "portionen": 4,
+      "dauerMin": 15,
+      "airfryer": false,
+      "tags": [
+        "schnell"
+      ],
+      "zutaten": [
+        {
+          "name": "Thunfisch im eigenen Saft",
+          "menge": 2,
+          "einheit": "Dose",
+          "kategorie": "vorrat",
+          "frisch": false,
+          "vorrat": true
+        },
+        {
+          "name": "Weiße Bohnen",
+          "menge": 2,
+          "einheit": "Dose",
+          "kategorie": "vorrat",
+          "frisch": false,
+          "vorrat": false
+        },
+        {
+          "name": "Fenchel",
+          "menge": 1,
+          "einheit": "Stück",
+          "kategorie": "obst-gemuese",
+          "frisch": false,
+          "vorrat": false
+        },
+        {
+          "name": "Kirschtomaten",
+          "menge": 250,
+          "einheit": "g",
+          "kategorie": "obst-gemuese",
+          "frisch": false,
+          "vorrat": false
+        },
+        {
+          "name": "Zwiebel rot",
+          "menge": 1,
+          "einheit": "Stück",
+          "kategorie": "obst-gemuese",
+          "frisch": false,
+          "vorrat": false
+        },
+        {
+          "name": "Zitrone",
+          "menge": 1,
+          "einheit": "Stück",
+          "kategorie": "obst-gemuese",
+          "frisch": false,
+          "vorrat": false
+        },
+        {
+          "name": "Petersilie",
+          "menge": 1,
+          "einheit": "Bund",
+          "kategorie": "obst-gemuese",
+          "frisch": true,
+          "vorrat": false
+        },
+        {
+          "name": "Olivenöl",
+          "menge": 3,
+          "einheit": "EL",
+          "kategorie": "vorrat",
+          "frisch": false,
+          "vorrat": true
+        },
+        {
+          "name": "Salz",
+          "menge": null,
+          "einheit": null,
+          "kategorie": "gewuerze",
+          "frisch": false,
+          "vorrat": true
+        },
+        {
+          "name": "Pfeffer",
+          "menge": null,
+          "einheit": null,
+          "kategorie": "gewuerze",
+          "frisch": false,
+          "vorrat": true
+        }
+      ],
+      "schritte": [
+        "Bohnen abspülen und abtropfen lassen. Thunfisch abgießen und grob zerpflücken.",
+        "Fenchel in feine Streifen hobeln, Tomaten halbieren, Zwiebel in feine Ringe schneiden.",
+        "Zitronensaft mit Öl, Salz und Pfeffer zu einem Dressing verrühren.",
+        "Alle Zutaten im Dressing mischen.",
+        "Petersilie unterheben und sofort servieren."
+      ]
+    },
+    {
+      "id": "seelachs-tacos-krautsalat",
+      "name": "Airfryer-Fisch-Tacos mit Krautsalat",
+      "typ": "pool",
+      "protein": "fisch",
+      "haltbarTage": 1,
+      "portionen": 4,
+      "dauerMin": 30,
+      "airfryer": true,
+      "tags": [
+        "airfryer",
+        "schnell"
+      ],
+      "zutaten": [
+        {
+          "name": "Seelachsfilet",
+          "menge": 600,
+          "einheit": "g",
+          "kategorie": "fleisch-fisch",
+          "frisch": true,
+          "vorrat": false
+        },
+        {
+          "name": "Weizentortilla",
+          "menge": 8,
+          "einheit": "Stück",
+          "kategorie": "backwaren",
+          "frisch": false,
+          "vorrat": false
+        },
+        {
+          "name": "Weißkohl",
+          "menge": 300,
+          "einheit": "g",
+          "kategorie": "obst-gemuese",
+          "frisch": false,
+          "vorrat": false
+        },
+        {
+          "name": "Limette",
+          "menge": 2,
+          "einheit": "Stück",
+          "kategorie": "obst-gemuese",
+          "frisch": false,
+          "vorrat": false
+        },
+        {
+          "name": "Avocado",
+          "menge": 1,
+          "einheit": "Stück",
+          "kategorie": "obst-gemuese",
+          "frisch": false,
+          "vorrat": false
+        },
+        {
+          "name": "Koriander",
+          "menge": 1,
+          "einheit": "Bund",
+          "kategorie": "obst-gemuese",
+          "frisch": true,
+          "vorrat": false
+        },
+        {
+          "name": "Naturjoghurt",
+          "menge": 200,
+          "einheit": "g",
+          "kategorie": "kuehlregal",
+          "frisch": false,
+          "vorrat": false
+        },
+        {
+          "name": "Knoblauch",
+          "menge": 1,
+          "einheit": "Zehe",
+          "kategorie": "obst-gemuese",
+          "frisch": false,
+          "vorrat": false
+        },
+        {
+          "name": "Paprikapulver edelsüß",
+          "menge": 1,
+          "einheit": "TL",
+          "kategorie": "gewuerze",
+          "frisch": false,
+          "vorrat": true
+        },
+        {
+          "name": "Kreuzkümmel",
+          "menge": 1,
+          "einheit": "TL",
+          "kategorie": "gewuerze",
+          "frisch": false,
+          "vorrat": true
+        },
+        {
+          "name": "Olivenöl",
+          "menge": 3,
+          "einheit": "EL",
+          "kategorie": "vorrat",
+          "frisch": false,
+          "vorrat": true
+        },
+        {
+          "name": "Salz",
+          "menge": null,
+          "einheit": null,
+          "kategorie": "gewuerze",
+          "frisch": false,
+          "vorrat": true
+        }
+      ],
+      "schritte": [
+        "Weißkohl fein hobeln, mit dem Saft von einer Limette, Salz und 1 EL Öl 10 Minuten marinieren.",
+        "Joghurt mit geriebenem Knoblauch, Limettenabrieb und Salz verrühren.",
+        "Fisch in Stücke schneiden, mit Paprikapulver, Kreuzkümmel, Salz und 1 EL Öl bestreichen.",
+        "Fisch im Airfryer bei 190 °C etwa 8 Minuten garen.",
+        "Tortillas kurz erwärmen.",
+        "Tortillas mit Fisch, Krautsalat, Avocadoscheiben und Koriander füllen, mit Joghurt und Limettenspalten servieren."
+      ]
+    },
+    {
+      "id": "rotbarsch-fenchel-suppe",
+      "name": "Mediterrane Fischsuppe mit Fenchel",
+      "typ": "pool",
+      "protein": "fisch",
+      "haltbarTage": 1,
+      "portionen": 4,
+      "dauerMin": 40,
+      "airfryer": false,
+      "tags": [
+        "topf"
+      ],
+      "zutaten": [
+        {
+          "name": "Rotbarschfilet",
+          "menge": 600,
+          "einheit": "g",
+          "kategorie": "fleisch-fisch",
+          "frisch": true,
+          "vorrat": false
+        },
+        {
+          "name": "Fenchel",
+          "menge": 1,
+          "einheit": "Stück",
+          "kategorie": "obst-gemuese",
+          "frisch": false,
+          "vorrat": false
+        },
+        {
+          "name": "Zwiebel",
+          "menge": 1,
+          "einheit": "Stück",
+          "kategorie": "obst-gemuese",
+          "frisch": false,
+          "vorrat": false
+        },
+        {
+          "name": "Knoblauch",
+          "menge": 2,
+          "einheit": "Zehe",
+          "kategorie": "obst-gemuese",
+          "frisch": false,
+          "vorrat": false
+        },
+        {
+          "name": "Tomaten, gehackt",
+          "menge": 2,
+          "einheit": "Dose",
+          "kategorie": "vorrat",
+          "frisch": false,
+          "vorrat": false
+        },
+        {
+          "name": "Gemüsebrühe",
+          "menge": 800,
+          "einheit": "ml",
+          "kategorie": "vorrat",
+          "frisch": false,
+          "vorrat": true
+        },
+        {
+          "name": "Zitrone",
+          "menge": 1,
+          "einheit": "Stück",
+          "kategorie": "obst-gemuese",
+          "frisch": false,
+          "vorrat": false
+        },
+        {
+          "name": "Olivenöl",
+          "menge": 2,
+          "einheit": "EL",
+          "kategorie": "vorrat",
+          "frisch": false,
+          "vorrat": true
+        },
+        {
+          "name": "Petersilie",
+          "menge": 1,
+          "einheit": "Bund",
+          "kategorie": "obst-gemuese",
+          "frisch": true,
+          "vorrat": false
+        },
+        {
+          "name": "Vollkornbrot",
+          "menge": 1,
+          "einheit": "Stück",
+          "kategorie": "backwaren",
+          "frisch": false,
+          "vorrat": false
+        },
+        {
+          "name": "Salz",
+          "menge": null,
+          "einheit": null,
+          "kategorie": "gewuerze",
+          "frisch": false,
+          "vorrat": true
+        },
+        {
+          "name": "Pfeffer",
+          "menge": null,
+          "einheit": null,
+          "kategorie": "gewuerze",
+          "frisch": false,
+          "vorrat": true
+        }
+      ],
+      "schritte": [
+        "Zwiebel und Fenchel würfeln, Knoblauch fein hacken.",
+        "Öl im Topf erhitzen und Zwiebel, Fenchel und Knoblauch 5 Minuten dünsten.",
+        "Tomaten und Brühe zugeben und 15 Minuten köcheln lassen.",
+        "Fisch in Stücke schneiden, in die Suppe geben und 5 Minuten ziehen lassen, nicht mehr kochen.",
+        "Mit Zitronensaft, Salz und Pfeffer abschmecken.",
+        "Mit Petersilie bestreuen und mit dem Vollkornbrot servieren."
+      ]
+    },
+    {
+      "id": "koefte-bulgur",
+      "name": "Köfte mit Bulgur und Tomaten-Paprika-Salat",
+      "typ": "pool",
+      "protein": "hack",
+      "haltbarTage": 3,
+      "portionen": 4,
+      "dauerMin": 45,
+      "airfryer": true,
+      "tags": [
+        "airfryer"
+      ],
+      "zutaten": [
+        {
+          "name": "Rinderhack",
+          "menge": 600,
+          "einheit": "g",
+          "kategorie": "fleisch-fisch",
+          "frisch": true,
+          "vorrat": false
+        },
+        {
+          "name": "Bulgur",
+          "menge": 300,
+          "einheit": "g",
+          "kategorie": "vorrat",
+          "frisch": false,
+          "vorrat": false
+        },
+        {
+          "name": "Zwiebel",
+          "menge": 1,
+          "einheit": "Stück",
+          "kategorie": "obst-gemuese",
+          "frisch": false,
+          "vorrat": false
+        },
+        {
+          "name": "Knoblauch",
+          "menge": 2,
+          "einheit": "Zehe",
+          "kategorie": "obst-gemuese",
+          "frisch": false,
+          "vorrat": false
+        },
+        {
+          "name": "Petersilie",
+          "menge": 1,
+          "einheit": "Bund",
+          "kategorie": "obst-gemuese",
+          "frisch": true,
+          "vorrat": false
+        },
+        {
+          "name": "Tomate",
+          "menge": 3,
+          "einheit": "Stück",
+          "kategorie": "obst-gemuese",
+          "frisch": false,
+          "vorrat": false
+        },
+        {
+          "name": "Paprika rot",
+          "menge": 1,
+          "einheit": "Stück",
+          "kategorie": "obst-gemuese",
+          "frisch": false,
+          "vorrat": false
+        },
+        {
+          "name": "Zitrone",
+          "menge": 1,
+          "einheit": "Stück",
+          "kategorie": "obst-gemuese",
+          "frisch": false,
+          "vorrat": false
+        },
+        {
+          "name": "Naturjoghurt",
+          "menge": 200,
+          "einheit": "g",
+          "kategorie": "kuehlregal",
+          "frisch": false,
+          "vorrat": false
+        },
+        {
+          "name": "Paprikapulver edelsüß",
+          "menge": 1,
+          "einheit": "TL",
+          "kategorie": "gewuerze",
+          "frisch": false,
+          "vorrat": true
+        },
+        {
+          "name": "Kreuzkümmel",
+          "menge": 1,
+          "einheit": "TL",
+          "kategorie": "gewuerze",
+          "frisch": false,
+          "vorrat": true
+        },
+        {
+          "name": "Olivenöl",
+          "menge": 1,
+          "einheit": "EL",
+          "kategorie": "vorrat",
+          "frisch": false,
+          "vorrat": true
+        },
+        {
+          "name": "Salz",
+          "menge": null,
+          "einheit": null,
+          "kategorie": "gewuerze",
+          "frisch": false,
+          "vorrat": true
+        },
+        {
+          "name": "Pfeffer",
+          "menge": null,
+          "einheit": null,
+          "kategorie": "gewuerze",
+          "frisch": false,
+          "vorrat": true
+        }
+      ],
+      "schritte": [
+        "Zwiebel und 1 Knoblauchzehe fein reiben, Petersilie hacken.",
+        "Hack mit Zwiebel, Knoblauch, Petersilie, Paprikapulver, Kreuzkümmel, Salz und Pfeffer gut verkneten und 16 Köfte formen.",
+        "Köfte im Airfryer bei 200 °C etwa 12 Minuten garen, nach der Hälfte wenden.",
+        "Bulgur mit doppelt so viel kochendem Wasser übergießen und 10 Minuten quellen lassen.",
+        "Tomaten und Paprika würfeln, mit Zitronensaft, Öl und Salz mischen.",
+        "Joghurt mit der zweiten Knoblauchzehe und Salz verrühren und mit Köfte, Bulgur und Salat anrichten."
+      ]
+    },
+    {
+      "id": "gefuellte-paprika",
+      "name": "Gefüllte Paprika mit Hack und Reis",
+      "typ": "pool",
+      "protein": "hack",
+      "haltbarTage": 3,
+      "portionen": 4,
+      "dauerMin": 60,
+      "airfryer": true,
+      "tags": [
+        "ofen",
+        "airfryer"
+      ],
+      "zutaten": [
+        {
+          "name": "Rinderhack",
+          "menge": 500,
+          "einheit": "g",
+          "kategorie": "fleisch-fisch",
+          "frisch": true,
+          "vorrat": false
+        },
+        {
+          "name": "Paprika rot",
+          "menge": 4,
+          "einheit": "Stück",
+          "kategorie": "obst-gemuese",
+          "frisch": false,
+          "vorrat": false
+        },
+        {
+          "name": "Reis",
+          "menge": 200,
+          "einheit": "g",
+          "kategorie": "vorrat",
+          "frisch": false,
+          "vorrat": false
+        },
+        {
+          "name": "Zwiebel",
+          "menge": 1,
+          "einheit": "Stück",
+          "kategorie": "obst-gemuese",
+          "frisch": false,
+          "vorrat": false
+        },
+        {
+          "name": "Tomaten, gehackt",
+          "menge": 1,
+          "einheit": "Dose",
+          "kategorie": "vorrat",
+          "frisch": false,
+          "vorrat": false
+        },
+        {
+          "name": "Karotte",
+          "menge": 2,
+          "einheit": "Stück",
+          "kategorie": "obst-gemuese",
+          "frisch": false,
+          "vorrat": false
+        },
+        {
+          "name": "Basilikum",
+          "menge": 1,
+          "einheit": "Bund",
+          "kategorie": "obst-gemuese",
+          "frisch": true,
+          "vorrat": false
+        },
+        {
+          "name": "Olivenöl",
+          "menge": 1,
+          "einheit": "EL",
+          "kategorie": "vorrat",
+          "frisch": false,
+          "vorrat": true
+        },
+        {
+          "name": "Paprikapulver edelsüß",
+          "menge": 1,
+          "einheit": "TL",
+          "kategorie": "gewuerze",
+          "frisch": false,
+          "vorrat": true
+        },
+        {
+          "name": "Salz",
+          "menge": null,
+          "einheit": null,
+          "kategorie": "gewuerze",
+          "frisch": false,
+          "vorrat": true
+        },
+        {
+          "name": "Pfeffer",
+          "menge": null,
+          "einheit": null,
+          "kategorie": "gewuerze",
+          "frisch": false,
+          "vorrat": true
+        }
+      ],
+      "schritte": [
+        "Reis nach Packungsanweisung garen.",
+        "Paprika halbieren, entkernen und mit der Schnittfläche nach oben in eine Form legen.",
+        "Zwiebel und Karotte fein reiben, mit Hack, Reis, Paprikapulver, Salz und Pfeffer verkneten.",
+        "Füllung in die Paprikahälften drücken und die Tomaten darübergeben.",
+        "Im Airfryer bei 180 °C etwa 25 Minuten garen, bis die Paprika weich sind.",
+        "Mit Basilikum bestreuen und servieren."
+      ]
+    },
+    {
+      "id": "hack-auberginen-pfanne",
+      "name": "Hack-Auberginen-Pfanne mit Minze und Reis",
+      "typ": "pool",
+      "protein": "hack",
+      "haltbarTage": 3,
+      "portionen": 4,
+      "dauerMin": 40,
+      "airfryer": false,
+      "tags": [
+        "pfanne"
+      ],
+      "zutaten": [
+        {
+          "name": "Rinderhack",
+          "menge": 500,
+          "einheit": "g",
+          "kategorie": "fleisch-fisch",
+          "frisch": true,
+          "vorrat": false
+        },
+        {
+          "name": "Aubergine",
+          "menge": 2,
+          "einheit": "Stück",
+          "kategorie": "obst-gemuese",
+          "frisch": false,
+          "vorrat": false
+        },
+        {
+          "name": "Zwiebel",
+          "menge": 1,
+          "einheit": "Stück",
+          "kategorie": "obst-gemuese",
+          "frisch": false,
+          "vorrat": false
+        },
+        {
+          "name": "Knoblauch",
+          "menge": 2,
+          "einheit": "Zehe",
+          "kategorie": "obst-gemuese",
+          "frisch": false,
+          "vorrat": false
+        },
+        {
+          "name": "Tomaten, gehackt",
+          "menge": 1,
+          "einheit": "Dose",
+          "kategorie": "vorrat",
+          "frisch": false,
+          "vorrat": false
+        },
+        {
+          "name": "Reis",
+          "menge": 300,
+          "einheit": "g",
+          "kategorie": "vorrat",
+          "frisch": false,
+          "vorrat": false
+        },
+        {
+          "name": "Minze",
+          "menge": 1,
+          "einheit": "Bund",
+          "kategorie": "obst-gemuese",
+          "frisch": true,
+          "vorrat": false
+        },
+        {
+          "name": "Naturjoghurt",
+          "menge": 200,
+          "einheit": "g",
+          "kategorie": "kuehlregal",
+          "frisch": false,
+          "vorrat": false
+        },
+        {
+          "name": "Olivenöl",
+          "menge": 3,
+          "einheit": "EL",
+          "kategorie": "vorrat",
+          "frisch": false,
+          "vorrat": true
+        },
+        {
+          "name": "Kreuzkümmel",
+          "menge": 1,
+          "einheit": "TL",
+          "kategorie": "gewuerze",
+          "frisch": false,
+          "vorrat": true
+        },
+        {
+          "name": "Salz",
+          "menge": null,
+          "einheit": null,
+          "kategorie": "gewuerze",
+          "frisch": false,
+          "vorrat": true
+        }
+      ],
+      "schritte": [
+        "Reis nach Packungsanweisung garen.",
+        "Auberginen in Würfel schneiden und in 2 EL Öl 8 Minuten braten, herausnehmen.",
+        "Restliches Öl in der Pfanne, Zwiebel und Knoblauch glasig dünsten, Hack zugeben und krümelig braten.",
+        "Kreuzkümmel und Auberginen zurück in die Pfanne geben, Tomaten zugeben und 10 Minuten köcheln lassen.",
+        "Mit Salz abschmecken und Minze hacken.",
+        "Mit Joghurt, Minze und Reis servieren."
+      ]
+    },
+    {
+      "id": "hack-weisskohl-pfanne",
+      "name": "Hack-Weißkohl-Pfanne mit Kartoffeln",
+      "typ": "pool",
+      "protein": "hack",
+      "haltbarTage": 3,
+      "portionen": 4,
+      "dauerMin": 40,
+      "airfryer": false,
+      "tags": [
+        "pfanne"
+      ],
+      "zutaten": [
+        {
+          "name": "Rinderhack",
+          "menge": 500,
+          "einheit": "g",
+          "kategorie": "fleisch-fisch",
+          "frisch": true,
+          "vorrat": false
+        },
+        {
+          "name": "Kartoffeln, festkochend",
+          "menge": 700,
+          "einheit": "g",
+          "kategorie": "obst-gemuese",
+          "frisch": false,
+          "vorrat": false
+        },
+        {
+          "name": "Weißkohl",
+          "menge": 600,
+          "einheit": "g",
+          "kategorie": "obst-gemuese",
+          "frisch": false,
+          "vorrat": false
+        },
+        {
+          "name": "Zwiebel",
+          "menge": 2,
+          "einheit": "Stück",
+          "kategorie": "obst-gemuese",
+          "frisch": false,
+          "vorrat": false
+        },
+        {
+          "name": "Karotte",
+          "menge": 2,
+          "einheit": "Stück",
+          "kategorie": "obst-gemuese",
+          "frisch": false,
+          "vorrat": false
+        },
+        {
+          "name": "Gemüsebrühe",
+          "menge": 200,
+          "einheit": "ml",
+          "kategorie": "vorrat",
+          "frisch": false,
+          "vorrat": true
+        },
+        {
+          "name": "Olivenöl",
+          "menge": 2,
+          "einheit": "EL",
+          "kategorie": "vorrat",
+          "frisch": false,
+          "vorrat": true
+        },
+        {
+          "name": "Kümmel",
+          "menge": 1,
+          "einheit": "TL",
+          "kategorie": "gewuerze",
+          "frisch": false,
+          "vorrat": true
+        },
+        {
+          "name": "Paprikapulver edelsüß",
+          "menge": 1,
+          "einheit": "TL",
+          "kategorie": "gewuerze",
+          "frisch": false,
+          "vorrat": true
+        },
+        {
+          "name": "Salz",
+          "menge": null,
+          "einheit": null,
+          "kategorie": "gewuerze",
+          "frisch": false,
+          "vorrat": true
+        },
+        {
+          "name": "Pfeffer",
+          "menge": null,
+          "einheit": null,
+          "kategorie": "gewuerze",
+          "frisch": false,
+          "vorrat": true
+        }
+      ],
+      "schritte": [
+        "Kartoffeln würfeln, in 10 Minuten in Salzwasser vorgaren und abgießen.",
+        "Zwiebeln in Ringe, Karotten in Scheiben und Weißkohl in Streifen schneiden.",
+        "Hack in 1 EL Öl krümelig braten, herausnehmen.",
+        "Restliches Öl in die Pfanne, Kartoffeln kurz anbraten, Zwiebel und Karotte 5 Minuten mitbraten.",
+        "Weißkohl, Kümmel und Paprikapulver zugeben, mit Brühe ablöschen und 10 Minuten dünsten.",
+        "Hack wieder dazugeben, mit Salz und Pfeffer abschmecken und heiß servieren."
+      ]
+    },
+    {
+      "id": "hackbaellchen-polenta",
+      "name": "Airfryer-Hackbällchen mit Polenta und Zucchini",
+      "typ": "pool",
+      "protein": "hack",
+      "haltbarTage": 3,
+      "portionen": 4,
+      "dauerMin": 40,
+      "airfryer": true,
+      "tags": [
+        "airfryer"
+      ],
+      "zutaten": [
+        {
+          "name": "Rinderhack",
+          "menge": 500,
+          "einheit": "g",
+          "kategorie": "fleisch-fisch",
+          "frisch": true,
+          "vorrat": false
+        },
+        {
+          "name": "Polenta, grob",
+          "menge": 300,
+          "einheit": "g",
+          "kategorie": "vorrat",
+          "frisch": false,
+          "vorrat": false
+        },
+        {
+          "name": "Zucchini",
+          "menge": 2,
+          "einheit": "Stück",
+          "kategorie": "obst-gemuese",
+          "frisch": false,
+          "vorrat": false
+        },
+        {
+          "name": "Tomaten, gehackt",
+          "menge": 1,
+          "einheit": "Dose",
+          "kategorie": "vorrat",
+          "frisch": false,
+          "vorrat": false
+        },
+        {
+          "name": "Zwiebel",
+          "menge": 1,
+          "einheit": "Stück",
+          "kategorie": "obst-gemuese",
+          "frisch": false,
+          "vorrat": false
+        },
+        {
+          "name": "Knoblauch",
+          "menge": 1,
+          "einheit": "Zehe",
+          "kategorie": "obst-gemuese",
+          "frisch": false,
+          "vorrat": false
+        },
+        {
+          "name": "Basilikum",
+          "menge": 1,
+          "einheit": "Bund",
+          "kategorie": "obst-gemuese",
+          "frisch": true,
+          "vorrat": false
+        },
+        {
+          "name": "Semmelbrösel",
+          "menge": 3,
+          "einheit": "EL",
+          "kategorie": "backwaren",
+          "frisch": false,
+          "vorrat": true
+        },
+        {
+          "name": "Olivenöl",
+          "menge": 2,
+          "einheit": "EL",
+          "kategorie": "vorrat",
+          "frisch": false,
+          "vorrat": true
+        },
+        {
+          "name": "Oregano getrocknet",
+          "menge": 1,
+          "einheit": "TL",
+          "kategorie": "gewuerze",
+          "frisch": false,
+          "vorrat": true
+        },
+        {
+          "name": "Salz",
+          "menge": null,
+          "einheit": null,
+          "kategorie": "gewuerze",
+          "frisch": false,
+          "vorrat": true
+        },
+        {
+          "name": "Pfeffer",
+          "menge": null,
+          "einheit": null,
+          "kategorie": "gewuerze",
+          "frisch": false,
+          "vorrat": true
+        }
+      ],
+      "schritte": [
+        "Polenta nach Packungsanweisung garen und mit Salz würzen.",
+        "Zwiebel und Knoblauch fein hacken, Zucchini würfeln.",
+        "Hack mit Zwiebel, Knoblauch, Semmelbrösel, Oregano, Salz und Pfeffer verkneten und 16 Bällchen formen.",
+        "Bällchen im Airfryer bei 200 °C etwa 12 Minuten garen.",
+        "Zucchini in 1 EL Öl 5 Minuten braten, Tomaten zugeben und 5 Minuten einkochen lassen.",
+        "Polenta mit Gemüse und Bällchen anrichten, mit Basilikum bestreuen."
+      ]
+    },
+    {
+      "id": "rindergulasch-paprika",
+      "name": "Rindergulasch mit Paprika und Bauernbrot",
+      "typ": "pool",
+      "protein": "rind",
+      "haltbarTage": 4,
+      "portionen": 4,
+      "dauerMin": 150,
+      "airfryer": false,
+      "tags": [
+        "topf"
+      ],
+      "zutaten": [
+        {
+          "name": "Rindergulasch",
+          "menge": 800,
+          "einheit": "g",
+          "kategorie": "fleisch-fisch",
+          "frisch": true,
+          "vorrat": false
+        },
+        {
+          "name": "Zwiebel",
+          "menge": 3,
+          "einheit": "Stück",
+          "kategorie": "obst-gemuese",
+          "frisch": false,
+          "vorrat": false
+        },
+        {
+          "name": "Paprika rot",
+          "menge": 2,
+          "einheit": "Stück",
+          "kategorie": "obst-gemuese",
+          "frisch": false,
+          "vorrat": false
+        },
+        {
+          "name": "Karotte",
+          "menge": 2,
+          "einheit": "Stück",
+          "kategorie": "obst-gemuese",
+          "frisch": false,
+          "vorrat": false
+        },
+        {
+          "name": "Tomatenmark",
+          "menge": 2,
+          "einheit": "EL",
+          "kategorie": "vorrat",
+          "frisch": false,
+          "vorrat": true
+        },
+        {
+          "name": "Rinderbrühe",
+          "menge": 700,
+          "einheit": "ml",
+          "kategorie": "vorrat",
+          "frisch": false,
+          "vorrat": true
+        },
+        {
+          "name": "Paprikapulver edelsüß",
+          "menge": 2,
+          "einheit": "EL",
+          "kategorie": "gewuerze",
+          "frisch": false,
+          "vorrat": true
+        },
+        {
+          "name": "Kümmel",
+          "menge": 1,
+          "einheit": "TL",
+          "kategorie": "gewuerze",
+          "frisch": false,
+          "vorrat": true
+        },
+        {
+          "name": "Majoran getrocknet",
+          "menge": 1,
+          "einheit": "TL",
+          "kategorie": "gewuerze",
+          "frisch": false,
+          "vorrat": true
+        },
+        {
+          "name": "Olivenöl",
+          "menge": 2,
+          "einheit": "EL",
+          "kategorie": "vorrat",
+          "frisch": false,
+          "vorrat": true
+        },
+        {
+          "name": "Bauernbrot",
+          "menge": 1,
+          "einheit": "Stück",
+          "kategorie": "backwaren",
+          "frisch": false,
+          "vorrat": false
+        },
+        {
+          "name": "Salz",
+          "menge": null,
+          "einheit": null,
+          "kategorie": "gewuerze",
+          "frisch": false,
+          "vorrat": true
+        },
+        {
+          "name": "Pfeffer",
+          "menge": null,
+          "einheit": null,
+          "kategorie": "gewuerze",
+          "frisch": false,
+          "vorrat": true
+        }
+      ],
+      "schritte": [
+        "Zwiebeln würfeln, Paprika und Karotten in Stücke schneiden.",
+        "Fleisch in heißem Öl portionsweise scharf anbraten, herausnehmen.",
+        "Zwiebeln 5 Minuten dünsten, Tomatenmark zugeben und kurz mitrösten.",
+        "Paprikapulver, Kümmel und Majoran unterrühren, Fleisch zurückgeben und mit Brühe ablöschen.",
+        "Zugedeckt bei kleiner Hitze etwa 100 Minuten schmoren, Paprika und Karotten in den letzten 20 Minuten mitgaren.",
+        "Mit Salz und Pfeffer abschmecken und mit dem Bauernbrot servieren."
+      ]
+    },
+    {
+      "id": "rindfleisch-wok-nudeln",
+      "name": "Rindfleisch-Wok mit Brokkoli und Nudeln",
+      "typ": "pool",
+      "protein": "rind",
+      "haltbarTage": 1,
+      "portionen": 4,
+      "dauerMin": 25,
+      "airfryer": false,
+      "tags": [
+        "pfanne",
+        "schnell"
+      ],
+      "zutaten": [
+        {
+          "name": "Rindfleisch, Streifen",
+          "menge": 600,
+          "einheit": "g",
+          "kategorie": "fleisch-fisch",
+          "frisch": true,
+          "vorrat": false
+        },
+        {
+          "name": "Eiernudeln",
+          "menge": 400,
+          "einheit": "g",
+          "kategorie": "vorrat",
+          "frisch": false,
+          "vorrat": false
+        },
+        {
+          "name": "Brokkoli",
+          "menge": 500,
+          "einheit": "g",
+          "kategorie": "obst-gemuese",
+          "frisch": false,
+          "vorrat": false
+        },
+        {
+          "name": "Paprika rot",
+          "menge": 1,
+          "einheit": "Stück",
+          "kategorie": "obst-gemuese",
+          "frisch": false,
+          "vorrat": false
+        },
+        {
+          "name": "Knoblauch",
+          "menge": 2,
+          "einheit": "Zehe",
+          "kategorie": "obst-gemuese",
+          "frisch": false,
+          "vorrat": false
+        },
+        {
+          "name": "Ingwer, frisch",
+          "menge": 1,
+          "einheit": "Stück",
+          "kategorie": "obst-gemuese",
+          "frisch": false,
+          "vorrat": false
+        },
+        {
+          "name": "Sojasoße",
+          "menge": 4,
+          "einheit": "EL",
+          "kategorie": "vorrat",
+          "frisch": false,
+          "vorrat": true
+        },
+        {
+          "name": "Honig",
+          "menge": 1,
+          "einheit": "TL",
+          "kategorie": "vorrat",
+          "frisch": false,
+          "vorrat": true
+        },
+        {
+          "name": "Sesamöl",
+          "menge": 1,
+          "einheit": "EL",
+          "kategorie": "vorrat",
+          "frisch": false,
+          "vorrat": true
+        },
+        {
+          "name": "Pflanzenöl",
+          "menge": 2,
+          "einheit": "EL",
+          "kategorie": "vorrat",
+          "frisch": false,
+          "vorrat": true
+        },
+        {
+          "name": "Salz",
+          "menge": null,
+          "einheit": null,
+          "kategorie": "gewuerze",
+          "frisch": false,
+          "vorrat": true
+        }
+      ],
+      "schritte": [
+        "Nudeln nach Packungsanweisung kochen, abgießen und mit etwas Sesamöl mischen.",
+        "Brokkoli in kleine Röschen teilen, Paprika in Streifen schneiden. Knoblauch und Ingwer fein reiben.",
+        "Rindfleisch in heißem Öl im Wok 3 bis 4 Minuten braten, herausnehmen.",
+        "Brokkoli und Paprika im Wok 4 Minuten braten, Knoblauch und Ingwer kurz mitbraten.",
+        "Fleisch zurückgeben, mit Sojasoße und Honig ablöschen und 1 Minute glasieren.",
+        "Nudeln unterheben und sofort servieren."
+      ]
+    },
+    {
+      "id": "rinder-pho",
+      "name": "Rinder-Pho mit Reisnudeln",
+      "typ": "pool",
+      "protein": "rind",
+      "haltbarTage": 3,
+      "portionen": 4,
+      "dauerMin": 90,
+      "airfryer": false,
+      "tags": [
+        "topf"
+      ],
+      "zutaten": [
+        {
+          "name": "Rindfleisch, dünn geschnitten",
+          "menge": 600,
+          "einheit": "g",
+          "kategorie": "fleisch-fisch",
+          "frisch": true,
+          "vorrat": false
+        },
+        {
+          "name": "Reisnudeln",
+          "menge": 300,
+          "einheit": "g",
+          "kategorie": "vorrat",
+          "frisch": false,
+          "vorrat": false
+        },
+        {
+          "name": "Rinderbrühe",
+          "menge": 1500,
+          "einheit": "ml",
+          "kategorie": "vorrat",
+          "frisch": false,
+          "vorrat": true
+        },
+        {
+          "name": "Zwiebel",
+          "menge": 2,
+          "einheit": "Stück",
+          "kategorie": "obst-gemuese",
+          "frisch": false,
+          "vorrat": false
+        },
+        {
+          "name": "Ingwer, frisch",
+          "menge": 1,
+          "einheit": "Stück",
+          "kategorie": "obst-gemuese",
+          "frisch": false,
+          "vorrat": false
+        },
+        {
+          "name": "Sternanis",
+          "menge": 2,
+          "einheit": "Stück",
+          "kategorie": "gewuerze",
+          "frisch": false,
+          "vorrat": true
+        },
+        {
+          "name": "Sojasoße",
+          "menge": 3,
+          "einheit": "EL",
+          "kategorie": "vorrat",
+          "frisch": false,
+          "vorrat": true
+        },
+        {
+          "name": "Fischsoße",
+          "menge": 1,
+          "einheit": "EL",
+          "kategorie": "vorrat",
+          "frisch": false,
+          "vorrat": true
+        },
+        {
+          "name": "Limette",
+          "menge": 2,
+          "einheit": "Stück",
+          "kategorie": "obst-gemuese",
+          "frisch": false,
+          "vorrat": false
+        },
+        {
+          "name": "Frühlingszwiebel",
+          "menge": 4,
+          "einheit": "Stück",
+          "kategorie": "obst-gemuese",
+          "frisch": false,
+          "vorrat": false
+        },
+        {
+          "name": "Koriander",
+          "menge": 1,
+          "einheit": "Bund",
+          "kategorie": "obst-gemuese",
+          "frisch": true,
+          "vorrat": false
+        },
+        {
+          "name": "Sojasprossen",
+          "menge": 200,
+          "einheit": "g",
+          "kategorie": "obst-gemuese",
+          "frisch": false,
+          "vorrat": false
+        },
+        {
+          "name": "Salz",
+          "menge": null,
+          "einheit": null,
+          "kategorie": "gewuerze",
+          "frisch": false,
+          "vorrat": true
+        }
+      ],
+      "schritte": [
+        "Zwiebeln halbieren und mit dem Ingwer in einer trockenen Pfanne oder im Ofen anrösten.",
+        "Brühe mit Zwiebeln, Ingwer und Sternanis aufkochen und 45 Minuten leise köcheln lassen.",
+        "Brühe mit Sojasoße, Fischsoße und Salz abschmecken, Zwiebeln und Ingwer entfernen.",
+        "Reisnudeln nach Packungsanweisung garen und in Schalen verteilen.",
+        "Rindfleisch auf die Nudeln legen und mit der heißen Brühe übergießen, das Fleisch gart darin nach.",
+        "Mit Frühlingszwiebeln, Koriander, Sprossen und Limettenspalten servieren."
+      ]
+    },
+    {
+      "id": "rinderstreifen-chimichurri",
+      "name": "Rinderstreifen mit Chimichurri und grünen Bohnen",
+      "typ": "pool",
+      "protein": "rind",
+      "haltbarTage": 1,
+      "portionen": 4,
+      "dauerMin": 25,
+      "airfryer": false,
+      "tags": [
+        "pfanne",
+        "schnell"
+      ],
+      "zutaten": [
+        {
+          "name": "Rinderhüftsteak",
+          "menge": 600,
+          "einheit": "g",
+          "kategorie": "fleisch-fisch",
+          "frisch": true,
+          "vorrat": false
+        },
+        {
+          "name": "Grüne Bohnen",
+          "menge": 500,
+          "einheit": "g",
+          "kategorie": "obst-gemuese",
+          "frisch": false,
+          "vorrat": false
+        },
+        {
+          "name": "Petersilie",
+          "menge": 2,
+          "einheit": "Bund",
+          "kategorie": "obst-gemuese",
+          "frisch": true,
+          "vorrat": false
+        },
+        {
+          "name": "Oregano getrocknet",
+          "menge": 1,
+          "einheit": "TL",
+          "kategorie": "gewuerze",
+          "frisch": false,
+          "vorrat": true
+        },
+        {
+          "name": "Knoblauch",
+          "menge": 2,
+          "einheit": "Zehe",
+          "kategorie": "obst-gemuese",
+          "frisch": false,
+          "vorrat": false
+        },
+        {
+          "name": "Chiliflocken",
+          "menge": 1,
+          "einheit": "Prise",
+          "kategorie": "gewuerze",
+          "frisch": false,
+          "vorrat": true
+        },
+        {
+          "name": "Rotweinessig",
+          "menge": 3,
+          "einheit": "EL",
+          "kategorie": "vorrat",
+          "frisch": false,
+          "vorrat": true
+        },
+        {
+          "name": "Olivenöl",
+          "menge": 5,
+          "einheit": "EL",
+          "kategorie": "vorrat",
+          "frisch": false,
+          "vorrat": true
+        },
+        {
+          "name": "Salz",
+          "menge": null,
+          "einheit": null,
+          "kategorie": "gewuerze",
+          "frisch": false,
+          "vorrat": true
+        },
+        {
+          "name": "Pfeffer",
+          "menge": null,
+          "einheit": null,
+          "kategorie": "gewuerze",
+          "frisch": false,
+          "vorrat": true
+        }
+      ],
+      "schritte": [
+        "Für das Chimichurri Petersilie, Knoblauch, Oregano und Chili fein hacken, mit Essig, 3 EL Öl und Salz verrühren.",
+        "Grüne Bohnen 6 Minuten in Salzwasser blanchieren, abgießen und mit 1 EL Öl und Salz mischen.",
+        "Rindfleisch salzen, pfeffern und in 1 EL Öl je Seite 2 bis 3 Minuten scharf anbraten.",
+        "Fleisch 5 Minuten ruhen lassen und in dünne Streifen schneiden.",
+        "Bohnen in der Pfanne kurz schwenken, Fleisch darauf anrichten.",
+        "Mit Chimichurri beträufeln und servieren."
+      ]
+    },
+    {
+      "id": "schweinefilet-airfryer-senf",
+      "name": "Airfryer-Schweinefilet mit Senfkruste und grünen Bohnen",
+      "typ": "pool",
+      "protein": "schwein",
+      "haltbarTage": 2,
+      "portionen": 4,
+      "dauerMin": 30,
+      "airfryer": true,
+      "tags": [
+        "airfryer",
+        "schnell"
+      ],
+      "zutaten": [
+        {
+          "name": "Schweinefilet",
+          "menge": 800,
+          "einheit": "g",
+          "kategorie": "fleisch-fisch",
+          "frisch": true,
+          "vorrat": false
+        },
+        {
+          "name": "Senf, mittelscharf",
+          "menge": 3,
+          "einheit": "EL",
+          "kategorie": "kuehlregal",
+          "frisch": false,
+          "vorrat": true
+        },
+        {
+          "name": "Kartoffeln, festkochend",
+          "menge": 800,
+          "einheit": "g",
+          "kategorie": "obst-gemuese",
+          "frisch": false,
+          "vorrat": false
+        },
+        {
+          "name": "Grüne Bohnen",
+          "menge": 500,
+          "einheit": "g",
+          "kategorie": "obst-gemuese",
+          "frisch": false,
+          "vorrat": false
+        },
+        {
+          "name": "Knoblauch",
+          "menge": 1,
+          "einheit": "Zehe",
+          "kategorie": "obst-gemuese",
+          "frisch": false,
+          "vorrat": false
+        },
+        {
+          "name": "Thymian getrocknet",
+          "menge": 1,
+          "einheit": "TL",
+          "kategorie": "gewuerze",
+          "frisch": false,
+          "vorrat": true
+        },
+        {
+          "name": "Olivenöl",
+          "menge": 1,
+          "einheit": "EL",
+          "kategorie": "vorrat",
+          "frisch": false,
+          "vorrat": true
+        },
+        {
+          "name": "Salz",
+          "menge": null,
+          "einheit": null,
+          "kategorie": "gewuerze",
+          "frisch": false,
+          "vorrat": true
+        },
+        {
+          "name": "Pfeffer",
+          "menge": null,
+          "einheit": null,
+          "kategorie": "gewuerze",
+          "frisch": false,
+          "vorrat": true
+        }
+      ],
+      "schritte": [
+        "Kartoffeln in 20 Minuten in Salzwasser gar kochen, abgießen.",
+        "Schweinefilet mit Senf, geriebenem Knoblauch, Thymian, Salz und Pfeffer einstreichen.",
+        "Filet im Airfryer bei 190 °C etwa 15 Minuten garen, nach der Hälfte wenden.",
+        "Grüne Bohnen 6 Minuten in Salzwasser blanchieren und mit Öl schwenken.",
+        "Filet 5 Minuten ruhen lassen und in Scheiben schneiden.",
+        "Mit Bohnen und Kartoffeln servieren."
+      ]
+    },
+    {
+      "id": "schweinekoteletts-apfel",
+      "name": "Schweinekoteletts mit Apfel-Zwiebel-Pfanne und Brot",
+      "typ": "pool",
+      "protein": "schwein",
+      "haltbarTage": 3,
+      "portionen": 4,
+      "dauerMin": 35,
+      "airfryer": false,
+      "tags": [
+        "pfanne"
+      ],
+      "zutaten": [
+        {
+          "name": "Schweinekoteletts",
+          "menge": 800,
+          "einheit": "g",
+          "kategorie": "fleisch-fisch",
+          "frisch": true,
+          "vorrat": false
+        },
+        {
+          "name": "Äpfel",
+          "menge": 3,
+          "einheit": "Stück",
+          "kategorie": "obst-gemuese",
+          "frisch": false,
+          "vorrat": false
+        },
+        {
+          "name": "Zwiebel",
+          "menge": 2,
+          "einheit": "Stück",
+          "kategorie": "obst-gemuese",
+          "frisch": false,
+          "vorrat": false
+        },
+        {
+          "name": "Vollkornbrot",
+          "menge": 1,
+          "einheit": "Stück",
+          "kategorie": "backwaren",
+          "frisch": false,
+          "vorrat": false
+        },
+        {
+          "name": "Apfelessig",
+          "menge": 2,
+          "einheit": "EL",
+          "kategorie": "vorrat",
+          "frisch": false,
+          "vorrat": true
+        },
+        {
+          "name": "Kümmel",
+          "menge": 1,
+          "einheit": "TL",
+          "kategorie": "gewuerze",
+          "frisch": false,
+          "vorrat": true
+        },
+        {
+          "name": "Olivenöl",
+          "menge": 2,
+          "einheit": "EL",
+          "kategorie": "vorrat",
+          "frisch": false,
+          "vorrat": true
+        },
+        {
+          "name": "Salz",
+          "menge": null,
+          "einheit": null,
+          "kategorie": "gewuerze",
+          "frisch": false,
+          "vorrat": true
+        },
+        {
+          "name": "Pfeffer",
+          "menge": null,
+          "einheit": null,
+          "kategorie": "gewuerze",
+          "frisch": false,
+          "vorrat": true
+        }
+      ],
+      "schritte": [
+        "Koteletts salzen, pfeffern und in 1 EL Öl je Seite 4 bis 5 Minuten braten. Herausnehmen und warm stellen.",
+        "Zwiebeln in Ringe und Äpfel in Spalten schneiden.",
+        "Restliches Öl in der Pfanne, Zwiebeln und Äpfel 6 Minuten braten.",
+        "Mit Essig ablöschen, Kümmel zugeben und kurz einkochen lassen.",
+        "Koteletts zurück in die Pfanne geben und 2 Minuten mitziehen lassen.",
+        "Mit dem Vollkornbrot servieren."
+      ]
+    },
+    {
+      "id": "rote-linsen-eintopf",
+      "name": "Rote-Linsen-Eintopf mit Möhren und Kreuzkümmel",
+      "typ": "pool",
+      "protein": "vegetarisch",
+      "haltbarTage": 4,
+      "portionen": 4,
+      "dauerMin": 40,
+      "airfryer": false,
+      "tags": [
+        "topf"
+      ],
+      "zutaten": [
+        {
+          "name": "Rote Linsen",
+          "menge": 300,
+          "einheit": "g",
+          "kategorie": "vorrat",
+          "frisch": false,
+          "vorrat": false
+        },
+        {
+          "name": "Karotte",
+          "menge": 3,
+          "einheit": "Stück",
+          "kategorie": "obst-gemuese",
+          "frisch": false,
+          "vorrat": false
+        },
+        {
+          "name": "Zwiebel",
+          "menge": 1,
+          "einheit": "Stück",
+          "kategorie": "obst-gemuese",
+          "frisch": false,
+          "vorrat": false
+        },
+        {
+          "name": "Knoblauch",
+          "menge": 2,
+          "einheit": "Zehe",
+          "kategorie": "obst-gemuese",
+          "frisch": false,
+          "vorrat": false
+        },
+        {
+          "name": "Tomaten, gehackt",
+          "menge": 1,
+          "einheit": "Dose",
+          "kategorie": "vorrat",
+          "frisch": false,
+          "vorrat": false
+        },
+        {
+          "name": "Gemüsebrühe",
+          "menge": 1200,
+          "einheit": "ml",
+          "kategorie": "vorrat",
+          "frisch": false,
+          "vorrat": true
+        },
+        {
+          "name": "Kreuzkümmel",
+          "menge": 2,
+          "einheit": "TL",
+          "kategorie": "gewuerze",
+          "frisch": false,
+          "vorrat": true
+        },
+        {
+          "name": "Olivenöl",
+          "menge": 2,
+          "einheit": "EL",
+          "kategorie": "vorrat",
+          "frisch": false,
+          "vorrat": true
+        },
+        {
+          "name": "Naturjoghurt",
+          "menge": 200,
+          "einheit": "g",
+          "kategorie": "kuehlregal",
+          "frisch": false,
+          "vorrat": false
+        },
+        {
+          "name": "Petersilie",
+          "menge": 1,
+          "einheit": "Bund",
+          "kategorie": "obst-gemuese",
+          "frisch": true,
+          "vorrat": false
+        },
+        {
+          "name": "Salz",
+          "menge": null,
+          "einheit": null,
+          "kategorie": "gewuerze",
+          "frisch": false,
+          "vorrat": true
+        }
+      ],
+      "schritte": [
+        "Zwiebel und Knoblauch würfeln, Karotten in Scheiben schneiden.",
+        "Öl im Topf erhitzen, Zwiebel, Karotten und Knoblauch 5 Minuten dünsten, Kreuzkümmel kurz mitrösten.",
+        "Linsen waschen, mit Tomaten und Brühe zugeben.",
+        "Alles 25 Minuten köcheln lassen, bis die Linsen zerfallen und die Suppe sämig ist.",
+        "Mit Salz abschmecken und Petersilie hacken.",
+        "Eintopf mit einem Klecks Joghurt und Petersilie servieren."
+      ]
+    },
+    {
+      "id": "halloumi-couscous-zucchini",
+      "name": "Halloumi mit Couscous, Zucchini und Minze",
+      "typ": "pool",
+      "protein": "vegetarisch",
+      "haltbarTage": 2,
+      "portionen": 4,
+      "dauerMin": 25,
+      "airfryer": false,
+      "tags": [
+        "pfanne",
+        "schnell"
+      ],
+      "zutaten": [
+        {
+          "name": "Halloumi",
+          "menge": 400,
+          "einheit": "g",
+          "kategorie": "kuehlregal",
+          "frisch": false,
+          "vorrat": false
+        },
+        {
+          "name": "Couscous",
+          "menge": 300,
+          "einheit": "g",
+          "kategorie": "vorrat",
+          "frisch": false,
+          "vorrat": false
+        },
+        {
+          "name": "Zucchini",
+          "menge": 2,
+          "einheit": "Stück",
+          "kategorie": "obst-gemuese",
+          "frisch": false,
+          "vorrat": false
+        },
+        {
+          "name": "Kirschtomaten",
+          "menge": 250,
+          "einheit": "g",
+          "kategorie": "obst-gemuese",
+          "frisch": false,
+          "vorrat": false
+        },
+        {
+          "name": "Minze",
+          "menge": 1,
+          "einheit": "Bund",
+          "kategorie": "obst-gemuese",
+          "frisch": true,
+          "vorrat": false
+        },
+        {
+          "name": "Zitrone",
+          "menge": 1,
+          "einheit": "Stück",
+          "kategorie": "obst-gemuese",
+          "frisch": false,
+          "vorrat": false
+        },
+        {
+          "name": "Gemüsebrühe",
+          "menge": 300,
+          "einheit": "ml",
+          "kategorie": "vorrat",
+          "frisch": false,
+          "vorrat": true
+        },
+        {
+          "name": "Olivenöl",
+          "menge": 3,
+          "einheit": "EL",
+          "kategorie": "vorrat",
+          "frisch": false,
+          "vorrat": true
+        },
+        {
+          "name": "Kreuzkümmel",
+          "menge": 1,
+          "einheit": "TL",
+          "kategorie": "gewuerze",
+          "frisch": false,
+          "vorrat": true
+        },
+        {
+          "name": "Salz",
+          "menge": null,
+          "einheit": null,
+          "kategorie": "gewuerze",
+          "frisch": false,
+          "vorrat": true
+        }
+      ],
+      "schritte": [
+        "Couscous mit der heißen Brühe übergießen und 5 Minuten quellen lassen.",
+        "Zucchini in Scheiben und Tomaten halbieren.",
+        "Halloumi in 1 cm dicke Scheiben schneiden und in 1 EL Öl je Seite 2 Minuten goldbraun braten, herausnehmen.",
+        "Zucchini mit Kreuzkümmel und 1 EL Öl in der Pfanne 5 Minuten braten, Tomaten 2 Minuten mitbraten.",
+        "Couscous mit Zitronensaft, restlichem Öl und Salz auflockern.",
+        "Couscous mit Gemüse und Halloumi anrichten, mit gehackter Minze bestreuen."
+      ]
+    },
+    {
+      "id": "shakshuka-brot",
+      "name": "Shakshuka mit Brot",
+      "typ": "pool",
+      "protein": "vegetarisch",
+      "haltbarTage": 1,
+      "portionen": 4,
+      "dauerMin": 25,
+      "airfryer": false,
+      "tags": [
+        "pfanne",
+        "schnell"
+      ],
+      "zutaten": [
+        {
+          "name": "Eier",
+          "menge": 8,
+          "einheit": "Stück",
+          "kategorie": "kuehlregal",
+          "frisch": false,
+          "vorrat": false
+        },
+        {
+          "name": "Paprika rot",
+          "menge": 2,
+          "einheit": "Stück",
+          "kategorie": "obst-gemuese",
+          "frisch": false,
+          "vorrat": false
+        },
+        {
+          "name": "Zwiebel",
+          "menge": 1,
+          "einheit": "Stück",
+          "kategorie": "obst-gemuese",
+          "frisch": false,
+          "vorrat": false
+        },
+        {
+          "name": "Knoblauch",
+          "menge": 2,
+          "einheit": "Zehe",
+          "kategorie": "obst-gemuese",
+          "frisch": false,
+          "vorrat": false
+        },
+        {
+          "name": "Tomaten, gehackt",
+          "menge": 2,
+          "einheit": "Dose",
+          "kategorie": "vorrat",
+          "frisch": false,
+          "vorrat": false
+        },
+        {
+          "name": "Fladenbrot",
+          "menge": 1,
+          "einheit": "Packung",
+          "kategorie": "backwaren",
+          "frisch": false,
+          "vorrat": false
+        },
+        {
+          "name": "Paprikapulver edelsüß",
+          "menge": 1,
+          "einheit": "TL",
+          "kategorie": "gewuerze",
+          "frisch": false,
+          "vorrat": true
+        },
+        {
+          "name": "Kreuzkümmel",
+          "menge": 1,
+          "einheit": "TL",
+          "kategorie": "gewuerze",
+          "frisch": false,
+          "vorrat": true
+        },
+        {
+          "name": "Olivenöl",
+          "menge": 2,
+          "einheit": "EL",
+          "kategorie": "vorrat",
+          "frisch": false,
+          "vorrat": true
+        },
+        {
+          "name": "Salz",
+          "menge": null,
+          "einheit": null,
+          "kategorie": "gewuerze",
+          "frisch": false,
+          "vorrat": true
+        }
+      ],
+      "schritte": [
+        "Paprika und Zwiebel würfeln, Knoblauch fein hacken.",
+        "Öl in einer großen Pfanne erhitzen, Paprika, Zwiebel und Knoblauch 6 Minuten dünsten.",
+        "Paprikapulver und Kreuzkümmel einrühren, Tomaten zugeben und 10 Minuten einkochen lassen.",
+        "Mit Salz abschmecken und mit einem Löffel 8 Mulden in die Soße drücken.",
+        "Je ein Ei in die Mulden schlagen, zugedeckt 6 bis 8 Minuten stocken lassen.",
+        "Mit warmem Fladenbrot servieren."
+      ]
     }
   ]
 }
