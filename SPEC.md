@@ -93,6 +93,7 @@ Feldregeln (der Validator prüft alle):
 - `dauerMin`: Ganzzahl 10 bis 180 (aktive + passive Zeit)
 - `airfryer`: boolean (true, wenn der Airfryer ein zentraler Teil der Zubereitung ist)
 - `tags`: Array aus `ofen`, `pfanne`, `topf`, `airfryer`, `schnell` (<= 30 min), `scharf`
+  - Der Validator lehnt `schnell` bei `dauerMin > 30` ab. Rezepte bis 30 Minuten müssen den Tag nicht tragen.
 - `zutaten`: mindestens 3 Einträge, Mengen für 4 Portionen
   - `name`: Singular oder übliche Handelsbezeichnung, deutsch ("Paprika rot", "Kokosmilch")
   - `menge`: Zahl > 0 oder `null` (nur bei "nach Geschmack")
