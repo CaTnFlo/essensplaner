@@ -1,0 +1,839 @@
+{
+  "version": 1,
+  "rezepte": [
+    {
+      "id": "lachs-spinat-nudeln",
+      "name": "Lachs-Spinat-Nudeln",
+      "typ": "favorit",
+      "protein": "fisch",
+      "haltbarTage": 1,
+      "portionen": 4,
+      "dauerMin": 30,
+      "airfryer": false,
+      "tags": [
+        "pfanne"
+      ],
+      "zutaten": [
+        {
+          "name": "Lachsfilet",
+          "menge": 4,
+          "einheit": "Stück",
+          "kategorie": "fleisch-fisch",
+          "frisch": true,
+          "vorrat": false
+        },
+        {
+          "name": "Blattspinat",
+          "menge": 300,
+          "einheit": "g",
+          "kategorie": "obst-gemuese",
+          "frisch": true,
+          "vorrat": false
+        },
+        {
+          "name": "Nudeln",
+          "menge": 400,
+          "einheit": "g",
+          "kategorie": "vorrat",
+          "frisch": false,
+          "vorrat": false
+        }
+      ],
+      "schritte": [
+        "Vorbereiten.",
+        "Kochen.",
+        "Servieren."
+      ],
+      "variantenGruppen": []
+    },
+    {
+      "id": "lasagne",
+      "name": "Lasagne Bolognese",
+      "typ": "favorit",
+      "protein": "hack",
+      "haltbarTage": 3,
+      "portionen": 4,
+      "dauerMin": 75,
+      "airfryer": false,
+      "tags": [
+        "ofen"
+      ],
+      "zutaten": [
+        {
+          "name": "Rinderhack",
+          "menge": 500,
+          "einheit": "g",
+          "kategorie": "fleisch-fisch",
+          "frisch": true,
+          "vorrat": false
+        },
+        {
+          "name": "Lasagneplatten",
+          "menge": 250,
+          "einheit": "g",
+          "kategorie": "vorrat",
+          "frisch": false,
+          "vorrat": false
+        },
+        {
+          "name": "Möhre",
+          "menge": 2,
+          "einheit": "Stück",
+          "kategorie": "obst-gemuese",
+          "frisch": false,
+          "vorrat": false
+        }
+      ],
+      "schritte": [
+        "Vorbereiten.",
+        "Kochen.",
+        "Servieren."
+      ],
+      "variantenGruppen": []
+    },
+    {
+      "id": "curry",
+      "name": "Hähnchen-Curry mit Reis",
+      "typ": "favorit",
+      "protein": "gefluegel",
+      "haltbarTage": 3,
+      "portionen": 4,
+      "dauerMin": 40,
+      "airfryer": false,
+      "tags": [
+        "topf"
+      ],
+      "zutaten": [
+        {
+          "name": "Hähnchenbrust",
+          "menge": 500,
+          "einheit": "g",
+          "kategorie": "fleisch-fisch",
+          "frisch": true,
+          "vorrat": false
+        },
+        {
+          "name": "Kokosmilch",
+          "menge": 1,
+          "einheit": "Dose",
+          "kategorie": "vorrat",
+          "frisch": false,
+          "vorrat": false
+        },
+        {
+          "name": "Paprika rot",
+          "menge": 2,
+          "einheit": "Stück",
+          "kategorie": "obst-gemuese",
+          "frisch": false,
+          "vorrat": false
+        }
+      ],
+      "schritte": [
+        "Vorbereiten.",
+        "Kochen.",
+        "Servieren."
+      ],
+      "variantenGruppen": []
+    },
+    {
+      "id": "hack-brokkoli-auflauf",
+      "name": "Hack-Brokkoli-Auflauf",
+      "typ": "favorit",
+      "protein": "hack",
+      "haltbarTage": 3,
+      "portionen": 4,
+      "dauerMin": 55,
+      "airfryer": false,
+      "tags": [
+        "ofen"
+      ],
+      "zutaten": [
+        {
+          "name": "Rinderhack",
+          "menge": 400,
+          "einheit": "g",
+          "kategorie": "fleisch-fisch",
+          "frisch": true,
+          "vorrat": false
+        },
+        {
+          "name": "Brokkoli",
+          "menge": 1,
+          "einheit": "Stück",
+          "kategorie": "obst-gemuese",
+          "frisch": false,
+          "vorrat": false
+        },
+        {
+          "name": "Käse gerieben",
+          "menge": 150,
+          "einheit": "g",
+          "kategorie": "kuehlregal",
+          "frisch": false,
+          "vorrat": false
+        }
+      ],
+      "schritte": [
+        "Vorbereiten.",
+        "Kochen.",
+        "Servieren."
+      ],
+      "variantenGruppen": []
+    },
+    {
+      "id": "chili-con-carne",
+      "name": "Chili con carne",
+      "typ": "favorit",
+      "protein": "hack",
+      "haltbarTage": 3,
+      "portionen": 4,
+      "dauerMin": 50,
+      "airfryer": false,
+      "tags": [
+        "topf",
+        "scharf"
+      ],
+      "zutaten": [
+        {
+          "name": "Rinderhack",
+          "menge": 500,
+          "einheit": "g",
+          "kategorie": "fleisch-fisch",
+          "frisch": true,
+          "vorrat": false
+        },
+        {
+          "name": "Kidneybohnen",
+          "menge": 1,
+          "einheit": "Dose",
+          "kategorie": "vorrat",
+          "frisch": false,
+          "vorrat": false
+        },
+        {
+          "name": "Paprika rot",
+          "menge": 2,
+          "einheit": "Stück",
+          "kategorie": "obst-gemuese",
+          "frisch": false,
+          "vorrat": false
+        }
+      ],
+      "schritte": [
+        "Vorbereiten.",
+        "Kochen.",
+        "Servieren."
+      ],
+      "variantenGruppen": []
+    },
+    {
+      "id": "nudel-baukasten",
+      "name": "Nudeln mit Hähnchen",
+      "typ": "favorit",
+      "protein": "gefluegel",
+      "haltbarTage": 1,
+      "portionen": 4,
+      "dauerMin": 30,
+      "airfryer": false,
+      "tags": [
+        "pfanne",
+        "schnell"
+      ],
+      "zutaten": [
+        {
+          "name": "Hähnchenbrust",
+          "menge": 500,
+          "einheit": "g",
+          "kategorie": "fleisch-fisch",
+          "frisch": true,
+          "vorrat": false
+        },
+        {
+          "name": "Nudeln",
+          "menge": 400,
+          "einheit": "g",
+          "kategorie": "vorrat",
+          "frisch": false,
+          "vorrat": false
+        },
+        {
+          "name": "Salz",
+          "menge": null,
+          "einheit": null,
+          "kategorie": "gewuerze",
+          "frisch": false,
+          "vorrat": true
+        }
+      ],
+      "schritte": [
+        "Vorbereiten.",
+        "Kochen.",
+        "Servieren."
+      ],
+      "variantenGruppen": [
+        {
+          "id": "beilage",
+          "name": "Beilage",
+          "optionen": [
+            {
+              "id": "brokkoli",
+              "name": "Brokkoli",
+              "zutaten": [
+                {
+                  "name": "Brokkoli",
+                  "menge": 1,
+                  "einheit": "Stück",
+                  "kategorie": "obst-gemuese",
+                  "frisch": false,
+                  "vorrat": false
+                }
+              ]
+            },
+            {
+              "id": "bohnen",
+              "name": "Bohnen",
+              "zutaten": [
+                {
+                  "name": "Grüne Bohnen",
+                  "menge": 300,
+                  "einheit": "g",
+                  "kategorie": "obst-gemuese",
+                  "frisch": false,
+                  "vorrat": false
+                }
+              ]
+            },
+            {
+              "id": "blumenkohl",
+              "name": "Blumenkohl",
+              "zutaten": [
+                {
+                  "name": "Blumenkohl",
+                  "menge": 1,
+                  "einheit": "Stück",
+                  "kategorie": "obst-gemuese",
+                  "frisch": false,
+                  "vorrat": false
+                }
+              ]
+            },
+            {
+              "id": "pilze",
+              "name": "Pilze",
+              "zutaten": [
+                {
+                  "name": "Champignons",
+                  "menge": 250,
+                  "einheit": "g",
+                  "kategorie": "obst-gemuese",
+                  "frisch": true,
+                  "vorrat": false
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "sosse",
+          "name": "Soße",
+          "optionen": [
+            {
+              "id": "sahne",
+              "name": "Sahnesoße",
+              "zutaten": [
+                {
+                  "name": "Kochsahne 15 %",
+                  "menge": 200,
+                  "einheit": "ml",
+                  "kategorie": "kuehlregal",
+                  "frisch": false,
+                  "vorrat": false
+                }
+              ]
+            },
+            {
+              "id": "tomate",
+              "name": "Tomatensoße",
+              "zutaten": [
+                {
+                  "name": "Passierte Tomaten",
+                  "menge": 1,
+                  "einheit": "Packung",
+                  "kategorie": "vorrat",
+                  "frisch": false,
+                  "vorrat": false
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ofengemuese",
+      "name": "Ofengemüse mit Kartoffeln und Süßkartoffeln",
+      "typ": "favorit",
+      "protein": "vegetarisch",
+      "haltbarTage": 1,
+      "portionen": 4,
+      "dauerMin": 50,
+      "airfryer": false,
+      "tags": [
+        "ofen"
+      ],
+      "zutaten": [
+        {
+          "name": "Kartoffeln",
+          "menge": 600,
+          "einheit": "g",
+          "kategorie": "obst-gemuese",
+          "frisch": false,
+          "vorrat": false
+        },
+        {
+          "name": "Süßkartoffel",
+          "menge": 2,
+          "einheit": "Stück",
+          "kategorie": "obst-gemuese",
+          "frisch": false,
+          "vorrat": false
+        },
+        {
+          "name": "Zucchini",
+          "menge": 1,
+          "einheit": "Stück",
+          "kategorie": "obst-gemuese",
+          "frisch": false,
+          "vorrat": false
+        }
+      ],
+      "schritte": [
+        "Vorbereiten.",
+        "Kochen.",
+        "Servieren."
+      ],
+      "variantenGruppen": [
+        {
+          "id": "dazu",
+          "name": "Dazu",
+          "optionen": [
+            {
+              "id": "steak",
+              "name": "Grillsteak",
+              "zutaten": [
+                {
+                  "name": "Grillsteak",
+                  "menge": 4,
+                  "einheit": "Stück",
+                  "kategorie": "fleisch-fisch",
+                  "frisch": true,
+                  "vorrat": false
+                }
+              ]
+            },
+            {
+              "id": "ofenkaese",
+              "name": "Ofenkäse",
+              "zutaten": [
+                {
+                  "name": "Ofenkäse",
+                  "menge": 2,
+                  "einheit": "Packung",
+                  "kategorie": "kuehlregal",
+                  "frisch": false,
+                  "vorrat": false
+                }
+              ]
+            },
+            {
+              "id": "beides",
+              "name": "Grillsteak und Ofenkäse",
+              "zutaten": [
+                {
+                  "name": "Grillsteak",
+                  "menge": 4,
+                  "einheit": "Stück",
+                  "kategorie": "fleisch-fisch",
+                  "frisch": true,
+                  "vorrat": false
+                },
+                {
+                  "name": "Ofenkäse",
+                  "menge": 2,
+                  "einheit": "Packung",
+                  "kategorie": "kuehlregal",
+                  "frisch": false,
+                  "vorrat": false
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "haehnchen-gemuesepfanne",
+      "name": "Hähnchen-Gemüsepfanne",
+      "typ": "pool",
+      "protein": "gefluegel",
+      "haltbarTage": 1,
+      "portionen": 4,
+      "dauerMin": 30,
+      "airfryer": false,
+      "tags": [
+        "pfanne"
+      ],
+      "zutaten": [
+        {
+          "name": "Hähnchenbrust",
+          "menge": 500,
+          "einheit": "g",
+          "kategorie": "fleisch-fisch",
+          "frisch": true,
+          "vorrat": false
+        },
+        {
+          "name": "Paprika gelb",
+          "menge": 2,
+          "einheit": "Stück",
+          "kategorie": "obst-gemuese",
+          "frisch": false,
+          "vorrat": false
+        },
+        {
+          "name": "Reis",
+          "menge": 300,
+          "einheit": "g",
+          "kategorie": "vorrat",
+          "frisch": false,
+          "vorrat": false
+        }
+      ],
+      "schritte": [
+        "Vorbereiten.",
+        "Kochen.",
+        "Servieren."
+      ],
+      "variantenGruppen": []
+    },
+    {
+      "id": "lachs-ofen",
+      "name": "Ofenlachs mit Gemüse",
+      "typ": "pool",
+      "protein": "fisch",
+      "haltbarTage": 1,
+      "portionen": 4,
+      "dauerMin": 35,
+      "airfryer": true,
+      "tags": [
+        "ofen",
+        "airfryer",
+        "schnell"
+      ],
+      "zutaten": [
+        {
+          "name": "Lachsfilet",
+          "menge": 4,
+          "einheit": "Stück",
+          "kategorie": "fleisch-fisch",
+          "frisch": true,
+          "vorrat": false
+        },
+        {
+          "name": "Zucchini",
+          "menge": 2,
+          "einheit": "Stück",
+          "kategorie": "obst-gemuese",
+          "frisch": false,
+          "vorrat": false
+        },
+        {
+          "name": "Zitrone",
+          "menge": 1,
+          "einheit": "Stück",
+          "kategorie": "obst-gemuese",
+          "frisch": false,
+          "vorrat": false
+        }
+      ],
+      "schritte": [
+        "Vorbereiten.",
+        "Kochen.",
+        "Servieren."
+      ],
+      "variantenGruppen": []
+    },
+    {
+      "id": "forelle-kartoffeln",
+      "name": "Forelle mit Kartoffeln",
+      "typ": "pool",
+      "protein": "fisch",
+      "haltbarTage": 2,
+      "portionen": 4,
+      "dauerMin": 45,
+      "airfryer": false,
+      "tags": [
+        "pfanne"
+      ],
+      "zutaten": [
+        {
+          "name": "Forelle",
+          "menge": 4,
+          "einheit": "Stück",
+          "kategorie": "fleisch-fisch",
+          "frisch": true,
+          "vorrat": false
+        },
+        {
+          "name": "Kartoffeln",
+          "menge": 800,
+          "einheit": "g",
+          "kategorie": "obst-gemuese",
+          "frisch": false,
+          "vorrat": false
+        },
+        {
+          "name": "Dill",
+          "menge": 1,
+          "einheit": "Bund",
+          "kategorie": "obst-gemuese",
+          "frisch": true,
+          "vorrat": false
+        }
+      ],
+      "schritte": [
+        "Vorbereiten.",
+        "Kochen.",
+        "Servieren."
+      ],
+      "variantenGruppen": []
+    },
+    {
+      "id": "pute-airfryer",
+      "name": "Putenbrust aus dem Airfryer",
+      "typ": "pool",
+      "protein": "gefluegel",
+      "haltbarTage": 3,
+      "portionen": 4,
+      "dauerMin": 40,
+      "airfryer": true,
+      "tags": [
+        "airfryer"
+      ],
+      "zutaten": [
+        {
+          "name": "Putenbrust",
+          "menge": 600,
+          "einheit": "g",
+          "kategorie": "fleisch-fisch",
+          "frisch": true,
+          "vorrat": false
+        },
+        {
+          "name": "Brokkoli",
+          "menge": 1,
+          "einheit": "Stück",
+          "kategorie": "obst-gemuese",
+          "frisch": false,
+          "vorrat": false
+        },
+        {
+          "name": "Süßkartoffel",
+          "menge": 2,
+          "einheit": "Stück",
+          "kategorie": "obst-gemuese",
+          "frisch": false,
+          "vorrat": false
+        }
+      ],
+      "schritte": [
+        "Vorbereiten.",
+        "Kochen.",
+        "Servieren."
+      ],
+      "variantenGruppen": []
+    },
+    {
+      "id": "rind-wok",
+      "name": "Rindfleisch-Wok",
+      "typ": "pool",
+      "protein": "rind",
+      "haltbarTage": 2,
+      "portionen": 4,
+      "dauerMin": 30,
+      "airfryer": false,
+      "tags": [
+        "pfanne"
+      ],
+      "zutaten": [
+        {
+          "name": "Rindfleisch",
+          "menge": 500,
+          "einheit": "g",
+          "kategorie": "fleisch-fisch",
+          "frisch": true,
+          "vorrat": false
+        },
+        {
+          "name": "Paprika rot",
+          "menge": 2,
+          "einheit": "Stück",
+          "kategorie": "obst-gemuese",
+          "frisch": false,
+          "vorrat": false
+        },
+        {
+          "name": "Sojasoße",
+          "menge": 4,
+          "einheit": "EL",
+          "kategorie": "vorrat",
+          "frisch": false,
+          "vorrat": false
+        }
+      ],
+      "schritte": [
+        "Vorbereiten.",
+        "Kochen.",
+        "Servieren."
+      ],
+      "variantenGruppen": []
+    },
+    {
+      "id": "schwein-gulasch",
+      "name": "Schweinegulasch",
+      "typ": "pool",
+      "protein": "schwein",
+      "haltbarTage": 4,
+      "portionen": 4,
+      "dauerMin": 90,
+      "airfryer": false,
+      "tags": [
+        "topf"
+      ],
+      "zutaten": [
+        {
+          "name": "Schweinefleisch",
+          "menge": 600,
+          "einheit": "g",
+          "kategorie": "fleisch-fisch",
+          "frisch": true,
+          "vorrat": false
+        },
+        {
+          "name": "Zwiebel",
+          "menge": 3,
+          "einheit": "Stück",
+          "kategorie": "obst-gemuese",
+          "frisch": false,
+          "vorrat": false
+        },
+        {
+          "name": "Paprika rot",
+          "menge": 2,
+          "einheit": "Stück",
+          "kategorie": "obst-gemuese",
+          "frisch": false,
+          "vorrat": false
+        }
+      ],
+      "schritte": [
+        "Vorbereiten.",
+        "Kochen.",
+        "Servieren."
+      ],
+      "variantenGruppen": []
+    },
+    {
+      "id": "gemuese-linsen",
+      "name": "Linsen-Gemüse-Topf",
+      "typ": "pool",
+      "protein": "vegetarisch",
+      "haltbarTage": 4,
+      "portionen": 4,
+      "dauerMin": 40,
+      "airfryer": false,
+      "tags": [
+        "topf"
+      ],
+      "zutaten": [
+        {
+          "name": "Linsen",
+          "menge": 300,
+          "einheit": "g",
+          "kategorie": "vorrat",
+          "frisch": false,
+          "vorrat": false
+        },
+        {
+          "name": "Möhre",
+          "menge": 3,
+          "einheit": "Stück",
+          "kategorie": "obst-gemuese",
+          "frisch": false,
+          "vorrat": false
+        },
+        {
+          "name": "Sellerie",
+          "menge": 1,
+          "einheit": "Stück",
+          "kategorie": "obst-gemuese",
+          "frisch": false,
+          "vorrat": false
+        }
+      ],
+      "schritte": [
+        "Vorbereiten.",
+        "Kochen.",
+        "Servieren."
+      ],
+      "variantenGruppen": []
+    },
+    {
+      "id": "hack-paprika-pfanne",
+      "name": "Hack-Paprika-Pfanne",
+      "typ": "pool",
+      "protein": "hack",
+      "haltbarTage": 2,
+      "portionen": 4,
+      "dauerMin": 25,
+      "airfryer": false,
+      "tags": [
+        "pfanne",
+        "schnell"
+      ],
+      "zutaten": [
+        {
+          "name": "Rinderhack",
+          "menge": 400,
+          "einheit": "g",
+          "kategorie": "fleisch-fisch",
+          "frisch": true,
+          "vorrat": false
+        },
+        {
+          "name": "Paprika rot",
+          "menge": 3,
+          "einheit": "Stück",
+          "kategorie": "obst-gemuese",
+          "frisch": false,
+          "vorrat": false
+        },
+        {
+          "name": "Reis",
+          "menge": 300,
+          "einheit": "g",
+          "kategorie": "vorrat",
+          "frisch": false,
+          "vorrat": false
+        }
+      ],
+      "schritte": [
+        "Vorbereiten.",
+        "Kochen.",
+        "Servieren."
+      ],
+      "variantenGruppen": []
+    }
+  ]
+}
