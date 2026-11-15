@@ -14,3 +14,9 @@ Bring's documented import uses Schema.org/JSON-LD:
 https://www.getbring.com/en/integration-check
 
 The import payload is verified; behavior inside the Bring app and its cache is not claimed as device-tested. Existing items already in a Bring list are not deleted by this change. Fresh basil and other fresh herbs retain their existing non-pantry classification.
+
+## Palette, radii and modal scrolling follow-up
+
+The palette assembled and inspected in [Coolors](https://coolors.co/121214-232326-e66d20-99c9ef-18354c) retains orange and neutral surfaces. Day badges use light blue #99C9EF with ink #18354C in both themes. Shared radius tokens use 12px for controls, 20px for containers and full rounding for pills. Joined action rows retain square internal edges.
+
+Opening a sheet fixes the background body at its current offset. Sheet transitions retain this lock; dismissal restores the original inline styles and page position without focus-induced scrolling. Sheet content remains independently scrollable. Regression coverage exercises background wheel input, sheet transitions, content scrolling and offset restoration alongside backdrop, swipe, keyboard and touch focus checks.

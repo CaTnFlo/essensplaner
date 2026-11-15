@@ -1,5 +1,10 @@
 /* Shared selected palette from docs/mockups/palette.json. */
 :root {
+  --day-fill: #99C9EF;
+  --day-ink: #18354C;
+  --radius-control: 12px;
+  --radius-container: 20px;
+  --radius-pill: 999px;
   --primary-fill: #E66D20;
   --primary-text: #F8FAFB;
   --navigation: #FCFCFD;

@@ -674,10 +674,25 @@ document.addEventListener("submit", (e) => {
 
 // The dialog is outside the rerendered app: remote events cannot erase drafts,
 // focus, selection or sheet scroll. Native showModal supplies focus containment.
+let sheetScrollLock = null;
+function lockSheetScroll() {
+  if (sheetScrollLock) return;
+  sheetScrollLock = { x: window.scrollX, y: window.scrollY, bodyStyle: document.body.getAttribute("style") };
+  Object.assign(document.body.style, { position: "fixed", top: `-${sheetScrollLock.y}px`, left: `-${sheetScrollLock.x}px`, width: "100%", overflow: "hidden" });
+}
+function unlockSheetScroll() {
+  if (!sheetScrollLock) return;
+  const { x, y, bodyStyle } = sheetScrollLock;
+  sheetScrollLock = null;
+  if (bodyStyle === null) document.body.removeAttribute("style");
+  else document.body.setAttribute("style", bodyStyle);
+  window.scrollTo(x, y);
+}
 function oeffneSheet(type, slot) {
   const existing = document.getElementById('sheet');
   if (existing) { existing.close(); existing.remove(); }
   else {
+    lockSheetScroll();
     sheetTrigger = document.activeElement;
     sheetTriggerSelector = focusSelector(sheetTrigger);
     history.pushState({ mealSheet: true }, ''); sheetHistory = true;
@@ -694,10 +709,11 @@ function oeffneSheet(type, slot) {
 function schliesseSheet(fromBack = false) {
   const dialog = document.getElementById('sheet');
   dialog?.close(); dialog?.remove(); sheet = null;
+  unlockSheetScroll();
   if (sheetHistory && !fromBack) history.back();
   sheetHistory = false;
-  if (sheetTrigger?.isConnected) sheetTrigger.focus();
-  else (sheetTriggerSelector && document.querySelector(sheetTriggerSelector) || document.querySelector('[data-action="wish"]'))?.focus();
+  if (sheetTrigger?.isConnected) sheetTrigger.focus({preventScroll:true});
+  else (sheetTriggerSelector && document.querySelector(sheetTriggerSelector) || document.querySelector('[data-action="wish"]'))?.focus({preventScroll:true});
 }
 globalThis.window?.addEventListener('popstate', () => { if (sheet) schliesseSheet(true); });
 function zeichneSheet() {

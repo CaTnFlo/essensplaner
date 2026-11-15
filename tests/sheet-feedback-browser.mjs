@@ -37,4 +37,20 @@ await page.emulateMedia({colorScheme:'dark'});await page.screenshot({path:'/tmp/
 await page.locator('[data-action="wish"]').tap();await page.locator('#sheet-search').fill('lasagne');
 const body=page.locator('.sheet-body');await body.evaluate(el=>el.scrollTop=200);assert.equal(await page.locator('dialog').evaluate(el=>el.style.transform),'');
 r=await page.locator('dialog').boundingBox();await page.touchscreen.tap(10,Math.max(2,r.y/2));await waitClose();assert.equal(await read(),before);
+// Background remains fixed at a nonzero page offset, including sheet transitions.
+await page.evaluate(()=>window.scrollTo(0,180));
+const originalY=await page.evaluate(()=>window.scrollY);
+assert.ok(originalY>0);
+await open();
+assert.equal(await page.evaluate(()=>document.body.style.position),'fixed');
+const backgroundTop=await page.locator('.day-badge').first().evaluate(el=>el.getBoundingClientRect().top);
+await page.mouse.move(10,10);await page.mouse.wheel(0,500);await page.waitForTimeout(200);
+assert.equal(await page.locator('.day-badge').first().evaluate(el=>el.getBoundingClientRect().top),backgroundTop);
+await page.locator('[data-action="aendern"][data-slot="A"]').click();
+assert.equal(await page.evaluate(()=>document.body.style.position),'fixed');
+await page.locator('#sheet-results').hover();await page.mouse.wheel(0,500);await page.waitForTimeout(200);
+assert.ok(await page.locator('#sheet-results').evaluate(el=>el.scrollTop)>0);
+await page.keyboard.press('Escape');await waitClose();
+assert.equal(await page.evaluate(()=>window.scrollY),originalY);
+assert.equal(await page.evaluate(()=>document.body.style.position),'');
 assert.deepEqual(errors,[]);console.log('PASS: day badges, grouped icons, touch focus, keyboard focus, backdrop, swipe and short-swipe cancellation');await browser.close();
