@@ -53,4 +53,25 @@ assert.ok(await page.locator('#sheet-results').evaluate(el=>el.scrollTop)>0);
 await page.keyboard.press('Escape');await waitClose();
 assert.equal(await page.evaluate(()=>window.scrollY),originalY);
 assert.equal(await page.evaluate(()=>document.body.style.position),'');
+// Short mobile viewports need genuine touch scrolling inside ordinary menus.
+await page.setViewportSize({width:360,height:500});
+await page.reload();
+await open();
+const heights=await page.locator('.card-heading').first().evaluate(el=>[...el.children].map(child=>child.getBoundingClientRect().height));
+assert.ok(heights.every(height=>height===48),JSON.stringify(heights));
+const scrollBody=page.locator('.sheet-body');
+assert.ok(await scrollBody.evaluate(el=>el.scrollHeight>el.clientHeight));
+const box=await scrollBody.boundingBox();
+await page.waitForTimeout(500);
+await cdp.send('Input.dispatchTouchEvent',{type:'touchStart',touchPoints:[{x:180,y:box.y+box.height-30}]});
+for(let step=1;step<=6;step++) {
+ await cdp.send('Input.dispatchTouchEvent',{type:'touchMove',touchPoints:[{x:180,y:box.y+box.height-30-step*20}]});
+ await page.waitForTimeout(30);
+}
+await cdp.send('Input.dispatchTouchEvent',{type:'touchEnd',touchPoints:[]});
+await page.waitForTimeout(200);
+assert.ok(await scrollBody.evaluate(el=>el.scrollTop)>0,'Menu content must scroll with touch');
+assert.equal(await page.evaluate(()=>document.body.style.position),'fixed');
+await page.screenshot({path:'/tmp/meal-sheet-short.png'});
+await page.keyboard.press('Escape');await waitClose();
 assert.deepEqual(errors,[]);console.log('PASS: day badges, grouped icons, touch focus, keyboard focus, backdrop, swipe and short-swipe cancellation');await browser.close();

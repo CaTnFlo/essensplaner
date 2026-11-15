@@ -313,7 +313,7 @@ dialog[data-kind="replace"] .auswahl { min-height: 96px; overflow: auto; }
 .metadata { gap: 8px; margin-top: 4px; }
 .metadata > span { border-radius:var(--radius-pill); background: var(--accent-soft); padding: 4px 8px; }
 .menu-label { margin: 20px 0 8px; color: var(--muted); font-size: .85rem; font-weight: 600; }
-.sheet-actions { border-radius:var(--radius-container); overflow: hidden; background: var(--accent-soft); gap: 0; }
+.sheet-actions { border-radius:var(--radius-container); overflow: clip; background: var(--accent-soft); gap: 0; }
 .sheet-actions .btn { width: 100%; justify-content: flex-start; text-align: left; gap: 12px; min-height: 56px; padding: 14px 16px; border: 0; border-radius: 0; background: transparent; }
 .sheet-actions .btn + .btn { border-top: 1px solid var(--border); }
 .sheet-actions .btn svg { color: var(--accent); width: 22px; height: 22px; }
@@ -328,3 +328,21 @@ html[data-input="pointer"] #sheet button:focus-visible { outline: none; }
 button, a, summary { -webkit-tap-highlight-color: transparent; }
 
 .card-heading h2.day-badge { background:var(--day-fill); color:var(--day-ink); }
+
+/* Equal visual height in card headers; retain generous touch targets. */
+.card-heading h2.day-badge, .card-heading .badge, .card-heading .pin,
+.card-heading .icon-button {
+  min-height:48px; height:48px; box-sizing:border-box;
+  border-radius:var(--radius-control); padding:0 10px;
+}
+.card-heading .icon-button { width:48px; padding:0; justify-content:center; }
+/* A single explicit content viewport for every sheet, including short screens. */
+dialog[open] { display:flex; flex-direction:column; overflow:hidden; }
+.sheet-grip { min-height:32px; height:32px; }
+.sheet-heading { position:static; flex:none; padding:0 16px 12px; }
+.sheet-body { min-height:0; overflow-y:auto; overscroll-behavior-y:contain;
+  touch-action:pan-y; -webkit-overflow-scrolling:touch;
+  padding:16px 16px calc(24px + env(safe-area-inset-bottom)); }
+.sheet-body > :first-child { margin-top:0; }
+.sheet-body > :last-child { margin-bottom:0; }
+#sheet-footer, #sheet-save { flex:none; }

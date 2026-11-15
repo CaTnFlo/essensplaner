@@ -1,5 +1,5 @@
 {
-  "status": "Implemented palette with approved blue day-badge extension",
+  "status": "Implemented palette with approved warm sand day-badge extension",
   "scope": "The week board shows the selected palette. Other boards illustrate the UX flow in the original neutral styling; use these token values for implementation.",
   "light": {
     "canvas": "#F5F6F7",
@@ -9,8 +9,8 @@
     "primaryFill": "#E66D20",
     "primaryText": "#F8FAFB",
     "accentText": "#C14F13",
-    "dayFill": "#99C9EF",
-    "dayInk": "#18354C"
+    "dayFill": "#E4C9A0",
+    "dayInk": "#49351F"
   },
   "dark": {
     "canvas": "#121214",
@@ -22,10 +22,10 @@
     "primaryFill": "#E66D20",
     "primaryText": "#F8FAFB",
     "accentText": "#FF9B5D",
-    "dayFill": "#99C9EF",
-    "dayInk": "#18354C"
+    "dayFill": "#E4C9A0",
+    "dayInk": "#49351F"
   },
-  "secondaryPaletteSource": "https://coolors.co/121214-232326-e66d20-99c9ef-18354c",
+  "secondaryPaletteSource": "https://coolors.co/121214-232326-e66d20-e4c9a0-49351f",
   "radii": {
     "control": "12px",
     "container": "20px",

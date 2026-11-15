@@ -838,7 +838,7 @@ function installSheetDismiss(dialog) {
     const r = dialog.getBoundingClientRect();
     return e.clientX < r.left || e.clientX > r.right || e.clientY < r.top || e.clientY > r.bottom;
   };
-  const reset = () => { dialog.style.transform = ''; gesture = null; };
+  const reset = () => { if (gesture) dialog.style.transform = ''; gesture = null; };
   dialog.addEventListener('pointerdown', e => {
     if (!e.isPrimary || e.button !== 0) return;
     outsideStart = e.target === dialog && outside(e);

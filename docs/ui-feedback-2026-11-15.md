@@ -20,3 +20,7 @@ The import payload is verified; behavior inside the Bring app and its cache is n
 The palette assembled and inspected in [Coolors](https://coolors.co/121214-232326-e66d20-99c9ef-18354c) retains orange and neutral surfaces. Day badges use light blue #99C9EF with ink #18354C in both themes. Shared radius tokens use 12px for controls, 20px for containers and full rounding for pills. Joined action rows retain square internal edges.
 
 Opening a sheet fixes the background body at its current offset. Sheet transitions retain this lock; dismissal restores the original inline styles and page position without focus-induced scrolling. Sheet content remains independently scrollable. Regression coverage exercises background wheel input, sheet transitions, content scrolling and offset restoration alongside backdrop, swipe, keyboard and touch focus checks.
+
+## Warm day badges and consistent card headers
+
+The blue extension was rejected in visual review. Day labels now use warm sand #E4C9A0 with brown #49351F. All header badges and the overflow button share a 48px height and 12px radius. Every sheet has a constrained, independently scrollable body, a shorter 32px grip area and 24px bottom content padding plus the safe-area inset. Background locking remains unchanged. Browser coverage now includes matching header heights and native touch scrolling in a freshly loaded 360 × 500 viewport. Physical iPhone verification remains outstanding.
