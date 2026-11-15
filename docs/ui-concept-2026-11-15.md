@@ -1,5 +1,7 @@
 # Meal planner UI proposal
 
+Implementation follow-up: [code changes and verification](ui-implementation-2026-11-15.md). The proposal status below records the original design handoff.
+
 Status: visual direction and UX refinements updated at the user's request on 15 November 2026. These are design artifacts; no redesign, wish-selection, undo or synchronization implementation is included. The existing review fixes remain separate. The latest [mockups and behavior contract](mockups/README.md) supersede earlier chat images and conflicting earlier proposals.
 
 The goal is to replace or move one of three weekly dishes quickly, while keeping cooking days, eating days and shopping consequences visible. Keep the three destinations, orange accent, system font, static ES modules and Firebase storage. Move navigation to a bottom bar labelled “Woche”, “Einkauf” and “Rezepte”.
