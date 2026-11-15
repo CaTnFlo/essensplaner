@@ -270,7 +270,7 @@ export async function erstelleStore(optionen)
 
 Deutsch, mobil zuerst (375 px breit muss sauber aussehen), helles und dunkles Farbschema über `prefers-color-scheme`. Keine Frameworks, keine externen Schriften. Als Homescreen-App installierbar (`manifest.webmanifest`, `display: standalone`, Icons).
 
-Navigation unten mit drei Tabs: Woche, Einkauf, Rezepte.
+Navigation oben (bleibt beim Scrollen sichtbar) mit drei Tabs, jeweils mit eigenem Icon: Woche (Kalender), Einkauf (Korb), Rezepte (Buch). Akzentfarbe Orange.
 
 ### 6.1 Woche
 - Überschrift: "Woche ab So, 22.11."

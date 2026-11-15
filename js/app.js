@@ -17,6 +17,16 @@ const KATEGORIE_NAMEN = {
   gewuerze: "Gewürze",
 };
 const PROTEIN_BADGE = { fisch: "Fisch", gefluegel: "Geflügel" };
+const svg = (pfade) =>
+  `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">${pfade}</svg>`;
+const TAB_ICONS = {
+  // Kalender
+  woche: svg('<rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/>'),
+  // Einkaufskorb
+  einkauf: svg('<path d="M3 10h18l-2 10H5z"/><path d="M8 10l4-6 4 6M9 14v3M15 14v3"/>'),
+  // Buch
+  rezepte: svg('<path d="M4 5a2 2 0 0 1 2-2h13v16H6a2 2 0 0 0-2 2z"/><path d="M4 19V5M19 19v2H6"/>'),
+};
 
 const root = document.getElementById("app");
 const statusEl = document.getElementById("status");
@@ -391,15 +401,16 @@ function renderRezepte() {
 function render() {
   if (!state) return;
   const inhalt = { woche: renderWoche, einkauf: renderEinkauf, rezepte: renderRezepte }[ui.tab]();
-  const tab = (id, label) => `<button data-action="tab" data-tab="${id}" ${ui.tab === id ? 'aria-current="page"' : ""}>${label}</button>`;
+  const tab = (id, label) =>
+    `<button data-action="tab" data-tab="${id}" ${ui.tab === id ? 'aria-current="page"' : ""}>${TAB_ICONS[id]}<span>${label}</span></button>`;
   let banner = "";
   if (modus === "lokal") {
     banner = `<p class="banner" role="note">Lokaler Modus: nur auf diesem Gerät gespeichert${lokalHinweis ? `. ${esc(lokalHinweis)}` : ""}</p>`;
   } else if (verbindungsFehler) {
     banner = `<p class="banner" role="alert">${esc(verbindungsFehler)}</p>`;
   }
-  root.innerHTML = `${banner}<main>${inhalt}</main>
-    <nav class="nav" aria-label="Hauptnavigation">${tab("woche", "Woche")}${tab("einkauf", "Einkauf")}${tab("rezepte", "Rezepte")}</nav>`;
+  root.innerHTML = `<nav class="nav" aria-label="Hauptnavigation">${tab("woche", "Woche")}${tab("einkauf", "Einkauf")}${tab("rezepte", "Rezepte")}</nav>
+    ${banner}<main>${inhalt}</main>`;
 }
 
 function renderStart(fehler = "") {
