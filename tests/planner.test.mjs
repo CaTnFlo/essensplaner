@@ -374,7 +374,7 @@ test("uebernehmePlan: gleiche Woche ersetzt ohne Verlauf", () => {
   const state = { ...leer(), aktuellerPlan: alt, verlauf: [vorwoche()] };
   const neu = planMit("2026-11-22", "chili-con-carne", "curry", "nudel-baukasten", "A");
   const res = uebernehmePlan(state, neu);
-  assert.deepEqual(res.aktuellerPlan, neu);
+  assert.deepEqual(res.aktuellerPlan, { ...neu, probiertHinzugefuegt: true });
   assert.equal(res.verlauf.length, 1);
 });
 
@@ -421,4 +421,73 @@ test("Eingaben werden nie verändert (eingefroren)", () => {
   pruefePlan({ plan, recipes: rez, state });
   uebernehmePlan(state, plan);
   kandidaten(rez, state);
+});
+
+// ---------- P6b Frage 2: verworfenes neues Rezept zurücknehmen ----------
+
+const LINK = (id) => ({ id, titel: `Link ${id}`, url: "https://example.org", hinzugefuegt: "2026-11-01", geplantAm: null });
+const linkEintrag = (id) => ({ quelle: "link", id, variante: null });
+const planNeu = (wocheAb, neuSlot, neu, extra = {}) => {
+  const p = planMit(wocheAb, "lasagne", "curry", "lachs-spinat-nudeln", neuSlot);
+  p.slots[neuSlot] = neu;
+  return { ...p, ...extra };
+};
+
+test("uebernehmePlan: gleiche Woche, anderes neues Rezept -> alter Link wieder offen", () => {
+  const alt = planNeu("2026-11-22", "C", linkEintrag("link-1"));
+  const state = { ...leer(), links: [LINK("link-1")] };
+  const mitAlt = uebernehmePlan(state, alt);
+  assert.equal(mitAlt.links[0].geplantAm, "2026-11-22");
+  const neu = planNeu("2026-11-22", "A", eintrag("chili-con-carne"));
+  const res = uebernehmePlan(mitAlt, neu);
+  assert.equal(res.links[0].geplantAm, null);
+});
+
+test("uebernehmePlan: gleiche Woche, beide Pläne mit demselben Link -> geplantAm bleibt", () => {
+  const state = { ...leer(), links: [LINK("link-1")] };
+  const alt = uebernehmePlan(state, planNeu("2026-11-22", "C", linkEintrag("link-1")));
+  const res = uebernehmePlan(alt, planNeu("2026-11-22", "C", linkEintrag("link-1")));
+  assert.equal(res.links[0].geplantAm, "2026-11-22");
+});
+
+test("uebernehmePlan: gleiche Woche, altes Pool-Rezept mit probiertHinzugefuegt true -> aus probiert entfernt", () => {
+  const alt = uebernehmePlan(leer(), planNeu("2026-11-22", "C", eintrag("lachs-ofen")));
+  assert.deepEqual(alt.probiert, ["lachs-ofen"]);
+  const res = uebernehmePlan(alt, planNeu("2026-11-22", "A", eintrag("chili-con-carne")));
+  assert.deepEqual(res.probiert, ["chili-con-carne"]);
+});
+
+test("uebernehmePlan: gleiche Woche, altes Pool-Rezept mit probiertHinzugefuegt false -> bleibt in probiert", () => {
+  const state = { ...leer(), probiert: ["lachs-ofen"] };
+  const alt = uebernehmePlan(state, planNeu("2026-11-22", "C", eintrag("lachs-ofen")));
+  assert.equal(alt.aktuellerPlan.probiertHinzugefuegt, false);
+  const res = uebernehmePlan(alt, planNeu("2026-11-22", "A", eintrag("chili-con-carne")));
+  assert.ok(res.probiert.includes("lachs-ofen"));
+});
+
+test("uebernehmePlan: gleiche Woche, dasselbe neue Rezept nochmal -> probiert-Herkunft bleibt erhalten", () => {
+  const alt = uebernehmePlan(leer(), planNeu("2026-11-22", "C", eintrag("lachs-ofen")));
+  const again = uebernehmePlan(alt, planNeu("2026-11-22", "C", eintrag("lachs-ofen")));
+  assert.equal(again.aktuellerPlan.probiertHinzugefuegt, true);
+  const res = uebernehmePlan(again, planNeu("2026-11-22", "A", eintrag("chili-con-carne")));
+  assert.deepEqual(res.probiert, ["chili-con-carne"]);
+});
+
+test("uebernehmePlan: andere Woche -> nichts wird zurückgenommen", () => {
+  const state = { ...leer(), links: [LINK("link-1")] };
+  const alt = uebernehmePlan(state, planNeu("2026-11-15", "C", linkEintrag("link-1")));
+  assert.equal(alt.links[0].geplantAm, "2026-11-15");
+  const res = uebernehmePlan(alt, planNeu("2026-11-22", "A", eintrag("chili-con-carne")));
+  assert.equal(res.links[0].geplantAm, "2026-11-15");
+  assert.equal(res.verlauf.length, 1);
+  const pool = uebernehmePlan(leer(), planNeu("2026-11-15", "C", eintrag("lachs-ofen")));
+  const pool2 = uebernehmePlan(pool, planNeu("2026-11-22", "A", eintrag("chili-con-carne")));
+  assert.deepEqual(pool2.probiert, ["lachs-ofen", "chili-con-carne"]);
+});
+
+test("uebernehmePlan: alter Plan ohne Feld probiertHinzugefuegt -> kein Fehler, Pool-ID bleibt", () => {
+  const state = { ...leer(), probiert: ["lachs-ofen"], aktuellerPlan: planNeu("2026-11-22", "C", eintrag("lachs-ofen")) };
+  assert.equal("probiertHinzugefuegt" in state.aktuellerPlan, false);
+  const res = uebernehmePlan(state, planNeu("2026-11-22", "A", eintrag("chili-con-carne")));
+  assert.ok(res.probiert.includes("lachs-ofen"));
 });

@@ -289,22 +289,45 @@ export function setzeSlot(plan, slot, eintrag) {
 
 // ---------- Zustand ----------
 
+// SPEC 4.4 / P6b Frage 2: Ersetzt ein Plan den aktuellen derselben Woche, wird das
+// neue Rezept des alten Plans zurückgenommen, wenn der neue Plan ein anderes hat.
 export function uebernehmePlan(state, plan) {
   const neu = structuredClone(state);
   const p = structuredClone(plan);
   neu.verlauf ??= [];
   neu.probiert ??= [];
   neu.links ??= [];
-  if (neu.aktuellerPlan && neu.aktuellerPlan.wocheAb !== p.wocheAb) {
-    neu.verlauf = [...neu.verlauf, neu.aktuellerPlan].slice(-8);
+  const alt = neu.aktuellerPlan;
+  const neuEintrag = (pl) => (pl?.neuSlot ? pl.slots?.[pl.neuSlot] ?? null : null);
+  const altNeu = alt && alt.wocheAb === p.wocheAb ? neuEintrag(alt) : null;
+  const neuNeu = neuEintrag(p);
+  const dasselbe = !!altNeu && !!neuNeu && altNeu.quelle === neuNeu.quelle && altNeu.id === neuNeu.id;
+
+  if (alt && alt.wocheAb !== p.wocheAb) {
+    neu.verlauf = [...neu.verlauf, alt].slice(-8);
+  } else if (altNeu && !dasselbe) {
+    if (altNeu.quelle === "link") {
+      const link = neu.links.find((l) => l.id === altNeu.id);
+      if (link && link.geplantAm === alt.wocheAb) link.geplantAm = null;
+    } else if (alt.probiertHinzugefuegt === true) {
+      neu.probiert = neu.probiert.filter((id) => id !== altNeu.id);
+    }
   }
+
   neu.aktuellerPlan = p;
-  const eintrag = p.neuSlot ? p.slots[p.neuSlot] : null;
+  const eintrag = neuNeu;
+  p.probiertHinzugefuegt = false;
   if (eintrag?.quelle === "link") {
     const link = neu.links.find((l) => l.id === eintrag.id);
     if (link) link.geplantAm = p.wocheAb;
-  } else if (eintrag?.quelle === "rezept" && !neu.probiert.includes(eintrag.id)) {
-    neu.probiert.push(eintrag.id);
+  } else if (eintrag?.quelle === "rezept") {
+    if (!neu.probiert.includes(eintrag.id)) {
+      neu.probiert.push(eintrag.id);
+      p.probiertHinzugefuegt = true;
+    } else if (dasselbe) {
+      // Gleiches neues Rezept wie vorher: Herkunft des alten Plans bleibt erhalten.
+      p.probiertHinzugefuegt = alt.probiertHinzugefuegt === true;
+    }
   }
   return neu;
 }

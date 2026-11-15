@@ -25,7 +25,7 @@ SPEC 4.1 und 5.4. Für den Dateinamen bei Varianten: `rezeptSeitenPfad` in `js/b
 - `node scripts/build-pages.mjs` läuft ohne Fehler, zweiter Lauf ändert nichts (`git status` sauber nach erneutem Lauf)
 - Anzahl Dateien = Anzahl Rezepte ohne Varianten + Summe der Kombinationen (mit den echten Daten: 5 + 8 + 3 + 30 = 46)
 - Test: JSON-LD jeder Seite ist parsebares JSON mit `@type: "Recipe"`, `recipeIngredient` nicht leer, `recipeYield` "4 Portionen"
-- `node --test tests/` grün
+- `node --test tests/*.test.mjs` grün
 
 ## Nicht tun
 Keine Änderungen an `data/recipes.json`, keine JavaScript-Logik in den Rezeptseiten.

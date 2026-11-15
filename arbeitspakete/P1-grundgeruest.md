@@ -9,7 +9,7 @@ Ordnerstruktur aus SPEC Abschnitt 5 anlegen und einen Validator bauen, der `data
 SPEC Abschnitte 4.1, 4.2, 4.3, 5.
 
 ## Dateien
-- `README.md` (kurz: Zweck, lokal starten mit `python3 -m http.server 8000`, Tests mit `node --test tests/`, Verweis auf SPEC)
+- `README.md` (kurz: Zweck, lokal starten mit `python3 -m http.server 8000`, Tests mit `node --test tests/*.test.mjs`, Verweis auf SPEC)
 - `.gitignore` (`.DS_Store`, `node_modules/`)
 - `data/recipes.json` mit `{"version": 1, "rezepte": []}`
 - `scripts/validate-recipes.mjs`
@@ -32,7 +32,7 @@ SPEC Abschnitte 4.1, 4.2, 4.3, 5.
 - `node scripts/validate-recipes.mjs tests/fixtures/recipes-gueltig.json` -> Exit 0
 - `node scripts/validate-recipes.mjs tests/fixtures/recipes-ungueltig.json` -> Exit 1, jeder Fehlerfall erscheint
 - `node scripts/validate-recipes.mjs` -> Exit 0 (leere Liste ist gültig)
-- `node --test tests/` grün, mindestens 8 Testfälle
+- `node --test tests/*.test.mjs` grün, mindestens 8 Testfälle
 
 ## Nicht tun
 Keine UI, keine Planer-Logik, keine echten Rezepte.

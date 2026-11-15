@@ -38,3 +38,35 @@ test("rezeptSeitenPfad: mit Varianten in Gruppenreihenfolge", () => {
 test("rezeptSeitenPfad: Link hat keine eigene Seite", () => {
   assert.equal(rezeptSeitenPfad({ quelle: "link", id: "link-1", variante: null }), null);
 });
+
+const rezepte = [
+  {
+    id: "nudel-baukasten",
+    variantenGruppen: [
+      { id: "beilage", optionen: [{ id: "brokkoli" }, { id: "bohnen" }] },
+      { id: "sosse", optionen: [{ id: "sahne" }, { id: "tomate" }] },
+    ],
+  },
+  { id: "ofengemuese", variantenGruppen: [{ id: "dazu", optionen: [{ id: "beides" }] }] },
+];
+
+test("rezeptSeitenPfad mit recipes: Reihenfolge der Gruppen, nicht der Schlüssel", () => {
+  assert.equal(
+    rezeptSeitenPfad({ quelle: "rezept", id: "nudel-baukasten", variante: { sosse: "sahne", beilage: "brokkoli" } }, rezepte),
+    "rezepte/nudel-baukasten--brokkoli-sahne.html",
+  );
+});
+
+test("rezeptSeitenPfad mit recipes: fehlende Gruppe wird übersprungen", () => {
+  assert.equal(
+    rezeptSeitenPfad({ quelle: "rezept", id: "nudel-baukasten", variante: { sosse: "tomate" } }, rezepte),
+    "rezepte/nudel-baukasten--tomate.html",
+  );
+  assert.equal(rezeptSeitenPfad({ quelle: "rezept", id: "ofengemuese", variante: {} }, rezepte), "rezepte/ofengemuese.html");
+});
+
+test("rezeptSeitenPfad: ohne recipes oder unbekanntes Rezept wie bisher", () => {
+  const e = { quelle: "rezept", id: "nudel-baukasten", variante: { sosse: "sahne", beilage: "brokkoli" } };
+  assert.equal(rezeptSeitenPfad(e), "rezepte/nudel-baukasten--sahne-brokkoli.html");
+  assert.equal(rezeptSeitenPfad(e, rezepte.slice(1)), "rezepte/nudel-baukasten--sahne-brokkoli.html");
+});

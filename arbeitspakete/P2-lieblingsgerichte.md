@@ -21,7 +21,7 @@ SPEC 4.1 und 4.2. Ein Beispiel für gültige Daten steht in `tests/fixtures/reci
 
 ## Abnahme
 - `node scripts/validate-recipes.mjs` -> Exit 0
-- `node --test tests/` grün
+- `node --test tests/*.test.mjs` grün
 - Jedes der 7 Gerichte vorhanden, Tabellenwerte aus 4.2 unverändert (Validator mit `--voll` darf nur noch Pool-Fehler melden)
 
 ## Nicht tun

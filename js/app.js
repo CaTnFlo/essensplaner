@@ -114,7 +114,7 @@ function eintragFuer(k, rng) {
 
 function rezeptUrl(eintrag) {
   if (eintrag.quelle === "link") return linkVon(eintrag.id)?.url ?? "#";
-  return new URL(rezeptSeitenPfad(eintrag), location.href).href;
+  return new URL(rezeptSeitenPfad(eintrag, recipes), location.href).href;
 }
 function bringUrl(eintrag) {
   return bringLink(rezeptUrl(eintrag));
@@ -330,7 +330,7 @@ function rezeptZeile(r) {
     ? ""
     : `<button class="btn" data-action="favorit" data-id="${esc(r.id)}" aria-pressed="${fav}">Favorit</button>`;
   return `<li><span class="name">${esc(r.name)}<br><span class="small muted">${r.dauerMin} Min.</span></span>
-    <a class="btn" href="${esc(rezeptSeitenPfad(standardEintrag(r)))}" target="_blank" rel="noopener" aria-label="${esc(r.name)}: Rezept">Rezept</a>${schalter}</li>`;
+    <a class="btn" href="${esc(rezeptSeitenPfad(standardEintrag(r), recipes))}" target="_blank" rel="noopener" aria-label="${esc(r.name)}: Rezept">Rezept</a>${schalter}</li>`;
 }
 
 function linkZeile(l) {

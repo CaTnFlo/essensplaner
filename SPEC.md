@@ -47,6 +47,8 @@ Links haben keine Zutaten- und Haltbarkeitsdaten. Sie gelten als `haltbarTage: 1
 
 Wenn keine gültige Kombination existiert: zuerst R3 lockern, dann R4, dann R2. Jede Lockerung erzeugt einen Hinweistext, z.B. "Regel 'keine Wiederholung aus Vorwoche' gelockert: zu wenige Favoriten". Der Planer darf nie abstürzen und liefert immer einen Plan.
 
+Die Lockerung bei R2 (letzte Stufe) wählt die drei Slots frei aus Favoriten und neuen Rezepten, Favoriten bevorzugt. `neuSlot` ist dann nur gesetzt, wenn genau ein neues Rezept in A oder C landet.
+
 Varianten: Hat ein Rezept `variantenGruppen`, wird pro Gruppe zufällig eine Option gewählt.
 
 Zufall: Alle Zufallsentscheidungen laufen über eine übergebene Funktion `rng()` (liefert [0,1)). Gleicher Seed ergibt gleichen Plan.
@@ -142,7 +144,7 @@ Ein Objekt, für beide Personen geteilt:
 // Link
 { id: "link-<zeitstempel>", titel: "Gnocchi-Pfanne", url: "https://...", hinzugefuegt: "2026-11-15", geplantAm: null | "2026-11-22" }
 // Plan
-{ wocheAb: "2026-11-22", erstellt: "<ISO-Zeitpunkt>", neuSlot: "A" | "C" | null,
+{ wocheAb: "2026-11-22", erstellt: "<ISO-Zeitpunkt>", neuSlot: "A" | "C" | null, probiertHinzugefuegt: true | false,
   slots: { A: SlotEintrag, B: SlotEintrag, C: SlotEintrag } }
 // SlotEintrag
 { quelle: "rezept", id: "nudel-baukasten", variante: { "beilage": "brokkoli", "sosse": "sahne" } }
@@ -157,6 +159,8 @@ Plan übernehmen (`uebernehmePlan`):
 - Sonst wandert der alte Plan ans Ende von `verlauf`; `verlauf` wird auf die letzten 8 gekürzt.
 - Ist das neue Rezept ein Link, bekommt der Link `geplantAm = wocheAb`. Ist es ein Pool-Rezept, kommt seine ID in `probiert` (ohne Dubletten).
 - Die Vorwoche für R3 ist der jüngste Plan mit `wocheAb` kleiner als das neue `wocheAb` (aus `aktuellerPlan` oder `verlauf`).
+- `probiertHinzugefuegt` ist `true`, wenn die Pool-ID des neuen Rezepts in diesem Aufruf neu in `probiert` aufgenommen wurde, sonst `false`. Fehlt das Feld (alte Pläne), gilt `false`. Bleibt dasselbe neue Rezept, bleibt der Wert erhalten.
+- Ersetzt der neue Plan den aktuellen Plan derselben Woche und ist das neue Rezept ein anderes, wird das alte zurückgenommen, bevor der neue Plan übernommen wird: War es ein Link mit `geplantAm` = `wocheAb`, wird `geplantAm` auf `null` gesetzt. War es ein Pool-Rezept mit `probiertHinzugefuegt: true`, wird seine ID aus `probiert` entfernt. Bei anderer Woche passiert das nicht.
 
 ## 5. Module und Schnittstellen
 
@@ -209,6 +213,10 @@ export function anzeigeName(eintrag, recipes, state)                // -> string
 
 `pruefePlan` meldet Verstöße gegen R1, R3, R4, R5 als kurze deutsche Sätze. Wird nach manuellen Änderungen in der UI angezeigt, blockiert aber nichts.
 
+Festgelegt (P6b):
+- `uebernehmePlan` bekommt keine `recipes`. Das neue Rezept erkennt die Funktion über `neuSlot` und `quelle`. Wird per "Ändern" ein Favorit in den Neu-Slot gesetzt, landet seine ID trotzdem in `probiert`. Das ist harmlos.
+- `wuerfleSlot` ohne Alternative: Der Plan bleibt unverändert, Hinweis "Keine andere Möglichkeit gefunden". Der Button wird nicht deaktiviert.
+
 ### 5.2 `js/shopping.js`
 
 ```js
@@ -228,9 +236,11 @@ export function einkaufsliste({ plan, recipes, state })
 ```js
 export function bringLink(rezeptUrl)
 // -> "https://api.getbring.com/rest/bringrecipes/deeplink?url=<encodeURIComponent(rezeptUrl)>&source=web"
-export function rezeptSeitenPfad(eintrag)   // -> "rezepte/lasagne.html" oder "rezepte/nudel-baukasten--brokkoli-sahne.html"
+export function rezeptSeitenPfad(eintrag, recipes = null)   // -> "rezepte/lasagne.html" oder "rezepte/nudel-baukasten--brokkoli-sahne.html"
 ```
 Für Rezepte ist `rezeptUrl` die absolute URL der Rezeptseite (`new URL(rezeptSeitenPfad(e), location.href)`), für Links die Link-URL selbst. Ob Bring diesen Link noch annimmt, ist unbestätigt und wird in P8 geprüft.
+
+Festgelegt (P6b): Mit `recipes` (die Rezeptliste) werden die Optionen in der Reihenfolge der `variantenGruppen` des Rezepts gelesen, unabhängig von der Schlüsselreihenfolge von `variante`. Gruppen, die in `variante` fehlen, werden übersprungen. Ohne `recipes` oder bei unbekannter ID gilt die Schlüsselreihenfolge. Die Dateinamen bleiben gleich. Für Links liefert die Funktion `null`; SPEC sieht dafür keine Seite vor, die App zeigt dann die Link-URL.
 
 ### 5.4 Rezeptseiten `rezepte/*.html`
 
@@ -325,7 +335,7 @@ service cloud.firestore {
 ## 9. Definition of Done (gesamt)
 
 - `node scripts/validate-recipes.mjs` meldet 0 Fehler
-- `node --test tests/` grün
+- `node --test tests/*.test.mjs` grün
 - `node scripts/build-pages.mjs` erzeugt für jedes Rezept und jede Variantenkombination genau eine Seite mit gültigem JSON-LD
 - App läuft lokal (`python3 -m http.server 8000`) im lokalen Modus und auf GitHub Pages mit Firebase
 - Zwei Browser mit derselben Haushalts-ID sehen Änderungen des anderen innerhalb weniger Sekunden

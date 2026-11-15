@@ -13,10 +13,10 @@ python3 -m http.server 8000
 ## Tests
 
 ```bash
-node --test
+node --test tests/*.test.mjs
 ```
 
-`node --test tests/` (mit Ordner) funktioniert nur bis Node 22; ab Node 24 findet `node --test` die Tests in `tests/` selbst.
+Läuft unter Node 20 bis 24. `node --test tests/` (mit Ordner) bricht ab Node 24 ab, deshalb der Dateiname mit Muster.
 
 ## Rezepte prüfen
 

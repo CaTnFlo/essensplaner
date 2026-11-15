@@ -5,9 +5,15 @@ export function bringLink(rezeptUrl) {
 }
 
 // Für Links gibt es keine eigene Seite: null.
-// Reihenfolge der Optionen = Schlüsselreihenfolge von eintrag.variante (entspricht der Gruppenreihenfolge).
-export function rezeptSeitenPfad(eintrag) {
+// Ohne recipes: Reihenfolge der Optionen = Schlüsselreihenfolge von eintrag.variante.
+// Mit recipes (P6b Frage 3): Reihenfolge der variantenGruppen des Rezepts, unabhängig von der Schlüsselreihenfolge.
+// Gruppen, die in eintrag.variante fehlen, werden übersprungen.
+export function rezeptSeitenPfad(eintrag, recipes = null) {
   if (eintrag.quelle === "link") return null;
-  const optionen = Object.values(eintrag.variante ?? {});
+  const variante = eintrag.variante ?? {};
+  const rezept = recipes ? recipes.find((r) => r.id === eintrag.id) : null;
+  const optionen = rezept
+    ? (rezept.variantenGruppen ?? []).filter((g) => variante[g.id] != null).map((g) => variante[g.id])
+    : Object.values(variante);
   return optionen.length ? `rezepte/${eintrag.id}--${optionen.join("-")}.html` : `rezepte/${eintrag.id}.html`;
 }

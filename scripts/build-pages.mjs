@@ -87,7 +87,7 @@ export function baueSeiten(daten) {
         ? `${r.name} (${kombi.map(({ option }) => option.name).join(", ")})`
         : r.name;
       const zutaten = [...r.zutaten, ...kombi.flatMap(({ option }) => option.zutaten)];
-      const dateiname = basename(rezeptSeitenPfad({ quelle: "rezept", id: r.id, variante }));
+      const dateiname = basename(rezeptSeitenPfad({ quelle: "rezept", id: r.id, variante }, daten.rezepte));
       seiten.push({
         dateiname,
         html: seite({

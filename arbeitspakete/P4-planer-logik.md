@@ -43,7 +43,7 @@ SPEC Abschnitte 2, 3, 4.4, 5.1, 5.2, 5.3.
 - `bringLink` kodiert die URL korrekt; `rezeptSeitenPfad` für Rezept ohne und mit Varianten
 
 ## Abnahme
-- `node --test tests/` grün
+- `node --test tests/*.test.mjs` grün
 - `grep -n "Math.random" js/planner.js js/shopping.js js/bring.js` findet nichts
 - `grep -nE "document|window|localStorage|fetch\(" js/planner.js js/shopping.js js/bring.js` findet nichts
 

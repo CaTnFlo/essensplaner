@@ -33,7 +33,7 @@ Lokal mit `python3 -m http.server 8000` im Repo-Ordner, Browser auf 375 px Breit
 - Neu laden: Zustand bleibt erhalten
 - Dunkelmodus lesbar
 - Keine Fehler in der Browser-Konsole
-- `node --test tests/` weiterhin grün
+- `node --test tests/*.test.mjs` weiterhin grün
 Im Bericht Screenshots oder eine kurze Beschreibung je Punkt.
 
 ## Nicht tun

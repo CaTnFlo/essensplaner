@@ -1,6 +1,6 @@
 # P7 Firebase-Anbindung
 
-Modell: Sonnet. Voraussetzung: P6 gemergt, M1 erledigt, `firebaseConfig` liegt vor.
+Modell: Sonnet. Voraussetzung: P6b gemergt, M1 erledigt, `firebaseConfig` liegt vor.
 
 ## Ziel
 Geteilter Zustand für beide Handys über Firestore, nach SPEC 5.5 und 7.
@@ -25,7 +25,7 @@ SPEC 5.5 und 7. `js/store-local.js` als Vorbild für die Schnittstelle. Den Teil
 - Mit falscher ID: verständliche Fehlermeldung, kein Absturz
 - Mit richtiger ID (du testest das, nicht der Agent) in zwei Browsern: Plan in Browser 1 erstellen, erscheint in Browser 2 nach wenigen Sekunden; "Neu würfeln" in Browser 2 erscheint in Browser 1
 - `grep -rn "<haushalts-id>"` über das Repo findet die echte ID nicht (prüfst du selbst)
-- `node --test tests/` grün
+- `node --test tests/*.test.mjs` grün
 - Nach dem Push läuft die App unter der GitHub-Pages-URL
 
 ## Nicht tun

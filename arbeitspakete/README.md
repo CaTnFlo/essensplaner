@@ -12,8 +12,9 @@ Jedes Paket läuft in einem eigenen Chat. Der Chat bekommt nur das Repo, `SPEC.m
 | P4 Planer-, Einkaufs- und Bring-Logik | Sonnet | P1 | P2, P3 |
 | P5 Rezeptseiten-Generator | Haiku | P2, P3 | P6 |
 | P6 Oberfläche im lokalen Modus | Sonnet | P4 (P2 für echte Daten) | P5 |
+| P6b Korrekturen aus offenen Fragen | Sonnet | P6 | M1 |
 | M1 GitHub Pages und Firebase einrichten | du selbst | P1 | alles ab P2 |
-| P7 Firebase-Anbindung | Sonnet | P6, M1 | |
+| P7 Firebase-Anbindung | Sonnet | P6b, M1 | |
 | P8 Abnahme | Opus | alles | |
 
 Parallele Pakete ändern nie dieselben Dateien. Wenn zwei Pakete parallel laufen, jeweils in einem eigenen Branch oder Worktree arbeiten und nacheinander mergen.
