@@ -24,3 +24,7 @@ Opening a sheet fixes the background body at its current offset. Sheet transitio
 ## Warm day badges and consistent card headers
 
 The blue extension was rejected in visual review. Day labels now use warm sand #E4C9A0 with brown #49351F. All header badges and the overflow button share a 48px height and 12px radius. Every sheet has a constrained, independently scrollable body, a shorter 32px grip area and 24px bottom content padding plus the safe-area inset. Background locking remains unchanged. Browser coverage now includes matching header heights and native touch scrolling in a freshly loaded 360 × 500 viewport. Physical iPhone verification remains outstanding.
+
+## Shopping import and cache follow-up
+
+Live CSS was confirmed to contain sand #E4C9A0; the response permits 600 seconds of caching. Versioned stylesheet, token and application URLs now bypass older assets after a reload. Shopping rows use fixed quantity and unit columns with a flexible ingredient column. A primary “Alles zu Bring hinzufügen” action imports the full week without pantry staples through a public catalog-only Worker. The real Bring parser accepted a two-recipe selection and returned merged ingredients; confirmation in the native Bring app remains unverified. External links without ingredient data are clearly called out for separate import.

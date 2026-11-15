@@ -4,7 +4,7 @@ import { installPlanDrag } from "./plan-drag.js";
 // UI, Navigation, Events (SPEC 6, 7). Planungslogik liegt in planner.js / shopping.js / bring.js.
 import { SLOTS, erzeugeRng, planeWoche, wuerfleSlot, setzeSlot, pruefePlan, uebernehmePlan, anzeigeName, kandidaten, tauscheSlots, planeMitWunsch, wunschGrund, filterKandidaten } from "./planner.js";
 import { einkaufsliste } from "./shopping.js";
-import { bringLink, rezeptSeitenPfad } from "./bring.js";
+import { bringLink, rezeptSeitenPfad, bringWochenLink } from "./bring.js?v=20261115-5";
 import { firebaseConfig } from "./firebase-config.js";
 
 const KEY_HAUSHALT = "essensplaner-haushalt";
@@ -384,7 +384,7 @@ function abschnitt(titel, key, posten) {
     g.items.push(p);
   }
   const zeile = (p) =>
-    `<li><details><summary><span>${esc(p.name)}</span><span class="amount">${esc([fmtMenge(p.menge), p.einheit].filter(Boolean).join(" "))}</span></summary><p class="rezepte">${esc(p.rezepte.join(", "))}</p></details></li>`;
+    `<li><details><summary><span>${esc(p.name)}</span><span class="amount">${esc(fmtMenge(p.menge))}</span><span class="unit">${esc(p.einheit ?? "")}</span></summary><p class="rezepte">${esc(p.rezepte.join(", "))}</p></details></li>`;
   return `<h2>${esc(titel)}</h2>
     <button class="btn" data-action="kopieren" data-liste="${key}">Liste kopieren</button>
     ${gruppen.map((g) => `<h3 class="kategorie">${icon("box")}${esc(KATEGORIE_NAMEN[g.k] ?? g.k)}</h3><ul class="posten">${g.items.map(zeile).join("")}</ul>`).join("")}
@@ -409,7 +409,9 @@ function renderEinkauf() {
           ${externerLink(sichereLinkUrl(l.url), "Rezept")}</li>`)
         .join("")}</ul>`
     : "";
+  const bulkUrl = bringWochenLink(plan);
   return `<h1>Einkauf</h1>
+    ${bulkUrl ? `<div class="bring-all">${externerLink(bulkUrl, "Alles zu Bring hinzufügen").replace('class="btn"','class="btn primary"')}<p class="small muted">Ganze Woche · ohne Vorräte${liste.links.length ? '. Eigene Rezeptlinks bitte separat hinzufügen.' : ''}</p></div>` : ''}
     <div class="shopping-tabs" aria-label="Einkaufstag">${['samstag','donnerstag'].map(day => `<button class="btn" data-action="shoppingday" data-day="${day}" aria-pressed="${ui.einkauf === day}">${icon('calendar')}${day === 'samstag' ? 'Samstag' : 'Donnerstag'}${ui.einkauf === day ? '<span aria-hidden="true">✓</span>' : ''}</button>`).join('')}</div>
     ${abschnitt(ui.einkauf === 'samstag' ? 'Samstag' : 'Donnerstag', ui.einkauf, liste[ui.einkauf])}
     ${links}<h2>Zu Bring hinzufügen</h2><ul class="liste">${gerichte}</ul>`;

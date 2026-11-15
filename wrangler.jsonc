@@ -1,0 +1,7 @@
+{
+  "account_id": "89ac3cdad55462f2c268b70087cc6af9",
+  "name": "essensplaner-bring",
+  "main": "worker/index.mjs",
+  "compatibility_date": "2026-11-15",
+  "workers_dev": true
+}

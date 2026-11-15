@@ -1,7 +1,7 @@
 /* Hallmark · v2.0.0 · existing app · approved neutral week concept, no new direction */
 /* Critique: fixed bottom navigation, clear cooking days and one action menu per dish. */
 /* Hallmark · waive 24b · 48px controls and overflow checked at 360, 393, 412 and 1920px · Compact metadata keeps the explicitly approved week mockup spacing rather than imposing a new grid. */
-@import url("./tokens.css");
+@import url("./tokens.css?v=20261115-5");
 
 * { box-sizing: border-box; }
 
@@ -346,3 +346,11 @@ dialog[open] { display:flex; flex-direction:column; overflow:hidden; }
 .sheet-body > :first-child { margin-top:0; }
 .sheet-body > :last-child { margin-bottom:0; }
 #sheet-footer, #sheet-save { flex:none; }
+
+.bring-all { margin:20px 0; }
+.bring-all .btn { width:100%; font-size:1rem; }
+.bring-all p { margin:8px 0 0; }
+.posten summary { display:grid; grid-template-columns:minmax(0,1fr) 3.5rem 4.5rem 1rem; gap:8px; }
+.posten summary > span:first-child { min-width:0; overflow-wrap:anywhere; }
+.posten .amount { max-width:none; text-align:right; font-variant-numeric:tabular-nums; }
+.posten .unit { min-width:0; overflow-wrap:anywhere; text-align:left; }

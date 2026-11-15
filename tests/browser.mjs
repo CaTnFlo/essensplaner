@@ -87,6 +87,13 @@ for(const width of [360,393,412,1920]) for(const theme of ['light','dark']) {
   assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),`${width} ${tab} overflow`);
   const small=await page.locator('button,a.btn,input,summary').evaluateAll(els=>els.filter(el=>el.getClientRects().length).filter(el=>{const r=el.getBoundingClientRect();return r.width<47.9||r.height<47.9}).map(el=>el.outerHTML));
   assert.deepEqual(small,[],`${width} ${tab} undersized targets`);
+  if(tab==='einkauf') {
+   const bulk=page.getByRole('link',{name:'Alles zu Bring hinzufügen',exact:true});
+   assert.equal(await bulk.count(),1);
+   assert.equal(new URL(await bulk.getAttribute('href')).hostname,'api.getbring.com');
+   const columns=await page.locator('.posten:not(.vorrat) summary').evaluateAll(els=>els.filter(el=>el.getClientRects().length).map(el=>[el.querySelector('.amount').getBoundingClientRect().left,el.querySelector('.unit').getBoundingClientRect().left]));
+   if(columns.length) for(const row of columns) assert.deepEqual(row,columns[0],`${width} aligned quantity and unit columns`);
+  }
   await shot(`${width}-${theme}-${tab}`);
  }
  await click('[data-tab="woche"]'); await click('[data-action="wish"]'); await page.locator('#sheet-search').fill('Lasagne'); await shot(`${width}-${theme}-wish`); await close();
